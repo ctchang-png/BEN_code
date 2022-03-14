@@ -2,8 +2,6 @@ import numpy as np
 import math
 import time
 import tkinter as tk
-from tkinter import ttk
-from PIL import Image, ImageTk
 from pynput.keyboard import Key, Listener
 
 
@@ -67,6 +65,8 @@ class Eye:
             fill="Black", outline="Black", width=2)
 
     def move_pupil(self, xinc, yinc):
+        self.xp += xinc
+        self.yp += yinc
         self.canvas.move(self.pupil, xinc, yinc)
 
 
@@ -93,13 +93,13 @@ class Eye:
             0, self.hl + (self.window_width/2)*math.tan(self.al*math.pi/180),
             fill="Gray", outline="Black", width=1)
 
-    def move_eyelids(self, hinc, ainc):
+    def move_eyelids(self, hinc_u, hinc_l, ainc_u, ainc_l):
         #Moves both eyelids by a height increment and an angle increment
         #Will eventually want one for each eyelid, but this makes early testing easy with arrow keys
-        self.hu += hinc
-        self.hl -= hinc
-        self.au += ainc
-        self.al -= ainc
+        self.hu += hinc_u
+        self.hl -= hinc_l
+        self.au += ainc_u
+        self.al -= ainc_l
 
         self.set_eyelid_u(self.hu, self.au)
         self.set_eyelid_l(self.hl, self.al)
