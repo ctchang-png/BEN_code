@@ -55,7 +55,7 @@ def main():
     i = 0
     yellow_mask = make_yellow_gauss(pixel_num)
     yellow_bias = 1.0
-    while True():
+    while True:
         P = make_green_line(pixel_num, i)
         P = P + yellow_bias*yellow_mask
         P = P + np.random.normal(scale=1.0, size=pixel_num)
