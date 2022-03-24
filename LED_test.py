@@ -11,7 +11,7 @@ pixel_pin = board.D18
 # Update to match the number of NeoPixels you have connected
 pixel_num = 300
 
-pixels = neopixel.NeoPixel(pixel_pin, pixel_num, brightness=0.1, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, pixel_num, brightness=0.2, auto_write=False)
 
 def make_line(n, i):
     #generates a binary line from P[0] to P[i]
@@ -51,31 +51,58 @@ def normalize(P):
       return np.zeros_like(P)
     return (P - lo) / (hi-lo)
 
-
-
+def set_pixels(pix, pix_arr, n):
+    for i in range(n):
+        pix[i] = pix_arr[:,i]
+    pix.show()
 
 def main():
     i = 0
-    yellow_mask = make_red_gauss(pixel_num)
-    yellow_bias = 6.0
+    red_mask = make_red_gauss(pixel_num) #R + G = Y
+    red_bias = 6.0
     scroll_rate = -5
+    refresh_rate = 0.005
     try:
-      #Ignite Portal
-      for i in range(pixel_num):
-          #P = np.zeros((3,pixel_num))
-          P = make_green_line(pixel_num, i)
-          P = P + yellow_bias*yellow_mask*make_line(pixel_num, i)
-          P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i)
-          P = normalize(P)
-          P = np.floor(P*128).astype(int) #Max Brightness of 128 to allow for yellow flash effect
-          for j in range(pixel_num):
-              pixels[j] = P[:,j]
-          yellow_mask = np.roll(yellow_mask, scroll_rate, axis=1)
-          pixels.show()
-          time.sleep(0.005)
-      #Idle after animation complete
-      while True:
-         time.sleep(0.005)
+        #Ignite Portal
+        for i in range(pixel_num):
+            #P = np.zeros((3,pixel_num))
+            P = make_green_line(pixel_num, i)
+            P = P + red_bias*red_mask*make_line(pixel_num, i)
+            P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i)
+            P = normalize(P)
+            P = np.floor(P*128).astype(int) #Max Brightness of 128 to allow for yellow flash effect
+            set_pixels(pixels, P, pixel_num)
+            red_mask = np.roll(red_mask, scroll_rate, axis=1)
+            time.sleep(refresh_rate)
+        #Flash Yellow
+        Y = np.vstack([255*np.ones(pixel_num),
+                       255*np.ones(pixel_num),
+                       np.zeros(pixel_num)])
+        diff = Y - P
+        flash_time = 0.5 #sec
+        n = int(flash_time / refresh_rate)
+        inc = diff / n
+        #to yellow
+        for i in range(n):
+            P += inc
+            set_pixels(pixels, P, pixel_num)
+            time.sleep(refresh_rate)
+        #to original
+        for i in range(n):
+            P -= inc
+            set_pixels(pixels, P, pixel_num)
+            time.sleep(refresh_rate)
+
+        #Idle after animation complete
+        while True:
+            P = make_green_line(pixel_num, pixel_num)
+            P = P + red_bias*red_mask*make_line(pixel_num, i)
+            P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i)
+            P = normalize(P)
+            P = np.floor(P*128).astype(int) #Max Brightness of 128 to allow for yellow flash effect
+            set_pixels(pixels, P, pixel_num)
+            red_mask = np.roll(red_mask, scroll_rate, axis=1)
+            time.sleep(refresh_rate)
     except KeyboardInterrupt:
       print("Program Terminated, shutting off pixels")
       for j in range(pixel_num):
