@@ -57,9 +57,26 @@ def set_pixels(pix, pix_arr, n, simulated, fig=None, axim=None):
         axim.set_data(pix_im)
         fig.canvas.flush_events()
 
+def make_ignite_array(pixel_num):
+    red_mask = make_red_gauss(pixel_num) #R + G = Y
+    red_bias = 7.0
+    scroll_rate = -5
+    animation = np.zeros((pixel_num, pixel_num, 3))
+    for i in range(pixel_num):
+        P = make_green_line(pixel_num, i)
+        P = P + red_bias*red_mask*make_line(pixel_num, i)
+        P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i)
+        P = normalize(P)
+        P = np.floor(P*160).astype(int) #Max Brightness of 128 to allow for yellow flash effect
+        animation[i,:] = P
+        red_mask = np.roll(red_mask, scroll_rate, axis=1)
+    return animation
 
 def main(simulated=False):
+
     pixel_num = 300
+    refresh_rate = 0.005
+
     if not simulated:
         import board
         import neopixel
@@ -75,24 +92,18 @@ def main(simulated=False):
         fig, ax = plt.subplots()
         axim = ax.imshow(np.zeros((10,30, 3)))
         pixels = None
-    i = 0
-    red_mask = make_red_gauss(pixel_num) #R + G = Y
-    red_bias = 7.0
-    scroll_rate = -5
-    refresh_rate = 0.005
+
+    #Pre-compute animations
+    ignite_array = make_ignite_array(pixel_num)
+
     try:
-        #Ignite Portal
-        for i in range(pixel_num+1):
-            #P = np.zeros((3,pixel_num))
-            P = make_green_line(pixel_num, i)
-            P = P + red_bias*red_mask*make_line(pixel_num, i)
-            P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i)
-            P = normalize(P)
-            P = np.floor(P*160).astype(int) #Max Brightness of 128 to allow for yellow flash effect
+        for frame in range(ignite_array.shape[0]):
+            P = ignite_array[frame,:]
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
-            red_mask = np.roll(red_mask, scroll_rate, axis=1)
             time.sleep(refresh_rate)
+        
         #Flash Yellow
+        '''
         Y = np.vstack([255*np.ones(pixel_num),
                        255*np.ones(pixel_num),
                        np.zeros(pixel_num)])
@@ -110,7 +121,7 @@ def main(simulated=False):
             P = P - inc
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
-
+        
         #Idle after animation complete
         while True:
             P = make_green_line(pixel_num, pixel_num)
@@ -121,6 +132,7 @@ def main(simulated=False):
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             red_mask = np.roll(red_mask, scroll_rate, axis=1)
             time.sleep(refresh_rate)
+        '''
     except KeyboardInterrupt:
         print("Program Terminated, shutting off pixels")
         Z = np.zeros((3, pixel_num))
