@@ -1,7 +1,6 @@
 import numpy as np
 import time
 from math import sqrt, exp, pi
-import cv2
 
 
 def make_line(n, i):
@@ -61,7 +60,7 @@ def make_ignite_array(pixel_num):
     red_mask = make_red_gauss(pixel_num) #R + G = Y
     red_bias = 7.0
     scroll_rate = -5
-    animation = np.zeros((pixel_num, pixel_num, 3))
+    animation = np.zeros((pixel_num, 3, pixel_num))
     for i in range(pixel_num):
         P = make_green_line(pixel_num, i)
         P = P + red_bias*red_mask*make_line(pixel_num, i)
@@ -94,10 +93,11 @@ def main(simulated=False):
         pixels = None
 
     #Pre-compute animations
+    start = time.time()
     ignite_array = make_ignite_array(pixel_num)
-
+    print(time.time() - start)
     try:
-        for frame in range(ignite_array.shape[0]):
+        for frame in range(0, ignite_array.shape[0], 3): #Play with speed
             P = ignite_array[frame,:]
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
@@ -138,4 +138,4 @@ def main(simulated=False):
         Z = np.zeros((3, pixel_num))
         set_pixels(pixels, Z, pixel_num, simulated, fig, axim)
 
-main(simulated=True)
+main(simulated=False)
