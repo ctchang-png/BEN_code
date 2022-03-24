@@ -1,7 +1,6 @@
 import board
 import neopixel
 import numpy as np
-from scipy.ndimage import gaussian_filter
 import time
 from math import sqrt, exp, pi
 
