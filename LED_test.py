@@ -95,7 +95,7 @@ def main(simulated=False):
     #Pre-compute animations
     start = time.time()
     ignite_array = make_ignite_array(pixel_num)
-    print(time.time() - start)
+    #print(time.time() - start) Takes the pi 0.13s to compute these frames
     try:
         for frame in range(0, ignite_array.shape[0], 3): #Play with speed
             P = ignite_array[frame,:]
@@ -103,7 +103,6 @@ def main(simulated=False):
             time.sleep(refresh_rate)
         
         #Flash Yellow
-        '''
         Y = np.vstack([255*np.ones(pixel_num),
                        255*np.ones(pixel_num),
                        np.zeros(pixel_num)])
@@ -112,17 +111,20 @@ def main(simulated=False):
         n = int(flash_time / refresh_rate)
         inc = diff / n
         #to yellow
-        for i in range(n):
+        for _ in range(n):
             P = P + inc
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
         #to original
-        for i in range(n):
+        for _ in range(n):
             P = P - inc
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
         
         #Idle after animation complete
+        red_mask = make_red_gauss(pixel_num) #R + G = Y
+        red_bias = 7.0
+        scroll_rate = -5
         while True:
             P = make_green_line(pixel_num, pixel_num)
             P = P + red_bias*red_mask
@@ -132,7 +134,6 @@ def main(simulated=False):
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             red_mask = np.roll(red_mask, scroll_rate, axis=1)
             time.sleep(refresh_rate)
-        '''
     except KeyboardInterrupt:
         print("Program Terminated, shutting off pixels")
         Z = np.zeros((3, pixel_num))
