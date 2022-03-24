@@ -138,10 +138,12 @@ def do_door_animation(simulated=False):
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             red_mask = np.roll(red_mask, scroll_rate, axis=1)
             time.sleep(refresh_rate)
+        Z = np.zeros((3, pixel_num))
+        set_pixels(pixels, Z, pixel_num, simulated, fig, axim)
     except KeyboardInterrupt:
         print("Program Terminated, shutting off pixels")
         Z = np.zeros((3, pixel_num))
         set_pixels(pixels, Z, pixel_num, simulated, fig, axim)
 
 if __name__ == "__main__":
-    do_door_animation(simulated=True)
+    do_door_animation(simulation=True)
