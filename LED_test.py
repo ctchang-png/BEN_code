@@ -25,18 +25,19 @@ def make_green_line(n, i):
     # 1 1 0
     # 0 0 0
     # - i n
-    P = np.vstack((np.zeros(n), 
+    P = np.vstack((np.zeros(n),
                    make_line(n,i),
                    np.zeros(n)))
     return P
 
-def make_yellow_gauss(n):
-    sigma = 1
-    num_filts = 10
-    k = int(n/num_filts) #10 humps along the line
+def make_red_gauss(n):
+    sigma = 5
+    num_filts = 12
+    k = int(n/num_filts) #12 humps along the line
     r = range(-int(k/2),int(k/2)+1)
     filt = [1 / (sigma * sqrt(2*pi)) * exp(-float(x)**2/(2*sigma**2)) for x in r]
-    P = np.concatenate([filt for _ in range(num_filts)])
+    wave = np.concatenate([filt for _ in range(num_filts)])
+    P = np.vstack([ wave, np.zeros(n), np.zeros(n)])
     return P
 
 def add_noise(P, scale):
@@ -46,28 +47,39 @@ def add_noise(P, scale):
 def normalize(P):
     lo = np.min(P)
     hi = np.max(P)
-    return (P + lo) / (hi-lo)
+    if hi == lo:
+      return np.zeros_like(P)
+    return (P - lo) / (hi-lo)
 
 
 
 
 def main():
     i = 0
-    yellow_mask = make_yellow_gauss(pixel_num)
-    yellow_bias = 1.0
-    while True:
-        P = make_green_line(pixel_num, i)
-        P = P + yellow_bias*yellow_mask
-        P = P + np.random.normal(scale=1.0, size=pixel_num)
-        P = normalize(P)
-        P = int(np.floor(P*255))
-        for i, pi in enumerate(P):
-            pixels[i] = pi
-        yellow_mask = np.roll(yellow_mask, scroll_rate=-5)
-        
-        pixels.show()
-        time.sleep(0.1)
-
-        
+    yellow_mask = make_red_gauss(pixel_num)
+    yellow_bias = 6.0
+    scroll_rate = -5
+    try:
+      #Ignite Portal
+      for i in range(pixel_num):
+          #P = np.zeros((3,pixel_num))
+          P = make_green_line(pixel_num, i)
+          P = P + yellow_bias*yellow_mask*make_line(pixel_num, i)
+          P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i)
+          P = normalize(P)
+          P = np.floor(P*128).astype(int) #Max Brightness of 128 to allow for yellow flash effect
+          for j in range(pixel_num):
+              pixels[j] = P[:,j]
+          yellow_mask = np.roll(yellow_mask, scroll_rate, axis=1)
+          pixels.show()
+          time.sleep(0.005)
+      #Idle after animation complete
+      while True:
+         time.sleep(0.005)
+    except KeyboardInterrupt:
+      print("Program Terminated, shutting off pixels")
+      for j in range(pixel_num):
+        pixels[j] = (0,0,0)
+      pixels.show()
 
 main()
