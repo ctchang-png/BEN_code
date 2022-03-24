@@ -97,7 +97,7 @@ def main(simulated=False):
     ignite_array = make_ignite_array(pixel_num)
     #print(time.time() - start) Takes the pi 0.13s to compute these frames
     try:
-        for frame in range(0, ignite_array.shape[0], 3): #Play with speed
+        for frame in range(0, ignite_array.shape[0], 5): #Play with speed
             P = ignite_array[frame,:]
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
