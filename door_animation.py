@@ -71,10 +71,10 @@ def make_ignite_array(pixel_num):
         red_mask = np.roll(red_mask, scroll_rate, axis=1)
     return animation
 
-def main(simulated=False):
+def do_door_animation(simulated=False):
 
     pixel_num = 300
-    refresh_rate = 0.005
+    refresh_rate = 0.050 #50ms
 
     if not simulated:
         import board
@@ -101,14 +101,17 @@ def main(simulated=False):
             P = ignite_array[frame,:]
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
+        #last idx
+        P = ignite_array[ignite_array.shape[0]-1, :]
+        set_pixels(pixels, P, pixel_num, simulated, fig, axim)
+        time.sleep(refresh_rate)
         
         #Flash Yellow
         Y = np.vstack([255*np.ones(pixel_num),
                        255*np.ones(pixel_num),
                        np.zeros(pixel_num)])
         diff = Y - P
-        flash_time = 0.1 #sec
-        n = int(flash_time / refresh_rate)
+        n = 10
         inc = diff / n
         #to yellow
         for _ in range(n):
@@ -125,7 +128,8 @@ def main(simulated=False):
         red_mask = make_red_gauss(pixel_num) #R + G = Y
         red_bias = 7.0
         scroll_rate = -5
-        while True:
+        tic = time.time()
+        while time.time() < tic + 10: #remain active for 10seconds
             P = make_green_line(pixel_num, pixel_num)
             P = P + red_bias*red_mask
             P = P + np.random.normal(scale=0.01, size=pixel_num)
@@ -139,4 +143,5 @@ def main(simulated=False):
         Z = np.zeros((3, pixel_num))
         set_pixels(pixels, Z, pixel_num, simulated, fig, axim)
 
-main(simulated=False)
+if __name__ == "__main__":
+    do_door_animation(simulated=True)
