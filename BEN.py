@@ -35,7 +35,7 @@ class ThreadStatus():
         self.door = False
 
 thread_status = ThreadStatus()
-simulated = True
+simulated = False
 door_animation = False #True if animation already occurring
 
 def door_thread_func(thread_status, simulated):
