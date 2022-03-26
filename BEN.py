@@ -4,10 +4,24 @@ import time
 import threading
 from door_animation import do_door_animation
 from sound_effects import do_sound_effect
-import logging
 
+#sshkeyboard for ssh control
+from sshkeyboard import listen_keyboard
 keys = set()
 VALID_KEYS = ['d', 'q', 'a']
+def press(key):
+    if key in VALID_KEYS:
+        keys.add(key)
+
+def release(key):
+    if key in VALID_KEYS:
+        keys.remove(key)
+print('here')
+
+
+#Keypress driver for testing
+
+'''
 def on_press(key):
     try:
         k = key.char
@@ -29,13 +43,16 @@ listener = Listener(
         on_press=on_press,
         on_release=on_release) 
 listener.start()
-
+'''
+#Track running threads for joining & overload
 class ThreadStatus():
     def __init__(self):
         #Mark as True if thread is running
         self.door = False
         self.audio = False
+        self.keyboard = True
 
+#Threading wrappers for clarity
 def door_thread_func(thread_status, simulated):
     #for debugging
     print("Door Thread:\t Beginning Door Animation")
@@ -49,37 +66,56 @@ def audio_thread_func(thread_status, sound_effect):
     thread_status.audio = False
     print("Audio Thread:\t Sound Effect Completed!")
 
+def keyboard_thread_func(press, release):
+    print("Keyboard Thread:\t Beginning Keyboard Thread")
+    listen_keyboard(
+        on_press=press,
+        on_release=release,
+        until='esc'
+    )
+    print("Keyboard Thread:\t \'Esc\' Pressed, Keyboard Thread Terminated")
+
 
 
 
 thread_status = ThreadStatus()
 simulated = True
-threads = []
+#threads = [] Debugging tool
 door_thread_old = False
 audio_thread_old = False
+print("Main Thread:\t Creating Keyboard Thread")
+keyboard_thread = threading.Thread(target=keyboard_thread_func, args=(press, release), daemon=True)
+keyboard_thread.start()
 
 while True:
     print("loop start")
     #animate eyes
     #play audio
-    #scan for button press
+
+    #No inputs -> Idling auido/animations
+    if len(keys) == 0:
+        None
+        
+
+    #Trigger door animation on input. Some audio should be associated with this eventually
     if 'd' in keys:
         if not thread_status.door:
             thread_status.door = True
             print("Main Thread:\t Creating Door Thread")
             door_thread = threading.Thread(target=door_thread_func, args=(thread_status, simulated), daemon=True)
-            threads.append(door_thread)
+            #threads.append(door_thread)
             door_thread.start()
         else:
             print("Door animation attempted while already running. Please wait until current animation is completed")
 
+    #Trigger audio 'animation' on some input --- Also need idling audio
     if 'a' in keys and not thread_status.audio:
         if not thread_status.audio:
             thread_status.audio = True
             print("Main Thread:\t Creating Audio Thread")
-            sound_effect = input("Enter Sound Effect Name: ")
+            sound_effect = "1" #Change me later
             audio_thread = threading.Thread(target=audio_thread_func, args=(thread_status, sound_effect), daemon=True)
-            threads.append(audio_thread)
+            #threads.append(audio_thread)
             audio_thread.start()
         else:
             print("Audio attempted while already running. Please wait until current sound effect is completed")
@@ -91,22 +127,31 @@ while True:
 
 
     if 'q' in keys:
+        #This is fuckin trash but need to press q to join keyboard thread then esc to release to join the rest
+        print("Main Thread:\t Joining Keyboard Thread")
+        keyboard_thread.join()
         print("Main Thread:\t Joining Door Thread")
-        door_thread.join()
+        try:
+            door_thread.join()
+        except NameError:
+            print("Main Thread:\t Door Thread not joined (did not exist)")
         print("Main Thread:\t Joining Audio Thread")
-        audio_thread.join()
+        try:
+            audio_thread.join()
+        except NameError:
+            print("Main Thread:\t Audio Thread not joined (did not exist)")
         print("Main Thread:\t Program Terminated")
         break
-        
+    
     time.sleep(0.5)
     #Join threads on function completion
-    print("Thread Count: {}".format(len(threads)))
+    #print("Thread Count: {}".format(len(threads)))
     if door_thread_old and not thread_status.door:
         door_thread.join()
-        threads.pop(threads.index(door_thread))
+        #threads.pop(threads.index(door_thread))
     if audio_thread_old and not thread_status.audio:
         audio_thread.join()
-        threads.pop(threads.index(audio_thread))
+        #threads.pop(threads.index(audio_thread))
 
 
     
