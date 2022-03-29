@@ -87,15 +87,15 @@ baudRate = 115200
 from pyduinobridge import Bridge_py
 myBridge = Bridge_py()
 myBridge.begin(serPort, baudRate, numIntValues_FromPy=4, numFloatValues_FromPy=0)
-myBridge.setSleepTime(0.1)
+myBridge.setSleepTime(0)
 #numIntVals_fromPy = 4
 #numFloatVals_fromPy = 1
 
 # array of eye movements
-n = 100 #number of frames
+n = 50 #number of frames
 t = np.linspace(0, 2*pi, n)
-x = (120 + 40*np.cos(t)).astype(int)
-y = (160 + 40*np.sin(t)).astype(int)
+x = (120 + 60*np.cos(t)).astype(int)
+y = (160 + 60*np.sin(t)).astype(int)
 #           Note: color must be uint16_t
 testData = [(str(i), [int(x[i]), int(y[i]), int(5), int(0xFFFF)], []) for i in range(n)]
 #header: frame number
@@ -104,7 +104,7 @@ testData = [(str(i), [int(x[i]), int(y[i]), int(5), int(0xFFFF)], []) for i in r
 # When using this function, the program sends a list of strings and receives a list of strings.
 for header, int_arr, float_arr in testData:
     myBridge.writeAndRead_HeaderAndTwoLists(header, int_arr, float_arr)
-    header_fromArdu, int_arr, float_arr, millis = myBridge.writeAndRead_HeaderAndTwoLists("",[0,0,0,0],[])
+    #header_fromArdu, int_arr, float_arr, millis = myBridge.writeAndRead_HeaderAndTwoLists("",[0,0,0,0],[])
 
 
 # To hide the transmitted and received messages from the Python terminal:
