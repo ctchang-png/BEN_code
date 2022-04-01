@@ -3,6 +3,7 @@ import time
 from math import pi
 
 serPort = 'COM7'
+serPort = '/dev/ttyACM0'
 baudRate = 115200
 
 from pyduinobridge import Bridge_py

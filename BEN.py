@@ -1,5 +1,4 @@
 #main ben loop
-from pynput.keyboard import Key, Listener
 import time
 import threading
 from door_animation import do_door_animation
@@ -19,31 +18,6 @@ def release(key):
         keys.remove(key)
 
 
-#Keypress driver for testing
-
-'''
-def on_press(key):
-    try:
-        k = key.char
-    except:
-        k = key.name
-    if k in VALID_KEYS:
-        keys.add(k)
-def on_release(key):
-    if key == Key.esc:
-        # Stop listener
-        return False
-    try:
-        k = key.char
-    except:
-        k = key.name
-    if k in VALID_KEYS:
-        keys.remove(k)
-listener = Listener(
-        on_press=on_press,
-        on_release=on_release) 
-listener.start()
-'''
 #Track running threads for joining & overload
 class ThreadStatus():
     def __init__(self):
@@ -75,13 +49,6 @@ def keyboard_thread_func(press, release):
     )
     print("Keyboard Thread:\t \'Esc\' Pressed, Keyboard Thread Terminated")
 
-
-def get_state():
-    '''
-    Scan for button inputs in order to decide if BEN should be in state:
-    IDLE, ACTIVATED, PORTAL
-    '''
-    return "IDLE"
 
 thread_status = ThreadStatus()
 simulated = True
