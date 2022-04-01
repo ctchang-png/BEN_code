@@ -103,9 +103,9 @@ class Eyes():
         x_arr = np.ones(4*n_move+2*n_idle) * int(self.width*(1/5))
         y_arr = np.concatenate( (np.linspace(y, int(self.height*(1/5)), n_move),
                                  np.ones(n_idle)*int(self.height*(1/5)),
-                                 np.linspace(int(self.height*(1/5), int(self.height*(4/5)), 2*n_move),
+                                 np.linspace(int(self.height*(1/5)), int(self.height*(4/5)), 2*n_move),
                                  np.ones(n_idle)*int(self.height*(4/5)),
-                                 np.linspace(int(self.height*(4/5)), y, n_move)) )
+                                 np.linspace(int(self.height*(4/5)), y, n_move)))
         B = np.vstack([x_arr, y_arr])
 
         #Glitch
