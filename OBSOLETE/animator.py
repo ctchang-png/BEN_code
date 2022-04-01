@@ -1,7 +1,7 @@
 import numpy as np
 import math
 from pynput.keyboard import Key, Listener
-from eye import Eye
+from OBSOLETE.eye import Eye
 
 class Animator():
     def __init__(self):

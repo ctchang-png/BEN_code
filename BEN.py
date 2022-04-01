@@ -4,11 +4,12 @@ import time
 import threading
 from door_animation import do_door_animation
 from sound_effects import do_sound_effect
+from pyduino_eyes import Eyes
 
 #sshkeyboard for ssh control
 from sshkeyboard import listen_keyboard
 keys = set()
-VALID_KEYS = ['d', 'q', 'a']
+VALID_KEYS = ['0', '1', '2', 'q']
 def press(key):
     if key in VALID_KEYS:
         keys.add(key)
@@ -16,7 +17,6 @@ def press(key):
 def release(key):
     if key in VALID_KEYS:
         keys.remove(key)
-print('here')
 
 
 #Keypress driver for testing
@@ -76,7 +76,12 @@ def keyboard_thread_func(press, release):
     print("Keyboard Thread:\t \'Esc\' Pressed, Keyboard Thread Terminated")
 
 
-
+def get_state():
+    '''
+    Scan for button inputs in order to decide if BEN should be in state:
+    IDLE, ACTIVATED, PORTAL
+    '''
+    return "IDLE"
 
 thread_status = ThreadStatus()
 simulated = True
@@ -87,11 +92,42 @@ print("Main Thread:\t Creating Keyboard Thread")
 keyboard_thread = threading.Thread(target=keyboard_thread_func, args=(press, release), daemon=True)
 keyboard_thread.start()
 
+BEN_state = "IDLE" #BEN_state: "IDLE", "ACTIVATED", "PORTAL"
+eyes = Eyes()
+prev_state = "IDLE"
 while True:
-    print("loop start")
-    #animate eyes
-    #play audio
+    eyes.set_state(BEN_state)
+    eyes.advance_animation()
 
+    if 'q' in keys:
+        eyes.shutdown()
+        print('press \'esc\' to close keyboard listener')
+        keyboard_thread.join()
+        break
+
+    if '0' in keys:
+        eyes.set_animation("CENTER")
+
+    if '1' in keys:
+        #Trigger the transition into IDLE
+        prev_state = BEN_state
+        BEN_state = "IDLE"
+        print(BEN_state)
+        eyes.set_animation("IDLE1")
+    
+    if '2' in keys:
+        #Trigger the transition into ACTIVATED
+        prev_state = BEN_state
+        BEN_state = "ACTIVATED"
+        print(BEN_state)
+        eyes.set_animation("ACTIVATED")
+        None
+    
+    if '3' in keys:
+        #Trigger the transition into PORTAL
+        None
+    time.sleep(0.050)
+    '''
     #No inputs -> Idling auido/animations
     if len(keys) == 0:
         None
@@ -142,8 +178,8 @@ while True:
             print("Main Thread:\t Audio Thread not joined (did not exist)")
         print("Main Thread:\t Program Terminated")
         break
-    
     time.sleep(0.5)
+
     #Join threads on function completion
     #print("Thread Count: {}".format(len(threads)))
     if door_thread_old and not thread_status.door:
@@ -152,6 +188,6 @@ while True:
     if audio_thread_old and not thread_status.audio:
         audio_thread.join()
         #threads.pop(threads.index(audio_thread))
-
+    '''
 
     

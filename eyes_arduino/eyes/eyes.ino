@@ -82,8 +82,9 @@ void loop() {
   //For now, ints_recieved = {pupil_x, pupil_y, pupil_r, pupil_c}
   //For now, floats_recieved = {}
   if (px_old != px || py_old != py){ //Only write if something moves
-    draw_pupil_continuous(px, py, 0xFFFF);
-    //draw_pupil_cell(px, px_old, py, py_old, 0xFFFF);
+    //draw_pupil_continuous(px, py, 0xFFFF);
+    // Use size 2 for now
+    draw_pupil_cell(px, px_old, py, py_old, pr, pr, 0xFFFF);
     px_old = px;
     py_old = py;
     delay(20);
@@ -120,7 +121,7 @@ void draw_pupil_continuous(int px, int py, int color) {
   }*/
 }
 
-void draw_pupil_cell(int px, int px_old, int py, int py_old, int color) {
+void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int size_h, int color) {
   int cell_r = floor(py/CELL_SIZE);
   int rem_r = py-cell_r;
   int cell_c = floor(px/CELL_SIZE);
@@ -132,36 +133,76 @@ void draw_pupil_cell(int px, int px_old, int py, int py_old, int color) {
   int rem_c_old = px_old - cell_c_old;
   
   //Pick which cells need to be filled in
-  //For now just do 4 with nearest cell as origin and go down and right
-
-
   int w = CELL_SIZE - 2; //assume grid line thickness is 2
   int h = CELL_SIZE - 2;
-  screen.fillRect(cell_c*CELL_SIZE+2, cell_r*CELL_SIZE+2, w, h, color);
-  screen.fillRect((cell_c+1)*CELL_SIZE+2, cell_r*CELL_SIZE+2, w, h, color);
-  screen.fillRect(cell_c*CELL_SIZE+2, (cell_r+1)*CELL_SIZE+2, w, h, color);
-  screen.fillRect((cell_c+1)*CELL_SIZE+2, (cell_r+1)*CELL_SIZE+2, w, h, color);
-  if (cell_r > cell_r_old) {
-    screen.fillRect(cell_c*CELL_SIZE+2, (cell_r-1)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
-    screen.fillRect((cell_c+1)*CELL_SIZE+2, (cell_r-1)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
+
+  //Naive approach: blank all old cells, draw new cells
+  int n = size_w * size_h;
+  int x_new[n];
+  int y_new[n];
+  int x_old[n];
+  int y_old[n];
+
+
+  int i = 0;
+  for (int r = floor(-size_h/2); r < floor(size_h/2); r++) {
+    for (int c = floor(-size_w/2); c < floor(size_w/2); c++) {
+      x_new[i] = cell_c + c;
+      x_old[i] = cell_c_old + c;
+      y_new[i] = cell_r + r;
+      y_old[i] = cell_r_old + r;
+      i++;
+    }
   }
-  if (cell_r < cell_r_old) {
-    screen.fillRect(cell_c*CELL_SIZE+2, (cell_r+1+1)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
-    screen.fillRect((cell_c+1)*CELL_SIZE+2, (cell_r+1+1)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);    
+  int x;
+  int y;
+  
+  int clear_arr[n];
+  for (int i = 0; i < n; i++) {
+    //Check every old cell for membership in new pupil
+    x = x_old[i];
+    y = y_old[i];
+    clear_arr[i] = 1;
+    for (int j = 0; j < n; j++) {
+      //If coordinates match up, cell should not be cleared. Set clear_flag to 0 and move to next old cell.
+      if (x == x_new[j] && y == y_new[j]) {
+        clear_arr[i] = 0;
+        break;
+      }
+    }
   }
-  if (cell_c > cell_c_old) {
-    screen.fillRect((cell_c-1)*CELL_SIZE+2, (cell_r)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
-    screen.fillRect((cell_c-1)*CELL_SIZE+2, (cell_r+1)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
+  
+  int draw_arr[n];
+  for (int i = 0; i < n; i++) {
+    //Check every new cell for membership in old pupil
+    x = x_new[i];
+    y = x_new[i];
+    draw_arr[i] = 1;
+    for (int j = 0; j < n; j++) {
+      //If coordinates match up, cell should not be drawn. Set draw flag to 0 and move to next new cell.
+      if (x == x_old[j] && y == y_old[j]) {
+        draw_arr[i] = 0;
+        break;
+      }
+    }
   }
-  if (cell_c < cell_c_old) {
-    screen.fillRect((cell_c+1+1)*CELL_SIZE+2, (cell_r)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
-    screen.fillRect((cell_c+1+1)*CELL_SIZE+2, (cell_r+1)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
+  //Move through new and old cells, drawing and clearing only as needed.
+  //Might look better if pupils are drawn first and cleared second, but test this later.
+  for (int i = 0; i < n; i++) {
+    //If new cell is flagged to be drawn, do so
+    if (draw_arr[i]) {
+      x = x_new[i];
+      y = y_new[i];
+      screen.fillRect(x*CELL_SIZE+2, y*CELL_SIZE+2, w, h, color);
+    }
   }
-  if (cell_c < cell_c_old && cell_r < cell_r_old) {
-    screen.fillRect((cell_c+1+1)*CELL_SIZE+2, (cell_r+1+1)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
-  }
-  if (cell_c > cell_c_old && cell_r > cell_r_old) {
-    screen.fillRect((cell_c-1)*CELL_SIZE+2, (cell_r-1)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
+  for (int i = 0; i < n; i++) {
+    //If old cell is flagged to be cleared, do so 
+    if (clear_arr[i]) {
+      x = x_old[i];
+      y = y_old[i];
+      screen.fillRect(x*CELL_SIZE+2, y*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
+    }
   }
 }
 
