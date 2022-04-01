@@ -45,6 +45,7 @@ class Eyes():
             self.py = A[1,f]
 
     def get_idle1_animation(self):
+        "look around periodically and pause"
         n_move = 10
         n_idle = 40
         x = np.random.randint(0, self.width)
@@ -57,9 +58,10 @@ class Eyes():
         return A, A.shape[1]
 
     def get_idle2_animation(self):
+        "Slight pupil motions while looking towards map of treasure planet"
         n_move = 5
         n_idle = 40
-        x = int(self.width*(1/5)) + np.random.randint(-self.width/10, self.width/10)
+        x = int(self.width*(4/5)) + np.random.randint(-self.width/10, self.width/10)
         y = int(self.height/2) + np.random.randint(-self.width/10, self.width/10)
         x_arr = np.linspace(self.px, x, n_move)
         x_arr = np.concatenate((x_arr, x*np.ones(n_idle)))
@@ -109,10 +111,19 @@ class Eyes():
         B = np.vstack([x_arr, y_arr])
 
         #Glitch
+        n_pts = 15
+        n_pause = 10
+        x_pts = np.random.randint(0, self.width, n_pts)
+        y_pts = np.random.randint(0, self.height, n_pts)
+        x_arr = np.repeat(x_pts, n_pause)
+        y_arr = np.repeat(y_pts, n_pause)
+        C = np.vstack([x_arr, y_arr])
+
+
         #Look at treasure map
 
         #Idle at treasure map
-        animation = np.concatenate((A, B), axis=1)
+        animation = np.concatenate((A, B, C), axis=1)
         return animation, animation.shape[1]
 
     def set_state(self, state):
