@@ -1,7 +1,6 @@
 import time
 
 from playsound import playsound
-from pynput.keyboard import Key, Listener
 
 # Library that maps effect names to relative paths
 SOUND_EFFECTS = {"smp": "sample.wav"}
@@ -29,30 +28,6 @@ def do_sound_effect(sound_effect_key):
 
 
 if __name__ == "__main__":
-    ### Keypress driver for testing
-
-    keys = set()
-    KEYBOARD_EFFECT = {"1": "smp"}  # FILL ME
-
-    def on_press(key):
-        try:
-            k = key.char
-        except:
-            k = key.name
-        if k in KEYBOARD_EFFECT.keys():
-            keys.add(k)
-
-    def on_release(key):
-        if key == Key.esc:
-            # Stop listener
-            return False
-        try:
-            k = key.char
-        except:
-            k = key.name
-        if k in KEYBOARD_EFFECT.keys():
-            keys.remove(k)
-
     listener = Listener(on_press=on_press, on_release=on_release)
     listener.start()
 
