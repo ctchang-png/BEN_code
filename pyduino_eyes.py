@@ -45,8 +45,8 @@ class Eyes():
             self.py = A[1,f]
 
     def get_idle1_animation(self):
-        n_move = 30
-        n_idle = 100
+        n_move = 10
+        n_idle = 40
         x = np.random.randint(0, self.width)
         y = np.random.randint(0, self.height)
         x_arr = np.linspace(self.px, x, n_move)
@@ -57,9 +57,9 @@ class Eyes():
         return A, A.shape[1]
 
     def get_idle2_animation(self):
-        n_move = 10
-        n_idle = 100
-        x = int(self.width*(4/5)) + np.random.randint(-self.width/10, self.width/10)
+        n_move = 5
+        n_idle = 40
+        x = int(self.width*(1/5)) + np.random.randint(-self.width/10, self.width/10)
         y = int(self.height/2) + np.random.randint(-self.width/10, self.width/10)
         x_arr = np.linspace(self.px, x, n_move)
         x_arr = np.concatenate((x_arr, x*np.ones(n_idle)))
@@ -67,10 +67,11 @@ class Eyes():
         y_arr = np.concatenate((y_arr, y*np.ones(n_idle)))
         A = np.vstack([x_arr, y_arr])
         return A, A.shape[1]
-    
+
+
     def get_center_animation(self, freeze_time=1):
         n_move = 10
-        TIME_TO_FRAMES = 100
+        TIME_TO_FRAMES = 50
         n_idle = freeze_time * TIME_TO_FRAMES
         x = int(self.width/2)
         y = int(self.height/2)
@@ -85,9 +86,9 @@ class Eyes():
         # Animation when robot enters 'activated' state following a button press
         # Look up towards user's eyes
         n_move = 10
-        TIME_TO_FRAMES = 100
+        TIME_TO_FRAMES = 50
         n_idle = freeze_time * TIME_TO_FRAMES
-        x = int(self.width*(4/5))
+        x = int(self.width*(1/5))
         y = int(self.height/2)
         x_arr = np.linspace(self.px, x, n_move)
         x_arr = np.concatenate((x_arr, x*np.ones(n_idle)))
@@ -96,13 +97,23 @@ class Eyes():
         A = np.vstack([x_arr, y_arr])
 
         #Look around
+        n_move = 10
+        n_idle = 40
+        x, y = A[0,-1], A[1,-1]
+        x_arr = np.ones(4*n_move+2*n_idle) * int(self.width*(1/5))
+        y_arr = np.concatenate( (np.linspace(y, int(self.height*(1/5)), n_move),
+                                 np.ones(n_idle)*int(self.height*(1/5)),
+                                 np.linspace(int(self.height*(1/5), int(self.height*(4/5)), 2*n_move),
+                                 np.ones(n_idle)*int(self.height*(4/5)),
+                                 np.linspace(int(self.height*(4/5)), y, n_move)) )
+        B = np.vstack([x_arr, y_arr])
 
         #Glitch
-
         #Look at treasure map
 
         #Idle at treasure map
-        return A, A.shape[1]      
+        animation = np.concatenate((A, B), axis=1)
+        return animation, animation.shape[1]
 
     def set_state(self, state):
         self.state = state
