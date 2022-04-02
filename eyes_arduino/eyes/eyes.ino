@@ -2,9 +2,13 @@
 #include "DFRobot_GDL.h"
 /*AVR series mainboard*/
 //Pins for Data Command, Chip Select, Reset
-#define TFT_DC  8
-#define TFT_CS  10
-#define TFT_RST 9
+#define TFT_DC_L  8
+#define TFT_CS_L  10
+#define TFT_RST_L 9
+
+#define TFT_DC_R 7
+#define TFT_CS_R 5
+#define TFT_RST_R 6
 /*Define parameters for serial data transfer between python and arduino*/
 #define numIntVals_fromPy  4
 #define numFloatVals_fromPy  0
@@ -19,7 +23,8 @@
  * @param cs Chip select pin for SPI communication
  * @param rst reset pin of the screen
  */
-DFRobot_ST7789_240x320_HW_SPI screen(/*dc=*/TFT_DC,/*cs=*/TFT_CS,/*rst=*/TFT_RST);
+DFRobot_ST7789_240x320_HW_SPI screenL(/*dc=*/TFT_DC_L,/*cs=*/TFT_CS_L,/*rst=*/TFT_RST_L);
+DFRobot_ST7789_240x320_HW_SPI screenR(/*dc=*/TFT_DC_R,/*cs=*/TFT_CS_R,/*rst=*/TFT_RST_R);
 int px = WIDTH/2;
 int py = HEIGHT/2;
 int pr;
@@ -43,15 +48,21 @@ void setup() {
   // initialize the serial object
   Serial.begin(115200);
   Serial.println("<Arduino is ready>"); // tell the PC we are ready
-  screen.begin();
-  screen.fillScreen(COLOR_RGB565_BACKGROUND);
+  screenL.begin();
+  screenR.begin();
+  screenL.fillScreen(COLOR_RGB565_BACKGROUND);
+  screenR.fillScreen(COLOR_RGB565_BACKGROUND);
   for (int r_cell=0; r_cell <= floor(HEIGHT / CELL_SIZE); r_cell++) {
-    screen.drawFastHLine(0, r_cell*CELL_SIZE, WIDTH, 0xFFFF);
-    screen.drawFastHLine(0, r_cell*CELL_SIZE+1, WIDTH, 0xFFFF);
+    screenL.drawFastHLine(0, r_cell*CELL_SIZE, WIDTH, 0xFFFF);
+    screenL.drawFastHLine(0, r_cell*CELL_SIZE+1, WIDTH, 0xFFFF);
+    screenR.drawFastHLine(0, r_cell*CELL_SIZE, WIDTH, 0xFFFF);
+    screenR.drawFastHLine(0, r_cell*CELL_SIZE+1, WIDTH, 0xFFFF);
   }
   for (int c_cell=0; c_cell <= floor(WIDTH / CELL_SIZE); c_cell++) {
-    screen.drawFastVLine(c_cell*CELL_SIZE, 0, HEIGHT, 0xFFFF);
-    screen.drawFastVLine(c_cell*CELL_SIZE+1,0,HEIGHT, 0xFFFF);
+    screenL.drawFastVLine(c_cell*CELL_SIZE, 0, HEIGHT, 0xFFFF);
+    screenL.drawFastVLine(c_cell*CELL_SIZE+1,0,HEIGHT, 0xFFFF);
+    screenR.drawFastVLine(c_cell*CELL_SIZE, 0, HEIGHT, 0xFFFF);
+    screenR.drawFastVLine(c_cell*CELL_SIZE+1,0,HEIGHT, 0xFFFF);
   }
 }
 //Create the Bridge_ino object for communication with Python
@@ -91,34 +102,6 @@ void loop() {
   }
   //Assuming that the "xyz" header is not related to any programmed command...
   //strcpy(myBridge.headerOfMsg, "xyz");//...this line prevents the Arduino board from keeping executing the last command received cyclically.
-}
-
-void draw_pupil_continuous(int px, int py, int color) {
-  screen.fillRect(px_old-CELL_SIZE, py_old-CELL_SIZE, 2*CELL_SIZE, 2*CELL_SIZE, COLOR_RGB565_BACKGROUND);
-  delay(50);
-  screen.fillRect(px-CELL_SIZE, py-CELL_SIZE, 2*CELL_SIZE, 2*CELL_SIZE, color);
-  delay(50);
-  int cell_r = floor(py / CELL_SIZE);
-  int cell_c = floor(px / CELL_SIZE);
-  int rem_r = py - cell_r;
-  int rem_c = px - cell_c;
-  screen.drawFastVLine(cell_c*CELL_SIZE, 0, HEIGHT, 0xFFFF);
-  screen.drawFastVLine(cell_c*CELL_SIZE+1, 0, HEIGHT, 0xFFFF);
-  screen.drawFastVLine((cell_c+1)*CELL_SIZE, 0, HEIGHT, 0xFFFF);
-  screen.drawFastVLine((cell_c+1)*CELL_SIZE+1, 0, HEIGHT, 0xFFFF);
-  screen.drawFastHLine(0, cell_r*CELL_SIZE, WIDTH, 0xFFFF);
-  screen.drawFastHLine(0, cell_r*CELL_SIZE+1, WIDTH, 0xFFFF);
-  screen.drawFastHLine(0, (cell_r+1)*CELL_SIZE, WIDTH, 0xFFFF);
-  screen.drawFastHLine(0, (cell_r+1)*CELL_SIZE+1, WIDTH, 0xFFFF);
-  delay(50);
-  /*for (int r_cell=0; r_cell <= floor(HEIGHT / CELL_SIZE); r_cell++) {
-    screen.drawFastHLine(0, r_cell*CELL_SIZE, WIDTH, 0xFFFF);
-    screen.drawFastHLine(0, r_cell*CELL_SIZE+1, WIDTH, 0xFFFF);
-  }
-  for (int c_cell=0; c_cell <= floor(WIDTH / CELL_SIZE); c_cell++) {
-    screen.drawFastVLine(c_cell*CELL_SIZE, 0, HEIGHT, 0xFFFF);
-    screen.drawFastVLine(c_cell*CELL_SIZE+1,0,HEIGHT, 0xFFFF);
-  }*/
 }
 
 void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int size_h, int color) {
@@ -193,7 +176,8 @@ void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int siz
     if (draw_arr[i]) {
       x = x_new[i];
       y = y_new[i];
-      screen.fillRect(x*CELL_SIZE+2, y*CELL_SIZE+2, w, h, color);
+      screenL.fillRect(x*CELL_SIZE+2, y*CELL_SIZE+2, w, h, color);
+      screenR.fillRect((WIDTH/CELL_SIZE-x)*CELL_SIZE+2, (HEIGHT/CELL_SIZE-y)*CELL_SIZE+2, w, h, color);
     }
   }
   for (int i = 0; i < n; i++) {
@@ -201,7 +185,8 @@ void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int siz
     if (clear_arr[i]) {
       x = x_old[i];
       y = y_old[i];
-      screen.fillRect(x*CELL_SIZE+2, y*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
+      screenL.fillRect(x*CELL_SIZE+2, y*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);
+      screenR.fillRect((WIDTH/CELL_SIZE-x)*CELL_SIZE+2, (HEIGHT/CELL_SIZE-y)*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);  
     }
   }
 }

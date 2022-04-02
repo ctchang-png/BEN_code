@@ -47,8 +47,14 @@ class Eyes():
         "look around periodically and pause"
         n_move = 10
         n_idle = 40
-        x = np.random.randint(0, self.width)
-        y = np.random.randint(self.height/2 - self.width/2, self.height/2 + self.width/2)
+        b = 20
+        x = np.random.randint(0+b, self.width-b)
+        ymin = self.height/2 - self.width/2 + b + abs(self.width/2 - b - x)
+        ymax = self.height/2 + self.width/2 - b - abs(self.width/2 - b - x)
+        if ymin >= ymax:
+            ymin = self.height/2
+            ymax = self.height/2 + 1
+        y = np.random.randint(ymin, ymax)
         x_arr = np.linspace(self.px, x, n_move)
         x_arr = np.concatenate((x_arr, x*np.ones(n_idle)))
         y_arr = np.linspace(self.py, y, n_move)

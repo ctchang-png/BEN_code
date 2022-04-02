@@ -49,9 +49,8 @@ class Servo():
         self.pwm.stop()
 
 
-servo1 = Servo(3, angle_min=-20, angle_max=20)
-for angle in range(0, 100, 5):
+servo1 = Servo(3, angle_min=-30, angle_max=30)
+for angle in range(-30, 31, 5):
     print(angle)
-    print(angle * .01*40-20)
     servo1.set_angle(angle)
     
