@@ -3,7 +3,7 @@ import time
 
 gpio.setmode(gpio.BOARD)
 gpio.setup(3, gpio.OUT)
-pwm = gpio.pwm(3, 50)
+pwm = gpio.PWM(3, 50)
 pwm.start(0)
 
 def SetAngle(angle):
