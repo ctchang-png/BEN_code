@@ -35,7 +35,7 @@ class Servo():
         GPIO.output(self.pin, False)
         self.pwm.ChangeDutyCycle(0)
 
-servo1 = Servo(3, angle_min=-30, angle_max=30)
+#servo1 = Servo(3, angle_min=-30, angle_max=30)
 angle = 0
 GPIO.output(3, True)
 pwm = GPIO.PWM(3, 50)
