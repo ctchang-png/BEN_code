@@ -35,8 +35,8 @@ class ThreadManager():
         self.audio_thread = None
     
     def close_keyboard_thread(self):
-        self.keyboard_thread.join()
         stop_listening()
+        self.keyboard_thread.join()
         self.keyboard_thread = None
 
     def open_door_thread(self, simulated=False):
@@ -76,7 +76,7 @@ def keyboard_thread_func(thread_manager, press, release):
         on_press=press,
         on_release=release,
     )
-    print("Keyboard Thread:\t \'Esc\' Pressed, Keyboard Thread Terminated")
+    print("Keyboard Thread:\t Closing Keybaord Thread")
 
 
 thread_manager = ThreadManager()

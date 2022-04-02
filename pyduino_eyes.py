@@ -48,7 +48,7 @@ class Eyes():
         n_move = 10
         n_idle = 40
         x = np.random.randint(0, self.width)
-        y = np.random.randint(0, self.height)
+        y = np.random.randint(self.height/2 - self.width, self.height/2 + self.width)
         x_arr = np.linspace(self.px, x, n_move)
         x_arr = np.concatenate((x_arr, x*np.ones(n_idle)))
         y_arr = np.linspace(self.py, y, n_move)
