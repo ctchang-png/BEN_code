@@ -41,6 +41,7 @@ class Servo():
         self.pwm.ChangeDutyCycle(0)
         self.pwm.stop()
 
+'''
 servo1 = Servo(3, angle_min=-30, angle_max=30)
 angle = 0
 while True:
@@ -54,4 +55,14 @@ while True:
         GPIO.cleanup()
     
     
+'''
+pin = 3
+GPIO.setup(pin, GPIO.OUT)
+GPIO.output(pin, True)
+pwm = GPIO.PWM(pin, 50)
+pwm.start(0)
 
+for duty in range(0, 100, 10):
+    print(duty)
+    pwm.ChangeDutyCycle(duty)
+    time.sleep(1.0)
