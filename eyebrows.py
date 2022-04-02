@@ -37,8 +37,8 @@ class Servo():
 
 #servo1 = Servo(3, angle_min=-30, angle_max=30)
 angle = 0
-GPIO.output(3, True)
 GPIO.setup(3, GPIO.OUT)
+GPIO.output(3, True)
 pwm = GPIO.PWM(3, 50)
 while True:
     angle += 1
