@@ -34,13 +34,19 @@ class Servo():
     def shutdown(self):
         GPIO.output(self.pin, False)
         self.pwm.ChangeDutyCycle(0)
+        self.pwm.stop()
 
 servo1 = Servo(3, angle_min=-30, angle_max=30)
 angle = 0
 while True:
-    angle += 5
-    servo1.set_angle(angle)
-    time.sleep(0.5)
+    try:
+        angle += 5
+        print(angle)
+        servo1.set_angle(angle)
+        time.sleep(0.5)
+    except KeyboardInterrupt:
+        servo1.shutdown()
+        GPIO.cleanup()
     
     
 
