@@ -1,9 +1,8 @@
 import numpy as np
-import time
 from math import pi
 
-serPort = 'COM7'
-serPort = '/dev/ttyACM0'
+serPort = 'COM7'         #laptop
+serPort = '/dev/ttyACM0' #pi
 baudRate = 115200
 
 from pyduinobridge import Bridge_py
@@ -111,8 +110,8 @@ class Eyes():
         B = np.vstack([x_arr, y_arr])
 
         #Glitch
-        n_pts = 15
-        n_pause = 10
+        n_pts = 20
+        n_pause = 5
         x_pts = np.random.randint(0, self.width, n_pts)
         y_pts = np.random.randint(0, self.height, n_pts)
         x_arr = np.repeat(x_pts, n_pause)

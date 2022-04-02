@@ -19,57 +19,83 @@ def release(key):
 
 
 #Track running threads for joining & overload
-class ThreadStatus():
+class ThreadManager():
     def __init__(self):
         #Mark as True if thread is running
-        self.door = False
-        self.audio = False
-        self.keyboard = True
+        self.door_thread = None
+        self.audio_thread = None
+        self.keyboard_thread = None
+    
+    def close_door_thread(self):
+        self.door_thread.join()
+        self.door_thread = None
+
+    def close_audio_thread(self):
+        self.audio_thread.join()
+        self.audio_thread = None
+    
+    def close_keyboard_thread(self):
+        self.keyboard_thread.join()
+        self.keyboard_thread = None
+
+    def open_door_thread(self, simulated=False):
+        #args: ()
+        self.door_thread = threading.Thread(target=door_thread_func, args=(self, simulated), daemon=True)
+        self.door_thread.start()
+
+    def open_audio_thread(self):
+        #args: ()
+        raise NotImplementedError("Function \"open_audio_thread\" not yet")
+
+    def open_keyboard_thread(self):
+        #args: ()
+        self.keyboard_thread = threading.Thread(target=keyboard_thread_func, args=(self, press, release), daemon=True)
+        self.keyboard_thread.start()
 
 #Threading wrappers for clarity
-def door_thread_func(thread_status, simulated):
+def door_thread_func(thread_manager, simulated):
     #for debugging
     print("Door Thread:\t Beginning Door Animation")
+    if thread_manager.door_thread != None:
+        print("Door thread already running")
+        return
     do_door_animation(simulated=simulated)
-    thread_status.door = False
+    thread_manager.close_door_thread()
     print("Door Thread:\t Door Animation Completed!")
 
-def audio_thread_func(thread_status, sound_effect):
+def audio_thread_func(thread_manager, sound_effect):
     print("Audio Thread:\t Beginning Sound Effect")
     do_sound_effect(sound_effect)
-    thread_status.audio = False
+    thread_manager.close_audio_thread()
     print("Audio Thread:\t Sound Effect Completed!")
 
-def keyboard_thread_func(press, release):
+def keyboard_thread_func(thread_manager, press, release):
     print("Keyboard Thread:\t Beginning Keyboard Thread")
     listen_keyboard(
         on_press=press,
         on_release=release,
         until='esc'
     )
+    thread_manager.close_keyboard_thread()
     print("Keyboard Thread:\t \'Esc\' Pressed, Keyboard Thread Terminated")
 
 
-thread_status = ThreadStatus()
-simulated = True
-#threads = [] Debugging tool
-door_thread_old = False
-audio_thread_old = False
+thread_manager = ThreadManager()
+simulated = False
 print("Main Thread:\t Creating Keyboard Thread")
-keyboard_thread = threading.Thread(target=keyboard_thread_func, args=(press, release), daemon=True)
-keyboard_thread.start()
+
 
 BEN_state = "IDLE" #BEN_state: "IDLE", "ACTIVATED", "PORTAL"
 eyes = Eyes()
 prev_state = "IDLE"
+thread_manager.open_keyboard_thread()
 while True:
     eyes.set_state(BEN_state)
     eyes.advance_animation()
 
     if 'q' in keys:
         eyes.shutdown()
-        print('press \'esc\' to close keyboard listener')
-        keyboard_thread.join()
+        thread_manager.close_keyboard_thread()
         break
 
     if '0' in keys:
