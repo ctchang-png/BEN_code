@@ -31,9 +31,13 @@ class Servo():
             None
         #duty = angle * (100/360)
         #duty range (5, 34) * 100/360 = (1.5, 9.5)
-        duty = ((9.5-1.5)/(180))*angle + 1.5
+        duty = angle/18 + 2
         print(duty)
+        GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty)
+        time.sleep(1.0)
+        GPIO.output(self.pin, False)
+        self.pwm.ChangeDutyCycle(0)
         self.angle = angle
 
     def shutdown(self):
