@@ -74,9 +74,7 @@ def keyboard_thread_func(thread_manager, press, release):
     listen_keyboard(
         on_press=press,
         on_release=release,
-        until='esc'
     )
-    thread_manager.close_keyboard_thread()
     print("Keyboard Thread:\t \'Esc\' Pressed, Keyboard Thread Terminated")
 
 
