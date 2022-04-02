@@ -118,10 +118,10 @@ class Eyes():
         y_arr = np.repeat(y_pts, n_pause)
         C = np.vstack([x_arr, y_arr])
 
-
         #Look at treasure map
 
         #Idle at treasure map
+        #handled by advance_animation
         animation = np.concatenate((A, B, C), axis=1)
         return animation, animation.shape[1]
 

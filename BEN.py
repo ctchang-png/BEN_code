@@ -4,6 +4,7 @@ import threading
 from door_animation import do_door_animation
 from sound_effects import do_sound_effect
 from pyduino_eyes import Eyes
+import RPi.GPIO as gpio
 
 #sshkeyboard for ssh control
 from sshkeyboard import listen_keyboard, stop_listening
