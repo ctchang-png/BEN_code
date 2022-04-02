@@ -5,7 +5,7 @@ GPIO.setmode(GPIO.BOARD)
 
 
 class Servo():
-    def __init__(self, pin, angle_min=30, angle_max=30):
+    def __init__(self, pin, angle_min=20, angle_max=20):
         self.pin = pin
         self.angle_min = angle_min
         self.angle_max = angle_max
@@ -20,6 +20,7 @@ class Servo():
         print("Servo object at PIN {} created".format(pin))
     
     def set_angle(self, angle):
+        #angle: scale from 0-100 from angle_min to angle_max
         #measured angle range is 0-210
         #measured duty range is  0-12.5
         if angle < self.angle_min:
@@ -30,14 +31,16 @@ class Servo():
             #print("Angle {:0.2f} exceeds angle limits of ({:0.2f},{:0.2f}) [degrees]".format(angle, self.angle_min, self.angle_max))
             #angle = self.angle_max
             None
-        angle_offset = angle + 210/2
+        angle_degrees = angle *0.01*(self.angle_max-self.angle_min) + self.angle_min
+        angle_offset = angle_degrees + 210/2
         duty = angle_offset * (12.5/210)
-        print(duty)
+        #print(duty)
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty)
-        time.sleep(1.0)
+        time.sleep(0.050)
         GPIO.output(self.pin, False)
         self.pwm.ChangeDutyCycle(0)
+        time.sleep(0.050)
         self.angle = angle
 
     def shutdown(self):
@@ -46,7 +49,9 @@ class Servo():
         self.pwm.stop()
 
 
-servo1 = Servo(3, angle_min=-30, angle_max=30)
-for angle in range(-30, 31, 5):
+servo1 = Servo(3, angle_min=-20, angle_max=20)
+for angle in range(0, 100, 5):
+    print(angle)
+    print(angle * .01*40-20)
     servo1.set_angle(angle)
     
