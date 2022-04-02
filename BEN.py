@@ -6,7 +6,7 @@ from sound_effects import do_sound_effect
 from pyduino_eyes import Eyes
 
 #sshkeyboard for ssh control
-from sshkeyboard import listen_keyboard
+from sshkeyboard import listen_keyboard, stop_listening
 keys = set()
 VALID_KEYS = ['0', '1', '2', 'q']
 def press(key):
@@ -36,6 +36,7 @@ class ThreadManager():
     
     def close_keyboard_thread(self):
         self.keyboard_thread.join()
+        stop_listening()
         self.keyboard_thread = None
 
     def open_door_thread(self, simulated=False):
