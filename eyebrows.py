@@ -20,7 +20,8 @@ class Servo():
         print("Servo object at PIN {} created".format(pin))
     
     def set_angle(self, angle):
-        angle = angle % 180 #approximate 180 deg range
+        #measured angle range is 0-210
+        #measured duty range is  0-12.5
         if angle < self.angle_min:
             #print("Angle {:0.2f} exceeds angle limits of ({:0.2f},{:0.2f}) [degrees]".format(angle, self.angle_min, self.angle_max))
             #angle = self.angle_min
@@ -29,9 +30,8 @@ class Servo():
             #print("Angle {:0.2f} exceeds angle limits of ({:0.2f},{:0.2f}) [degrees]".format(angle, self.angle_min, self.angle_max))
             #angle = self.angle_max
             None
-        #duty = angle * (100/360)
-        #duty range (5, 34) * 100/360 = (1.5, 9.5)
-        duty = angle/18 + 2
+        angle_offset = angle + 210/2
+        duty = angle_offset * (12.5/210)
         print(duty)
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty)
@@ -45,28 +45,8 @@ class Servo():
         self.pwm.ChangeDutyCycle(0)
         self.pwm.stop()
 
-'''
-servo1 = Servo(3, angle_min=-30, angle_max=30)
-angle = 0
-while True:
-    try:
-        angle += 10
-        print(angle)
-        servo1.set_angle(angle)
-        time.sleep(1.0)
-    except KeyboardInterrupt:
-        servo1.shutdown()
-        GPIO.cleanup()
-    
-    
-'''
-pin = 3
-GPIO.setup(pin, GPIO.OUT)
-GPIO.output(pin, True)
-pwm = GPIO.PWM(pin, 50)
-pwm.start(0)
 
-for duty in range(0, 100, 10):
-    print(duty)
-    pwm.ChangeDutyCycle(duty)
-    time.sleep(1.0)
+servo1 = Servo(3, angle_min=-30, angle_max=30)
+for angle in range(-30, 31, 5):
+    servo1.set_angle(angle)
+    
