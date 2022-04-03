@@ -24,7 +24,8 @@ def release(key):
 class ThreadManager():
     def __init__(self):
         #Mark as True if thread is running
-        self.door_thread = threading.Thread(target=door_thread_func, args=(self, simulated), daemon=True)
+        self.door_thread = threading.Thread(target=door_thread_func, args=(self,), daemon=True)
+        self.door_running = False
         self.audio_thread = None
         self.keyboard_thread = None
     
@@ -35,7 +36,7 @@ class ThreadManager():
 
     def open_door_thread(self):
         #args: ()
-        if thread_manager.door_thread is not None:
+        if thread_manager.door_running:
             print("Door thread already running")
             return
         self.door_thread.start()
@@ -46,12 +47,12 @@ class ThreadManager():
         self.keyboard_thread.start()
 
 #Threading wrappers for clarity
-def door_thread_func(thread_manager, simulated):
+def door_thread_func(thread_manager):
     #for debugging
     print("Door Thread:\t Beginning Door Animation")
-    do_door_animation(simulated=simulated)
-    thread_manager.door_thread.join()
-    thread_manager.door_thread = None
+    thread_manager.door_running = True
+    do_door_animation(simulated=False)
+    thread_manager.door_running = False
     print("Door Thread:\t Door Animation Completed!")
 
 def audio_thread_func(thread_manager, sound_effect):
