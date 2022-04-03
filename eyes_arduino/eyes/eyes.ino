@@ -106,20 +106,16 @@ void loop() {
 
 void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int size_h, int color) {
   int cell_r = floor(py/CELL_SIZE);
-  int rem_r = py-cell_r;
   int cell_c = floor(px/CELL_SIZE);
-  int rem_c = px-cell_c;
 
   int cell_r_old = floor(py_old/CELL_SIZE);
-  int rem_r_old = py_old - cell_r_old;
   int cell_c_old = floor(px_old/CELL_SIZE);
-  int rem_c_old = px_old - cell_c_old;
   
-  //Pick which cells need to be filled in
-  int w = CELL_SIZE - 2; //assume grid line thickness is 2
+  //assume grid line thickness is 2
+  int w = CELL_SIZE - 2; 
   int h = CELL_SIZE - 2;
 
-  //Naive approach: blank all old cells, draw new cells
+  //Pick which cells need to be filled in
   int n = size_w * size_h;
   int x_new[n];
   int y_new[n];
@@ -128,12 +124,12 @@ void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int siz
 
 
   int i = 0;
-  for (int r = floor(-size_h/2); r < floor(size_h/2); r++) {
-    for (int c = floor(-size_w/2); c < floor(size_w/2); c++) {
-      x_new[i] = cell_c + c;
-      x_old[i] = cell_c_old + c;
-      y_new[i] = cell_r + r;
-      y_old[i] = cell_r_old + r;
+  for (int r_offset = 0; r < size_h; r++) {
+    for (int c_offset = 0; c < size_w; c++) {
+      x_new[i] = cell_c + c_offset - floor(size_h/2);
+      x_old[i] = cell_c_old + c_offset - floor(size_h/2);
+      y_new[i] = cell_r + r_offset - floor(size_w/2);
+      y_old[i] = cell_r_old + r_offset - floor(size_w/2);
       i++;
     }
   }
