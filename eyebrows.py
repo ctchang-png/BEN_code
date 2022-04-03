@@ -3,6 +3,8 @@ import time
 
 GPIO.setmode(GPIO.BOARD)
 
+def do_servo_animation():
+    return None
 
 class Servo():
     def __init__(self, pin, angle_min=20, angle_max=20):
