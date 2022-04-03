@@ -3,9 +3,9 @@ import time
 import threading
 from door_animation import do_door_animation
 from sound_effects import do_sound_effect
-from eyebrows import do_servo_animation
+#from eyebrows import do_servo_animation
 from pyduino_eyes import Eyes
-import RPi.GPIO as gpio
+#import RPi.GPIO as gpio
 
 #sshkeyboard for ssh control
 from sshkeyboard import listen_keyboard, stop_listening
@@ -71,6 +71,7 @@ def door_thread_func(thread_manager, simulated):
     #for debugging
     print("Door Thread:\t Beginning Door Animation")
     do_door_animation(simulated=simulated)
+    time.sleep(0.10)
     thread_manager.close_door_thread()
     print("Door Thread:\t Door Animation Completed!")
 
