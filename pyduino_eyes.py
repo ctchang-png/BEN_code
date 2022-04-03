@@ -146,6 +146,8 @@ class Eyes():
             A, n = self.get_ACTIVATED_animation()
         if animation_name == "IDLE2":
             A, n = self.get_idle2_animation()
+        if animation_name == "PORTAL":
+            A, n = self.get_idle1_animation()
         self.animation = A
         self.max_frame = n
         self.frame = 0
