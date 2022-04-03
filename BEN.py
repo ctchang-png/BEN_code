@@ -3,6 +3,7 @@ import time
 import threading
 from door_animation import do_door_animation
 from sound_effects import do_sound_effect
+from eyebrows import do_servo_animation
 from pyduino_eyes import Eyes
 import RPi.GPIO as gpio
 
@@ -40,6 +41,10 @@ class ThreadManager():
         self.keyboard_thread.join()
         self.keyboard_thread = None
 
+    def close_servo_thread(self):
+        self.servo_thread.join()
+        self.servo_thread = None
+
     def open_door_thread(self, simulated=False):
         #args: ()
         self.door_thread = threading.Thread(target=door_thread_func, args=(self, simulated), daemon=True)
@@ -53,6 +58,10 @@ class ThreadManager():
         #args: ()
         self.keyboard_thread = threading.Thread(target=keyboard_thread_func, args=(self, press, release), daemon=True)
         self.keyboard_thread.start()
+
+    def open_servo_thread(self):
+        self.servo_thread = threading.Thread(target=servo_thread_func, args=(self), daemon=True)
+        self.servo_thread.start()
 
 #Threading wrappers for clarity
 def door_thread_func(thread_manager, simulated):
@@ -78,6 +87,12 @@ def keyboard_thread_func(thread_manager, press, release):
         on_release=release,
     )
     print("Keyboard Thread:\t Closing Keybaord Thread")
+
+def servo_thread_func(thread_manager, animation):
+    print("Servo Thread:\t Beginning Servo Thread")
+    do_servo_animation(animation)
+    thread_manager.close_servo_thread()
+    print("Servo Thread:\t Closing Servo Thread")
 
 
 thread_manager = ThreadManager()
@@ -118,6 +133,10 @@ while True:
     
     if '3' in keys:
         #Trigger the transition into PORTAL
+        prev_state = BEN_state
+        BEN_state = "PORTAL"
+        print(BEN_state)
+        eyes.set_animation("PORTAL")
         None
     time.sleep(0.050)
     '''
