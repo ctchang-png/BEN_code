@@ -118,7 +118,7 @@ while True:
         BEN_state = "PORTAL"
         print(BEN_state)
         eyes.set_animation("PORTAL")
-        thread_manager.open_door_thread(simulated=False)
+        thread_manager.open_door_thread()
         None
     time.sleep(0.050)
     '''
