@@ -54,3 +54,36 @@ for angle in range(-30, 31, 5):
     print(angle)
     servo1.set_angle(angle)
     
+class Motors():
+    def __init__(self):
+        self.hl = Servo(pin, angle_min, angle_max)
+        self.al = Servo(pin, angle_min, angle_max)
+        self.hr = Servo(pin, angle_min, angle_max)
+        self.ar = Servo(pin, angle_min, angle_max)
+        self.jaw = Servo(pin, angle_min, angle_max)
+        
+        self.animation = None
+        self.frame = 0
+        self.max_frame = 0
+        self.state = "IDLE"
+
+    def advance_animation(self):
+        self.frame = self.frame + 1
+        if self.frame >= self.max_frame:
+            #If animation is complete default to idling
+            if self.state == "IDLE":
+                self.set_animation("IDLE1")
+            else:
+                self.set_animation("IDLE1")
+        else:
+            A = self.animation
+            f = self.frame
+
+        if A.shape[0] !=1:
+            print("Animation should be array of shape (1xn)")
+        self.hl.set_angle(A[0,f])
+
+    def get_idle1_animation(self):
+        n = 100
+        hl_arr = np.linspace(0,100, n)
+        return hl_arr, n
