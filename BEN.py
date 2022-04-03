@@ -10,7 +10,7 @@ import RPi.GPIO as gpio
 #sshkeyboard for ssh control
 from sshkeyboard import listen_keyboard, stop_listening
 keys = set()
-VALID_KEYS = ['0', '1', '2', 'q']
+VALID_KEYS = ['0', '1', '2', '3', 'q']
 def press(key):
     if key in VALID_KEYS:
         keys.add(key)
