@@ -49,10 +49,7 @@ class Servo():
         self.pwm.stop()
 
 
-servo1 = Servo(3, angle_min=-30, angle_max=30)
-for angle in range(-30, 31, 5):
-    print(angle)
-    servo1.set_angle(angle)
+
     
 class Motors():
     def __init__(self):
@@ -87,3 +84,9 @@ class Motors():
         n = 100
         hl_arr = np.linspace(0,100, n)
         return hl_arr, n
+
+if __name__ == "__main__":
+    servo1 = Servo(3, angle_min=-30, angle_max=30)
+    for angle in range(-30, 31, 5):
+        print(angle)
+        servo1.set_angle(angle)
