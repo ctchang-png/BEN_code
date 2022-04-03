@@ -71,8 +71,8 @@ def door_thread_func(thread_manager, simulated):
     #for debugging
     print("Door Thread:\t Beginning Door Animation")
     do_door_animation(simulated=simulated)
-    time.sleep(0.10)
-    thread_manager.close_door_thread()
+    thread_manager.door_thread.join()
+    thread_manager.door_thread = None
     print("Door Thread:\t Door Animation Completed!")
 
 def audio_thread_func(thread_manager, sound_effect):
