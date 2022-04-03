@@ -67,7 +67,7 @@ class ThreadManager():
 def door_thread_func(thread_manager, simulated):
     #for debugging
     print("Door Thread:\t Beginning Door Animation")
-    if thread_manager.door_thread != None:
+    if thread_manager.door_thread is not None:
         print("Door thread already running")
         return
     do_door_animation(simulated=simulated)
