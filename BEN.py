@@ -24,47 +24,26 @@ def release(key):
 class ThreadManager():
     def __init__(self):
         #Mark as True if thread is running
-        self.door_thread = None
+        self.door_thread = threading.Thread(target=door_thread_func, args=(self, simulated), daemon=True)
         self.audio_thread = None
         self.keyboard_thread = None
-    
-    def close_door_thread(self):
-        self.door_thread.join()
-        self.door_thread = None
-
-    def close_audio_thread(self):
-        self.audio_thread.join()
-        self.audio_thread = None
     
     def close_keyboard_thread(self):
         stop_listening()
         self.keyboard_thread.join()
         self.keyboard_thread = None
 
-    def close_servo_thread(self):
-        self.servo_thread.join()
-        self.servo_thread = None
-
-    def open_door_thread(self, simulated=False):
+    def open_door_thread(self):
         #args: ()
         if thread_manager.door_thread is not None:
             print("Door thread already running")
             return
-        self.door_thread = threading.Thread(target=door_thread_func, args=(self, simulated), daemon=True)
         self.door_thread.start()
-
-    def open_audio_thread(self):
-        #args: ()
-        raise NotImplementedError("Function \"open_audio_thread\" not yet")
 
     def open_keyboard_thread(self):
         #args: ()
         self.keyboard_thread = threading.Thread(target=keyboard_thread_func, args=(self, press, release), daemon=True)
         self.keyboard_thread.start()
-
-    def open_servo_thread(self):
-        self.servo_thread = threading.Thread(target=servo_thread_func, args=(self), daemon=True)
-        self.servo_thread.start()
 
 #Threading wrappers for clarity
 def door_thread_func(thread_manager, simulated):
