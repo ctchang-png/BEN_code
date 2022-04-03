@@ -1,6 +1,8 @@
 import numpy as np
 import time
 from math import sqrt, exp, pi
+import board
+import neopixel
 
 
 def make_line(n, i):
@@ -77,8 +79,6 @@ def do_door_animation(simulated=False):
     refresh_rate = 0.050 #50ms
 
     if not simulated:
-        import board
-        import neopixel
         # Update to match the pin connected to your NeoPixels
         pixel_pin = board.D18
         # Update to match the number of NeoPixels you have connected
@@ -144,6 +144,7 @@ def do_door_animation(simulated=False):
         print("Program Terminated, shutting off pixels")
         Z = np.zeros((3, pixel_num))
         set_pixels(pixels, Z, pixel_num, simulated, fig, axim)
+    return True
 
 if __name__ == "__main__":
     do_door_animation(simulation=True)
