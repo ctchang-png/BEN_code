@@ -24,7 +24,7 @@ def release(key):
 class ThreadManager():
     def __init__(self):
         #Mark as True if thread is running
-        self.door_thread = threading.Thread(target=door_thread_func, args=(self,), daemon=True)
+        self.door_thread = None
         self.door_running = False
         self.audio_thread = None
         self.keyboard_thread = None
@@ -35,16 +35,23 @@ class ThreadManager():
         self.keyboard_thread = None
 
     def open_door_thread(self):
-        #args: ()
+        #If no door animation is running, create a new thread and start it
         if thread_manager.door_running:
             print("Door thread already running")
             return
+        self.door_thread = threading.Thread(target=door_thread_func, args=(self,), daemon=True)
         self.door_thread.start()
 
     def open_keyboard_thread(self):
         #args: ()
         self.keyboard_thread = threading.Thread(target=keyboard_thread_func, args=(self, press, release), daemon=True)
         self.keyboard_thread.start()
+
+    def clean_threads(self):
+        #Threading wrappers should indicate when function is completed thorugh
+        # flagging self.xxx_running = False
+        if not self.door_running:
+            self.door_thread.join()
 
 #Threading wrappers for clarity
 def door_thread_func(thread_manager):
@@ -71,7 +78,7 @@ def keyboard_thread_func(thread_manager, press, release):
 
 def servo_thread_func(thread_manager, animation):
     print("Servo Thread:\t Beginning Servo Thread")
-    do_servo_animation(animation)
+    #do_servo_animation(animation)
     thread_manager.close_servo_thread()
     print("Servo Thread:\t Closing Servo Thread")
 
@@ -86,6 +93,7 @@ eyes = Eyes()
 prev_state = "IDLE"
 thread_manager.open_keyboard_thread()
 while True:
+    thread_manager.clean_threads()
     eyes.set_state(BEN_state)
     eyes.advance_animation()
 
