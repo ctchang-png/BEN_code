@@ -50,7 +50,7 @@ class ThreadManager():
     def clean_threads(self):
         #Threading wrappers should indicate when function is completed thorugh
         # flagging self.xxx_running = False
-        if not self.door_running:
+        if (self.door_thread != None) and (not self.door_running):
             self.door_thread.join()
 
 #Threading wrappers for clarity
