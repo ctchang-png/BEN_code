@@ -95,6 +95,7 @@ void loop() {
   if (px_old != px || py_old != py){ //Only write if something moves
     //draw_pupil_continuous(px, py, 0xFFFF);
     // Use size 2 for now
+    pr = 3;
     draw_pupil_cell(px, px_old, py, py_old, pr, pr, 0xFFFF);
     px_old = px;
     py_old = py;
