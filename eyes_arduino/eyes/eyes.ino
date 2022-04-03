@@ -125,8 +125,8 @@ void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int siz
 
 
   int i = 0;
-  for (int r_offset = 0; r < size_h; r++) {
-    for (int c_offset = 0; c < size_w; c++) {
+  for (int r_offset = 0; r < size_h + size_h%2; r++) {
+    for (int c_offset = 0; c < size_w + size_w%2; c++) {
       x_new[i] = cell_c + c_offset - floor(size_h/2);
       x_old[i] = cell_c_old + c_offset - floor(size_h/2);
       y_new[i] = cell_r + r_offset - floor(size_w/2);
