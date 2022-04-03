@@ -32,6 +32,8 @@ class Eyes():
                 self.set_animation("IDLE1")
             elif self.state == "ACTIVATED":
                 self.set_animation("IDLE2")
+            elif self.state == "PORTAL":
+                self.set_animation("IDLE1")
         else:
             A = self.animation
             f = self.frame
