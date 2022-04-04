@@ -151,7 +151,7 @@ while True:
         thread_manager.open_door_thread()
         None
     time.sleep(0.050)
-    thread_manager.close_eyebrow_thread()
+    #thread_manager.close_eyebrow_thread()
 
 
     
