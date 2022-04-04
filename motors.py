@@ -29,7 +29,7 @@ class Servo():
         print(duty)
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty)
-        time.sleep(0.050)
+        time.sleep(0.10)
         GPIO.output(self.pin, False)
         #self.pwm.ChangeDutyCycle(0)
         #time.sleep(0.050)
