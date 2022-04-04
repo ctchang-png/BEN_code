@@ -108,6 +108,8 @@ class Eyebrows():
 
 if __name__ == "__main__":
     servo1 = Servo(3, angle_min=-20, angle_max=20, bias=10)
+    servo2 = Servo(5, angle_min=-20, angle_max=20, bias=0)
     while True:
         angle = input("enter angle between {} and {}".format(-20, 20))
         servo1.set_angle(int(angle))
+        servo2.set_angle(int(angle))
