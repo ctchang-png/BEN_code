@@ -93,4 +93,4 @@ if __name__ == "__main__":
     servo1 = Servo(3, angle_min=-30, angle_max=30)
     while True:
         angle = input("enter angle between {} and {}".format(-30, 30))
-        servo1.set_angle(angle)
+        servo1.set_angle(int(angle))
