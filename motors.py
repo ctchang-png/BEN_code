@@ -5,7 +5,7 @@ import time
 #GPIO.setmode(GPIO.BOARD) Handled by door_animation.py
 
 class Servo():
-    def __init__(self, pin, angle_min=20, angle_max=20):
+    def __init__(self, pin, angle_min=-20, angle_max=20):
         self.pin = pin
         if angle_min < -210/2:
             angle_min = 210/2
@@ -51,13 +51,12 @@ class Servo():
 
 
     
-class Motors():
+class Eyebrows():
     def __init__(self):
         #self.hl = Servo(pin, angle_min, angle_max)
         #self.al = Servo(pin, angle_min, angle_max)
         self.hr = Servo(3, -30, 30)
         #self.ar = Servo(pin, angle_min, angle_max)
-        #self.jaw = Servo(pin, angle_min, angle_max)
         
         self.animation = None
         self.frame = 0
@@ -76,7 +75,7 @@ class Motors():
             A = self.animation
             f = self.frame
 
-            if A.shape[0] !=5:
+            if A.shape[0] != 4:
                 print("Animation should be array of shape (5xn)")
             #self.hl.set_angle(A[0,f])
             #self.al.set_angle(A[1,f])
@@ -90,7 +89,7 @@ class Motors():
         n = 10
         hr_arr = np.concatenate([np.linspace(0,100, n), np.linspace(100,0,n)])
         Z = np.zeros(2*n)
-        A = np.vstack([Z,Z,hr_arr,Z,Z])
+        A = np.vstack([Z,Z,hr_arr,Z])
         return A, n
 
     def set_state(self, state):

@@ -3,7 +3,7 @@ import time
 import threading
 from door_animation import do_door_animation
 from sound_effects import do_sound_effect
-from motors import Motors
+from motors import Eyebrows
 from pyduino_eyes import Eyes
 #import RPi.GPIO as gpio
 
@@ -26,6 +26,8 @@ class ThreadManager():
         #Mark as True if thread is running
         self.door_thread = None
         self.door_running = False
+        self.eyebrows_thread = None
+        self.eyebrows_running = False
         self.audio_thread = None
         self.keyboard_thread = None
     
@@ -36,11 +38,18 @@ class ThreadManager():
 
     def open_door_thread(self):
         #If no door animation is running, create a new thread and start it
-        if thread_manager.door_running:
+        if self.door_running:
             print("Door thread already running")
             return
         self.door_thread = threading.Thread(target=door_thread_func, args=(self,), daemon=True)
         self.door_thread.start()
+
+    def open_eyebrow_thread(self, eyebrows):
+        if self.eyebrows_running:
+            print("Eyebrow thread already running")
+        self.eyebrows_thread = threading.Thread(target=eyebrow_thread_func, args=(self, eyebrows),daemon=True)
+        self.eyebrows_thread.start()
+
 
     def open_keyboard_thread(self):
         #args: ()
@@ -52,6 +61,8 @@ class ThreadManager():
         # flagging self.xxx_running = False
         if (self.door_thread != None) and (not self.door_running):
             self.door_thread.join()
+        if (self.eyebrow_thread != None) and (not self.eyebrows_running):
+            self.eyebrow_thread.join()
 
 #Threading wrappers for clarity
 def door_thread_func(thread_manager):
@@ -76,10 +87,11 @@ def keyboard_thread_func(thread_manager, press, release):
     )
     print("Keyboard Thread:\t Closing Keybaord Thread")
 
-def servo_thread_func(thread_manager, animation):
+def eyebrow_thread_func(thread_manager, eyebrows):
     print("Servo Thread:\t Beginning Servo Thread")
-    #do_servo_animation(animation)
-    thread_manager.close_servo_thread()
+    thread_manager.eyebrows_running = True
+    eyebrows.advance_animation()
+    thread_manager.eyebrows_running = False
     print("Servo Thread:\t Closing Servo Thread")
 
 
@@ -90,15 +102,15 @@ print("Main Thread:\t Creating Keyboard Thread")
 
 BEN_state = "IDLE" #BEN_state: "IDLE", "ACTIVATED", "PORTAL"
 eyes = Eyes()
-motors = Motors()
+eyebrows = Eyebrows()
 prev_state = "IDLE"
 thread_manager.open_keyboard_thread()
 while True:
     thread_manager.clean_threads()
     eyes.set_state(BEN_state)
     eyes.advance_animation()
-    motors.set_state(BEN_state)
-    motors.advance_animation()
+    eyebrows.set_state(BEN_state)
+    eyebrows.advance_animation()
 
     if 'q' in keys:
         eyes.shutdown()
