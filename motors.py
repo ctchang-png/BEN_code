@@ -77,7 +77,7 @@ class Eyebrows():
             self.hl.set_angle(A[0,f])
             self.al.set_angle(A[1,f])
             #print("Attempting to set angle {}".format(A[2,f]))
-            self.hr.set_angle(A[2,f])
+            self.hr.set_angle(-A[2,f])
             self.ar.set_angle(A[3,f])
             #self.jaw.set_angle(A[4,f])
             time.sleep(0.1) #allow .1s to reach angle. Test and tune this
@@ -91,6 +91,14 @@ class Eyebrows():
         Z = np.zeros(8*n)
         A = np.vstack([hl_arr,al_arr,hr_arr,ar_arr])
         return A, n*8
+
+    def get_surprise_animation(self):
+        n_zero = 10
+        n_up = 30
+        hl_arr = np.concatenate([np.zeros(n_zero), 20*np.ones(n_up)])
+        al_arr = np.zeros(n_zero+n_up)
+        hr_arr = np.concatenate([np.zeros(n_zero), 20*np.ones(n_up)])
+        ar_arr = np.zeros(n_zero+n_up)
 
     def set_state(self, state):
         self.state = state

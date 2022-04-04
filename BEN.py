@@ -10,7 +10,7 @@ from pyduino_eyes import Eyes
 #sshkeyboard for ssh control
 from sshkeyboard import listen_keyboard, stop_listening
 keys = set()
-VALID_KEYS = ['0', '1', '2', '3', 'q']
+VALID_KEYS = ['0', '1', '2', '3', 'q', 's']
 def press(key):
     if key in VALID_KEYS:
         keys.add(key)
@@ -99,6 +99,9 @@ def eyebrow_thread_func(thread_manager, eyebrows):
     thread_manager.eyebrows_running = False
     #print("Servo Thread:\t Closing Servo Thread")
 
+def surprise():
+    eyes.set_animation("surprise")
+    eyebrows.set_animation("surprise")
 
 thread_manager = ThreadManager()
 simulated = False
@@ -150,6 +153,11 @@ while True:
         eyes.set_animation("PORTAL")
         thread_manager.open_door_thread()
         None
+
+    if 's' in keys:
+        #Trigger the surprise emote
+        surprise()
+
     time.sleep(0.050)
 
 
