@@ -30,12 +30,7 @@ class Servo():
         if angle > self.angle_max:
             angle = self.angle_max
         #angle: +100, -100
-        if angle + self.bias < -100:
-            angle = -100-self.bias
-        if angle + self.bias > 100:
-            angle = 100 - self.bias
         duty = 1.5+(12.5-1.5)* (angle+self.bias+100)/200
-        print(duty)
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty)
         time.sleep(0.15)
