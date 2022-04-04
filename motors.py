@@ -79,15 +79,15 @@ class Eyebrows():
                 print("Animation should be array of shape (5xn)")
             #self.hl.set_angle(A[0,f])
             #self.al.set_angle(A[1,f])
-            print("Attempting to set angle {}".format(A[2,f]))
+            #print("Attempting to set angle {}".format(A[2,f]))
             self.hr.set_angle(A[2,f])
             #self.ar.set_angle(A[3,f])
             #self.jaw.set_angle(A[4,f])
             #time.sleep(0.1) #allow .1s to reach angle. Test and tune this
 
     def get_idle1_animation(self):
-        n = 10
-        hr_arr = np.concatenate([np.linspace(0,100, n), np.linspace(100,0,n)])
+        n = 100
+        hr_arr = np.concatenate([np.linspace(20,80, n), np.linspace(80,20,n)])
         Z = np.zeros(2*n)
         A = np.vstack([Z,Z,hr_arr,Z])
         return A, n
