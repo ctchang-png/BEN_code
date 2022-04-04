@@ -31,7 +31,7 @@ class Servo():
         self.pwm.ChangeDutyCycle(duty)
         time.sleep(0.050)
         GPIO.output(self.pin, False)
-        self.pwm.ChangeDutyCycle(0)
+        #self.pwm.ChangeDutyCycle(0)
         time.sleep(0.050)
         self.angle = angle
 
