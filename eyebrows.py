@@ -91,6 +91,6 @@ class Motors():
 
 if __name__ == "__main__":
     servo1 = Servo(3, angle_min=-30, angle_max=30)
-    for angle in range(-30, 31, 5):
-        print(angle)
+    while True:
+        angle = input("enter angle between {} and {}".format(-30, 30))
         servo1.set_angle(angle)
