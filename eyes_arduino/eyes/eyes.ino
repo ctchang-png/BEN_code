@@ -94,8 +94,7 @@ void loop() {
   //For now, floats_recieved = {}
   if (px_old != px || py_old != py){ //Only write if something moves
     //draw_pupil_continuous(px, py, 0xFFFF);
-    // Use size 2 for now
-    pr = 3;
+    // For now run with square eyes
     draw_pupil_cell(px, px_old, py, py_old, pr, pr, 0xFFFF);
     px_old = px;
     py_old = py;
@@ -125,8 +124,8 @@ void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int siz
 
 
   int i = 0;
-  for (int r_offset = 0; r < size_h + size_h%2; r++) {
-    for (int c_offset = 0; c < size_w + size_w%2; c++) {
+  for (int r_offset = 0; r_offset < size_h; r_offset++) {
+    for (int c_offset = 0; c_offset < size_w; c_offset++) {
       x_new[i] = cell_c + c_offset - floor(size_h/2);
       x_old[i] = cell_c_old + c_offset - floor(size_h/2);
       y_new[i] = cell_r + r_offset - floor(size_w/2);
@@ -170,7 +169,7 @@ void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int siz
   //Might look better if pupils are drawn first and cleared second, but test this later.
   for (int i = 0; i < n; i++) {
     //If new cell is flagged to be drawn, do so
-    if (draw_arr[i]) {
+    if (draw_arr[i] == 1) {
       x = x_new[i];
       y = y_new[i];
       screenL.fillRect(x*CELL_SIZE+2, y*CELL_SIZE+2, w, h, color);
@@ -179,7 +178,7 @@ void draw_pupil_cell(int px, int px_old, int py, int py_old, int size_w, int siz
   }
   for (int i = 0; i < n; i++) {
     //If old cell is flagged to be cleared, do so 
-    if (clear_arr[i]) {
+    if (clear_arr[i] == 1) {
       x = x_old[i];
       y = y_old[i];
       screenL.fillRect(x*CELL_SIZE+2, y*CELL_SIZE+2, w, h, COLOR_RGB565_BACKGROUND);

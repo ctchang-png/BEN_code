@@ -1,4 +1,4 @@
-#main ben loop
+#main BEN loop
 import time
 import threading
 from door_animation import do_door_animation
