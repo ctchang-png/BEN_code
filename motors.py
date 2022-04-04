@@ -107,6 +107,8 @@ class Eyebrows():
     def set_animation(self, animation_name):
         if animation_name == "IDLE1":
             A, n = self.get_idle1_animation()
+        if animation_name == "surprise":
+            A, n = self.get_surprise_animation()
         self.animation = A
         self.max_frame = n
         self.frame = 0
