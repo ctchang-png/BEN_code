@@ -21,7 +21,7 @@ class Servo():
         self.angle = 0
         self.set_angle(50)
         time.sleep(0.50)
-        print("Servo object at GPIO pin #{} created".format(pin))
+        print("Servo object at GPIO pin #{} created with angle limits: ({}, {})".format(pin, angle_min, angle_max))
     
     def set_angle(self, angle):
         #angle: scale from 0-100 from angle_min to angle_max
