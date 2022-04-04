@@ -87,7 +87,7 @@ class Motors():
 
     def get_idle1_animation(self):
         n = 10
-        hr_arr = np.concatentate([np.linspace(0,100, n), np.linspace(100,0,n)])
+        hr_arr = np.concatenate([np.linspace(0,100, n), np.linspace(100,0,n)])
         Z = np.zeros(2*n)
         A = np.vstack([Z,Z,hr_arr,Z,Z])
         return A, n
