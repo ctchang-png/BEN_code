@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 import time
 
-#GPIO.setmode(GPIO.BOARD) Handled by door_animation.py
+#GPIO.setmode(GPIO.BOARD) #Handled by door_animation.py
 
 class Servo():
     def __init__(self, pin, angle_min=-20, angle_max=20, bias=0):
@@ -33,7 +33,7 @@ class Servo():
         duty = 1.5+(12.5-1.5)* (angle+self.bias+100)/200
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty)
-        time.sleep(0.5)
+        #time.sleep(0.5)
         GPIO.output(self.pin, False)
         #self.pwm.ChangeDutyCycle(0)
         #time.sleep(0.050)
@@ -50,10 +50,10 @@ class Servo():
     
 class Eyebrows():
     def __init__(self):
-        self.hl = Servo(2, angle_min=-20, angle_max=20)
-        self.al = Servo(3, angle_min=-20, angle_max=20)
-        #self.hr = Servo(pin, -30, 30)
-        self.ar = Servo(14, angle_min=-20, angle_max=20)
+        self.hl = Servo(2, angle_min=-20, angle_max=20, bias=10)
+        self.al = Servo(3, angle_min=-20, angle_max=20, bias=5)
+        self.hr = Servo(4, angle_min=-20, angle_max=20, bias=-5)
+        self.ar = Servo(14, angle_min=-20, angle_max=20, bias=-30)
         
         self.animation = None
         self.frame = 0
@@ -77,19 +77,19 @@ class Eyebrows():
             self.hl.set_angle(A[0,f])
             self.al.set_angle(A[1,f])
             #print("Attempting to set angle {}".format(A[2,f]))
-            #self.hr.set_angle(A[2,f])
+            self.hr.set_angle(A[2,f])
             self.ar.set_angle(A[3,f])
             #self.jaw.set_angle(A[4,f])
-            #time.sleep(0.1) #allow .1s to reach angle. Test and tune this
+            time.sleep(0.1) #allow .1s to reach angle. Test and tune this
 
     def get_idle1_animation(self):
-        n = 4
+        n = 10
         hl_arr = np.concatenate([np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n), np.zeros(4*n)])
         al_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n)])
-
-        ar_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n)])
+        hr_arr = np.concatenate([np.linspace(0,20,n),np.linspace(20,-20,2*n), np.linspace(-20,0,n), np.zeros(4*n)])
+        ar_arr = np.concatenate([np.zeros(4*n), np.linspace(0,20,n),np.linspace(20,-20,2*n), np.linspace(-20,0,n)])
         Z = np.zeros(8*n)
-        A = np.vstack([hl_arr,al_arr,Z,ar_arr])
+        A = np.vstack([hl_arr,al_arr,hr_arr,ar_arr])
         return A, n*8
 
     def set_state(self, state):
@@ -107,7 +107,11 @@ class Eyebrows():
 if __name__ == "__main__":
     servo1 = Servo(3, angle_min=-20, angle_max=20, bias=10)
     servo2 = Servo(5, angle_min=-20, angle_max=20, bias=5)
+    servo3 = Servo(8, angle_min=-100, angle_max=100, bias=-30)
+    servo4 = Servo(7, angle_min=-100, angle_max=100, bias=-5)
     while True:
         angle = input("enter angle between {} and {}: ".format(-20, 20))
         servo1.set_angle(int(angle))
         servo2.set_angle(int(angle))
+        servo3.set_angle(int(angle))
+        servo4.set_angle(int(angle))
