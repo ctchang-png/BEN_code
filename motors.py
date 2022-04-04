@@ -53,7 +53,7 @@ class Eyebrows():
         self.hl = Servo(2, angle_min=-20, angle_max=20)
         self.al = Servo(3, angle_min=-20, angle_max=20)
         #self.hr = Servo(pin, -30, 30)
-        self.ar = Servo(4, angle_min=-20, angle_max=20)
+        self.ar = Servo(14, angle_min=-20, angle_max=20)
         
         self.animation = None
         self.frame = 0
