@@ -55,8 +55,8 @@ class Servo():
     
 class Eyebrows():
     def __init__(self):
-        self.hl = Servo(2, angle_min, angle_max)
-        self.al = Servo(3, angle_min, angle_max)
+        self.hl = Servo(2, angle_min=-20, angle_max=20)
+        self.al = Servo(3, angle_min=-20, angle_max=20)
         #self.hr = Servo(pin, -30, 30)
         #self.ar = Servo(pin, angle_min, angle_max)
         
@@ -79,19 +79,20 @@ class Eyebrows():
 
             if A.shape[0] != 4:
                 print("Animation should be array of shape (5xn)")
-            #self.hl.set_angle(A[0,f])
-            #self.al.set_angle(A[1,f])
+            self.hl.set_angle(A[0,f])
+            self.al.set_angle(A[1,f])
             #print("Attempting to set angle {}".format(A[2,f]))
-            self.hr.set_angle(A[2,f])
+            #self.hr.set_angle(A[2,f])
             #self.ar.set_angle(A[3,f])
             #self.jaw.set_angle(A[4,f])
             #time.sleep(0.1) #allow .1s to reach angle. Test and tune this
 
     def get_idle1_animation(self):
         n = 100
-        hr_arr = np.concatenate([np.linspace(-100,100, n), np.flip(np.linspace(-100,100,n)), np.zeros(n)])
+        hl_arr = np.concatenate([np.linspace(0,-100,n),np.linspace(-100,100,2*n), np.linspace()])
+        al_arr = np.array()
         Z = np.zeros(3*n)
-        A = np.vstack([Z,Z,hr_arr,Z])
+        A = np.vstack([hl_arr,al_arr,Z,Z])
         return A, n
 
     def set_state(self, state):
@@ -110,6 +111,6 @@ if __name__ == "__main__":
     servo1 = Servo(3, angle_min=-20, angle_max=20, bias=10)
     servo2 = Servo(5, angle_min=-20, angle_max=20, bias=5)
     while True:
-        angle = input("enter angle between {} and {}".format(-20, 20))
+        angle = input("enter angle between {} and {}: ".format(-20, 20))
         servo1.set_angle(int(angle))
         servo2.set_angle(int(angle))
