@@ -79,8 +79,8 @@ class Eyebrows():
 
     def get_idle1_animation(self):
         n = 100
-        hr_arr = np.concatenate([np.linspace(-100,100, n), np.linspace(100,-100,n)])
-        Z = np.zeros(2*n)
+        hr_arr = np.concatenate([np.linspace(-100,100, n), np.linspace(100,-100,n), np.zeros(n)])
+        Z = np.zeros(3*n)
         A = np.vstack([Z,Z,hr_arr,Z])
         return A, n
 
