@@ -5,7 +5,7 @@ import time
 #GPIO.setmode(GPIO.BOARD) Handled by door_animation.py
 
 class Servo():
-    def __init__(self, pin, angle_min=-20, angle_max=20):
+    def __init__(self, pin, angle_min=-20, angle_max=20, bias=0):
         self.pin = pin
         if angle_min < -210/2:
             angle_min = 210/2
@@ -19,13 +19,22 @@ class Servo():
         pwm.start(0)
         self.pwm = pwm
         self.angle = 0
+        self.bias = bias
         self.set_angle(0)
         time.sleep(0.50)
         print("Servo object at GPIO pin #{} created with angle limits: ({}, {})".format(pin, angle_min, angle_max))
     
     def set_angle(self, angle):
+        if angle < self.angle_min:
+            angle = self.angle_min
+        if angle > self.angle_max:
+            angle = self.angle_max
         #angle: +100, -100
-        duty = 1.5+(12.5-1.5)* (angle+100)/200
+        if angle + self.bias < -100:
+            angle = -100-self.bias
+        if angle + self.bias > 100:
+            angle = 100 - self.bias
+        duty = 1.5+(12.5-1.5)* (angle+self.bias+100)/200
         print(duty)
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty)
@@ -98,7 +107,7 @@ class Eyebrows():
     
 
 if __name__ == "__main__":
-    servo1 = Servo(3, angle_min=-30, angle_max=30)
+    servo1 = Servo(3, angle_min=-20, angle_max=20, bias=10)
     while True:
-        angle = input("enter angle between {} and {}".format(-30, 30))
+        angle = input("enter angle between {} and {}".format(-20, 20)
         servo1.set_angle(int(angle))
