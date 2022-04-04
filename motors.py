@@ -55,9 +55,9 @@ class Servo():
     
 class Eyebrows():
     def __init__(self):
-        #self.hl = Servo(pin, angle_min, angle_max)
-        #self.al = Servo(pin, angle_min, angle_max)
-        self.hr = Servo(2, -30, 30)
+        self.hl = Servo(2, angle_min, angle_max)
+        self.al = Servo(3, angle_min, angle_max)
+        #self.hr = Servo(pin, -30, 30)
         #self.ar = Servo(pin, angle_min, angle_max)
         
         self.animation = None
@@ -108,7 +108,7 @@ class Eyebrows():
 
 if __name__ == "__main__":
     servo1 = Servo(3, angle_min=-20, angle_max=20, bias=10)
-    servo2 = Servo(5, angle_min=-20, angle_max=20, bias=0)
+    servo2 = Servo(5, angle_min=-20, angle_max=20, bias=5)
     while True:
         angle = input("enter angle between {} and {}".format(-20, 20))
         servo1.set_angle(int(angle))

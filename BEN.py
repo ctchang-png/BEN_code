@@ -110,7 +110,8 @@ while True:
     eyes.set_state(BEN_state)
     eyes.advance_animation()
     eyebrows.set_state(BEN_state)
-    eyebrows.advance_animation()
+    thread_manager.open_eyebrow_thread(eyebrows)
+    #eyebrows.advance_animation() #includes time.sleep(0.15)
 
     if 'q' in keys:
         eyes.shutdown()
@@ -145,67 +146,5 @@ while True:
         thread_manager.open_door_thread()
         None
     time.sleep(0.050)
-    '''
-    #No inputs -> Idling auido/animations
-    if len(keys) == 0:
-        None
-        
-
-    #Trigger door animation on input. Some audio should be associated with this eventually
-    if 'd' in keys:
-        if not thread_status.door:
-            thread_status.door = True
-            print("Main Thread:\t Creating Door Thread")
-            door_thread = threading.Thread(target=door_thread_func, args=(thread_status, simulated), daemon=True)
-            #threads.append(door_thread)
-            door_thread.start()
-        else:
-            print("Door animation attempted while already running. Please wait until current animation is completed")
-
-    #Trigger audio 'animation' on some input --- Also need idling audio
-    if 'a' in keys and not thread_status.audio:
-        if not thread_status.audio:
-            thread_status.audio = True
-            print("Main Thread:\t Creating Audio Thread")
-            sound_effect = "1" #Change me later
-            audio_thread = threading.Thread(target=audio_thread_func, args=(thread_status, sound_effect), daemon=True)
-            #threads.append(audio_thread)
-            audio_thread.start()
-        else:
-            print("Audio attempted while already running. Please wait until current sound effect is completed")
-
-
-    #Join threads when function is completed
-    door_thread_old = thread_status.door
-    audio_thread_old = thread_status.audio
-
-
-    if 'q' in keys:
-        #This is fuckin trash but need to press q to join keyboard thread then esc to release to join the rest
-        print("Main Thread:\t Joining Keyboard Thread")
-        keyboard_thread.join()
-        print("Main Thread:\t Joining Door Thread")
-        try:
-            door_thread.join()
-        except NameError:
-            print("Main Thread:\t Door Thread not joined (did not exist)")
-        print("Main Thread:\t Joining Audio Thread")
-        try:
-            audio_thread.join()
-        except NameError:
-            print("Main Thread:\t Audio Thread not joined (did not exist)")
-        print("Main Thread:\t Program Terminated")
-        break
-    time.sleep(0.5)
-
-    #Join threads on function completion
-    #print("Thread Count: {}".format(len(threads)))
-    if door_thread_old and not thread_status.door:
-        door_thread.join()
-        #threads.pop(threads.index(door_thread))
-    if audio_thread_old and not thread_status.audio:
-        audio_thread.join()
-        #threads.pop(threads.index(audio_thread))
-    '''
 
     
