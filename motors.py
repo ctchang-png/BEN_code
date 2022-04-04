@@ -32,7 +32,7 @@ class Servo():
         time.sleep(0.050)
         GPIO.output(self.pin, False)
         #self.pwm.ChangeDutyCycle(0)
-        time.sleep(0.050)
+        #time.sleep(0.050)
         self.angle = angle
 
     def shutdown(self):
