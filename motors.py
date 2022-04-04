@@ -91,7 +91,7 @@ class Eyebrows():
         n = 10
         hl_arr = np.concatenate([np.linspace(0,-100,n),np.linspace(-100,100,2*n), np.linspace(100,0,n), np.zeros(4*n)])
         al_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-100,n),np.linspace(-100,100,2*n), np.linspace(100,0,n)])
-        Z = np.zeros(4*n)
+        Z = np.zeros(8*n)
         A = np.vstack([hl_arr,al_arr,Z,Z])
         return A, n
 
