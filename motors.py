@@ -83,7 +83,7 @@ class Eyebrows():
             #time.sleep(0.1) #allow .1s to reach angle. Test and tune this
 
     def get_idle1_animation(self):
-        n = 10
+        n = 4
         hl_arr = np.concatenate([np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n), np.zeros(4*n)])
         al_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n)])
         Z = np.zeros(8*n)

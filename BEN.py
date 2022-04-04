@@ -93,11 +93,11 @@ def keyboard_thread_func(thread_manager, press, release):
     print("Keyboard Thread:\t Closing Keybaord Thread")
 
 def eyebrow_thread_func(thread_manager, eyebrows):
-    print("Servo Thread:\t Beginning Servo Thread")
+    #print("Servo Thread:\t Beginning Servo Thread")
     thread_manager.eyebrows_running = True
     eyebrows.advance_animation()
     thread_manager.eyebrows_running = False
-    print("Servo Thread:\t Closing Servo Thread")
+    #print("Servo Thread:\t Closing Servo Thread")
 
 
 thread_manager = ThreadManager()
@@ -152,6 +152,6 @@ while True:
         None
     time.sleep(0.050)
     thread_manager.close_eyebrow_thread()
-    
+
 
     
