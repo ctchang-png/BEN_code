@@ -9,6 +9,10 @@ def do_servo_animation():
 class Servo():
     def __init__(self, pin, angle_min=20, angle_max=20):
         self.pin = pin
+        if angle_min < -210/2:
+            angle_min = 210/2
+        if angle_max > 210/2:
+            angle_max = 210/2 #can techincally be a bit looser but +-20 or 30 deg should be standard for this bot
         self.angle_min = angle_min
         self.angle_max = angle_max
         GPIO.setup(pin, GPIO.OUT)

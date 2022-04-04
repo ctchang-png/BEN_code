@@ -3,7 +3,7 @@ import time
 import threading
 from door_animation import do_door_animation
 from sound_effects import do_sound_effect
-#from eyebrows import do_servo_animation
+from eyebrows import do_servo_animation
 from pyduino_eyes import Eyes
 #import RPi.GPIO as gpio
 
