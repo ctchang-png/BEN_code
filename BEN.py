@@ -126,7 +126,7 @@ while True:
         BEN_state = "IDLE"
         print(BEN_state)
         eyes.set_animation("IDLE1")
-        motors.set_animation("IDLE1")
+        eyebrows.set_animation("IDLE1")
     
     if '2' in keys:
         #Trigger the transition into ACTIVATED
