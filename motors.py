@@ -23,9 +23,9 @@ class Servo():
         time.sleep(0.50)
         print("Servo object at GPIO pin #{} created with angle limits: ({}, {})".format(pin, angle_min, angle_max))
     
-    def set_angle(self, duty):
+    def set_angle(self, angle):
         GPIO.output(self.pin, True)
-        self.pwm.ChangeDutyCycle(duty)
+        self.pwm.ChangeDutyCycle(angle)
         time.sleep(0.050)
         GPIO.output(self.pin, False)
         self.pwm.ChangeDutyCycle(0)
