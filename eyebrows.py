@@ -18,7 +18,9 @@ class Servo():
         self.pwm = pwm
         self.angle = 0
         self.set_angle(0)
+        tic = time.time()
         time.sleep(0.50)
+        print(time.time() - tic)
         print("Servo object at PIN {} created".format(pin))
     
     def set_angle(self, angle):
