@@ -4,9 +4,6 @@ import time
 
 #GPIO.setmode(GPIO.BOARD) Handled by door_animation.py
 
-def do_servo_animation():
-    return None
-
 class Servo():
     def __init__(self, pin, angle_min=20, angle_max=20):
         self.pin = pin
@@ -86,7 +83,7 @@ class Motors():
         self.hr.set_angle(A[2,f])
         #self.ar.set_angle(A[3,f])
         #self.jaw.set_angle(A[4,f])
-        time.sleep(0.1) #allow .1s to reach angle. Test and tune this
+        #time.sleep(0.1) #allow .1s to reach angle. Test and tune this
 
     def get_idle1_animation(self):
         n = 10
