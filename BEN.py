@@ -115,8 +115,8 @@ while True:
     eyes.set_state(BEN_state)
     eyes.advance_animation()
     eyebrows.set_state(BEN_state)
-    thread_manager.open_eyebrow_thread(eyebrows)
-    #eyebrows.advance_animation() #includes time.sleep(0.15)
+    if not thread_manager.eyebrows_running:
+        thread_manager.open_eyebrow_thread(eyebrows)
 
     if 'q' in keys:
         eyes.shutdown()
@@ -151,7 +151,6 @@ while True:
         thread_manager.open_door_thread()
         None
     time.sleep(0.050)
-    #thread_manager.close_eyebrow_thread()
 
 
     
