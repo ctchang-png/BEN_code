@@ -88,7 +88,6 @@ class Eyebrows():
         al_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n)])
         hr_arr = np.concatenate([np.linspace(0,20,n),np.linspace(20,-20,2*n), np.linspace(-20,0,n), np.zeros(4*n)])
         ar_arr = np.concatenate([np.zeros(4*n), np.linspace(0,20,n),np.linspace(20,-20,2*n), np.linspace(-20,0,n)])
-        Z = np.zeros(8*n)
         A = np.vstack([hl_arr,al_arr,hr_arr,ar_arr])
         return A, n*8
 
@@ -99,6 +98,8 @@ class Eyebrows():
         al_arr = np.zeros(n_zero+n_up)
         hr_arr = np.concatenate([np.zeros(n_zero), 20*np.ones(n_up)])
         ar_arr = np.zeros(n_zero+n_up)
+        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
+        return A, n_zero+n_up
 
     def set_state(self, state):
         self.state = state
