@@ -24,8 +24,10 @@ class Servo():
         print("Servo object at GPIO pin #{} created with angle limits: ({}, {})".format(pin, angle_min, angle_max))
     
     def set_angle(self, angle):
+        #angle: +100, -100
+        duty = 12.5* (angle+100)/200
         GPIO.output(self.pin, True)
-        self.pwm.ChangeDutyCycle(angle)
+        self.pwm.ChangeDutyCycle(duty)
         time.sleep(0.050)
         GPIO.output(self.pin, False)
         self.pwm.ChangeDutyCycle(0)
@@ -76,7 +78,7 @@ class Eyebrows():
 
     def get_idle1_animation(self):
         n = 100
-        hr_arr = np.concatenate([np.linspace(20,80, n), np.linspace(80,20,n)])
+        hr_arr = np.concatenate([np.linspace(-100,100, n), np.linspace(100,-100,n)])
         Z = np.zeros(2*n)
         A = np.vstack([Z,Z,hr_arr,Z])
         return A, n
