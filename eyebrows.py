@@ -17,7 +17,7 @@ class Servo():
         pwm.start(0)
         self.pwm = pwm
         self.angle = 0
-        self.set_angle(0)
+        self.set_angle(50)
         tic = time.time()
         time.sleep(0.50)
         print(time.time() - tic)
@@ -27,14 +27,10 @@ class Servo():
         #angle: scale from 0-100 from angle_min to angle_max
         #measured angle range is 0-210
         #measured duty range is  0-12.5
-        if angle < self.angle_min:
-            #print("Angle {:0.2f} exceeds angle limits of ({:0.2f},{:0.2f}) [degrees]".format(angle, self.angle_min, self.angle_max))
-            #angle = self.angle_min
-            None
-        if angle > self.angle_max:
-            #print("Angle {:0.2f} exceeds angle limits of ({:0.2f},{:0.2f}) [degrees]".format(angle, self.angle_min, self.angle_max))
-            #angle = self.angle_max
-            None
+        if angle < 0:
+            angle = 0
+        if angle > 100:
+            angle = 100
         angle_degrees = angle *0.01*(self.angle_max-self.angle_min) + self.angle_min
         angle_offset = angle_degrees + 210/2
         duty = angle_offset * (12.5/210)
