@@ -50,6 +50,11 @@ class ThreadManager():
         self.eyebrows_thread = threading.Thread(target=eyebrow_thread_func, args=(self, eyebrows),daemon=True)
         self.eyebrows_thread.start()
 
+    def close_eyebrow_thread(self):
+        self.eyebrows_thread.join()
+        self.eyebrows_thread = None
+        self.eyebrows_running = False
+
 
     def open_keyboard_thread(self):
         #args: ()
@@ -146,5 +151,7 @@ while True:
         thread_manager.open_door_thread()
         None
     time.sleep(0.050)
+    thread_manager.close_eyebrow_thread()
+    
 
     
