@@ -80,6 +80,7 @@ class Motors():
                 print("Animation should be array of shape (5xn)")
             #self.hl.set_angle(A[0,f])
             #self.al.set_angle(A[1,f])
+            print("Attempting to set angle {}".format(A[2,f]))
             self.hr.set_angle(A[2,f])
             #self.ar.set_angle(A[3,f])
             #self.jaw.set_angle(A[4,f])
