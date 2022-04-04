@@ -3,7 +3,7 @@ import time
 import threading
 from door_animation import do_door_animation
 from sound_effects import do_sound_effect
-from eyebrows import do_servo_animation
+from motors import Motors
 from pyduino_eyes import Eyes
 #import RPi.GPIO as gpio
 
@@ -90,12 +90,15 @@ print("Main Thread:\t Creating Keyboard Thread")
 
 BEN_state = "IDLE" #BEN_state: "IDLE", "ACTIVATED", "PORTAL"
 eyes = Eyes()
+motors = Motors()
 prev_state = "IDLE"
 thread_manager.open_keyboard_thread()
 while True:
     thread_manager.clean_threads()
     eyes.set_state(BEN_state)
     eyes.advance_animation()
+    motors.set_state(BEN_state)
+    motors.advance_animation()
 
     if 'q' in keys:
         eyes.shutdown()
@@ -111,6 +114,7 @@ while True:
         BEN_state = "IDLE"
         print(BEN_state)
         eyes.set_animation("IDLE1")
+        motors.set_animation("IDLE1")
     
     if '2' in keys:
         #Trigger the transition into ACTIVATED
