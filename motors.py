@@ -53,7 +53,7 @@ class Eyebrows():
         self.hl = Servo(2, angle_min=-20, angle_max=20)
         self.al = Servo(3, angle_min=-20, angle_max=20)
         #self.hr = Servo(pin, -30, 30)
-        #self.ar = Servo(pin, angle_min, angle_max)
+        self.ar = Servo(4, angle_min=-20, angle_max=20)
         
         self.animation = None
         self.frame = 0
@@ -78,7 +78,7 @@ class Eyebrows():
             self.al.set_angle(A[1,f])
             #print("Attempting to set angle {}".format(A[2,f]))
             #self.hr.set_angle(A[2,f])
-            #self.ar.set_angle(A[3,f])
+            self.ar.set_angle(A[3,f])
             #self.jaw.set_angle(A[4,f])
             #time.sleep(0.1) #allow .1s to reach angle. Test and tune this
 
@@ -86,9 +86,11 @@ class Eyebrows():
         n = 4
         hl_arr = np.concatenate([np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n), np.zeros(4*n)])
         al_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n)])
+
+        ar_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n)])
         Z = np.zeros(8*n)
-        A = np.vstack([hl_arr,al_arr,Z,Z])
-        return A, n
+        A = np.vstack([hl_arr,al_arr,Z,ar_arr])
+        return A, n*8
 
     def set_state(self, state):
         self.state = state
