@@ -61,8 +61,8 @@ class ThreadManager():
         # flagging self.xxx_running = False
         if (self.door_thread != None) and (not self.door_running):
             self.door_thread.join()
-        if (self.eyebrow_thread != None) and (not self.eyebrows_running):
-            self.eyebrow_thread.join()
+        if (self.eyebrows_thread != None) and (not self.eyebrows_running):
+            self.eyebrows_thread.join()
 
 #Threading wrappers for clarity
 def door_thread_func(thread_manager):
