@@ -2,7 +2,7 @@ import numpy as np
 from math import pi
 
 serPort = 'COM7'         #laptop
-#serPort = '/dev/ttyACM0' #pi
+serPort = '/dev/ttyACM0' #pi
 baudRate = 115200
 
 from pyduinobridge import Bridge_py
