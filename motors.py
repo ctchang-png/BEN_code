@@ -50,10 +50,10 @@ class Servo():
     
 class Eyebrows():
     def __init__(self):
-        self.hl = Servo(2, angle_min=-20, angle_max=20, bias=10)
-        self.al = Servo(3, angle_min=-20, angle_max=20, bias=5)
-        self.hr = Servo(4, angle_min=-20, angle_max=20, bias=-5)
-        self.ar = Servo(14, angle_min=-20, angle_max=20, bias=-30)
+        self.hl = Servo(2, angle_min=-20, angle_max=20, bias=0)
+        self.al = Servo(3, angle_min=-20, angle_max=20, bias=0)
+        self.hr = Servo(4, angle_min=-20, angle_max=20, bias=15)
+        self.ar = Servo(14, angle_min=-20, angle_max=20, bias=25)
         
         self.animation = None
         self.frame = 0
@@ -86,7 +86,7 @@ class Eyebrows():
         n = 10
         hl_arr = np.concatenate([np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n), np.zeros(4*n)])
         al_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n)])
-        hr_arr = np.concatenate([np.linspace(0,20,n),np.linspace(20,-20,2*n), np.linspace(-20,0,n), np.zeros(4*n)])
+        hr_arr = np.concatenate([np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n), np.zeros(4*n)])
         ar_arr = np.concatenate([np.zeros(4*n), np.linspace(0,20,n),np.linspace(20,-20,2*n), np.linspace(-20,0,n)])
         A = np.vstack([hl_arr,al_arr,hr_arr,ar_arr])
         return A, n*8
@@ -116,13 +116,13 @@ class Eyebrows():
     
 
 if __name__ == "__main__":
-    servo1 = Servo(3, angle_min=-20, angle_max=20, bias=10)
-    servo2 = Servo(5, angle_min=-20, angle_max=20, bias=5)
-    servo3 = Servo(8, angle_min=-100, angle_max=100, bias=-30)
-    servo4 = Servo(7, angle_min=-100, angle_max=100, bias=-5)
+    servo1 = Servo(3, angle_min=-20, angle_max=20, bias=0)
+    servo2 = Servo(5, angle_min=-20, angle_max=20, bias=0)
+    servo3 = Servo(7, angle_min=-100, angle_max=100, bias=15)
+    servo4 = Servo(8, angle_min=-100, angle_max=100, bias=25)
     while True:
         angle = input("enter angle between {} and {}: ".format(-20, 20))
-        servo1.set_angle(int(angle))
+        servo1.set_angle(-int(angle))
         servo2.set_angle(int(angle))
         servo3.set_angle(int(angle))
-        servo4.set_angle(int(angle))
+        servo4.set_angle(-int(angle))

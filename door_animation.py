@@ -147,4 +147,4 @@ def do_door_animation(simulated=False):
     return True
 
 if __name__ == "__main__":
-    do_door_animation(simulation=True)
+    do_door_animation()
