@@ -164,6 +164,7 @@ while True:
         BEN_state = "PORTAL"
         print(BEN_state)
         eyes.set_animation("PORTAL")
+        eyebrows.set_animation("PORTAL")
         thread_manager.open_door_thread()
         None
 
