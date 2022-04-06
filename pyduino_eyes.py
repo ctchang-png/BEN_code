@@ -150,7 +150,7 @@ class Eyes():
 
     # Helper FN, look up at the user
     def get_ACTIVATED_animation_awake(self, freeze_time=4):
-        n = 30
+        n = 40
         height = np.linspace(int(1/5 * self.height), int(5/6 * self.height), n)
         width = int(3/5 * self.width) * np.ones(n)
         A = np.vstack([height, width])
@@ -158,7 +158,7 @@ class Eyes():
 
     # Helper FN, look to sides with tilt
     def get_ACTIVATED_animation_tilt(self, freeze_time=4):
-        n = 30
+        n = 20
         height = np.concatenate(
             [np.linspace(int(5/6 * self.height), int(3/6 * self.height), n // 3),
              int(3/6 * self.height) * np.ones(n - (n // 3)),
