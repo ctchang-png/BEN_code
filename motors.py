@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 import time
 
-# GPIO.setmode(GPIO.BOARD) #Handled by door_animation.py
+GPIO.setmode(GPIO.BOARD)  # Handled by door_animation.py
 
 
 class Servo():
@@ -98,10 +98,12 @@ class Eyebrows():
     # Go here when you press 2. Added by Len Huang
     def get_ACTIVATED_animation(self, freeze_time=4):
         n = 300
+        # Left eyebrow raised
         hl_arr = -10 * np.ones(n)
         al_arr = -10 * np.ones(n)
         hr_arr = 10 * np.ones(n)
         ar_arr = 10 * np.ones(n)
+
         A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
         return A, n
 
