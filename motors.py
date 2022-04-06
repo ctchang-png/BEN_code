@@ -159,13 +159,13 @@ class Eyebrows():
         wiper = [-10, -10, -5, 5, -5, 5]
         alte1 = [5, 15, 15, -15, -15, 5]
         alte2 = [5, -15, -15, 15, 15, 5]
-        leftHeight = jump1 + jump2
-        leftAngle = wiper + wiper + alte1 + alte2
-        rightHeight = jump2 + jump1
-        rightAngle = wiper + wiper + alte2 + alte1
+        leftHeight = jump1 + jump2 + jump1
+        leftAngle = alte1 + alte2 + wiper + wiper + alte1 + alte2
+        rightHeight = jump2 + jump1 + jump2
+        rightAngle = alte2 + alte1 + wiper + wiper + alte2 + alte1
         n = len(jump1)
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
-        return A, 2 * n
+        return A, 3 * n
 
     # Go here when you press 2. Added by Len Huang
 
