@@ -149,7 +149,11 @@ class Eyes():
 
     # Helper FN, look up at the user
     def get_ACTIVATED_animation_awake(self, freeze_time=4):
-        return [], 0
+        n = 20
+        height = np.linspace(int(4/5 * self.height), int(self.height/5), n)
+        width = int(self.width / 2) * np.ones(n)
+        A = np.vstack([height, width])
+        return A, A.shape[1]
 
     # Helper FN, look to sides with tilt
     def get_ACTIVATED_animation_tilt(self, freeze_time=4):
@@ -169,12 +173,14 @@ class Eyes():
 
     def get_ACTIVATED_animation_len(self, freeze_time=4):
         A1, n1 = self.get_ACTIVATED_animation_awake()  # Look Up At User
-        A2, n2 = self.get_ACTIVATED_animation_tilt()  # Look To Sides with Tilt
-        A3, n3 = self.get_ACTIVATED_animation_down()  # Look Back at Neutral
-        A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()  # Raise Eyebrow
-        A5, n5 = self.get_ACTIVATED_animation_glitch()  # Glitch
-        N = [n1, n2, n3, n4, n5]
-        A = [A1, A2, A3, A4, A5]
+        # A2, n2 = self.get_ACTIVATED_animation_tilt()  # Look To Sides with Tilt
+        # A3, n3 = self.get_ACTIVATED_animation_down()  # Look Back at Neutral
+        # A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()  # Raise Eyebrow
+        # A5, n5 = self.get_ACTIVATED_animation_glitch()  # Glitch
+        # N = [n1, n2, n3, n4, n5]
+        # A = [A1, A2, A3, A4, A5]
+        N = [n1]
+        A = [A1]
         return np.hstack(A), np.sum(N)
 
     def set_state(self, state):
