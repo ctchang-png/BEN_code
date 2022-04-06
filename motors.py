@@ -145,14 +145,14 @@ if __name__ == "__main__":
         # servo4.set_angle(-int(angle))
 
         print("")
-        angle1 = input("leftHeight btwn {} and {}: ".format(-20, 20))
-        angle2 = input("leftAngle btwn {} and {}: ".format(-20, 20))
+        angle1 = input("leftHeight btwn {} and {}:  ".format(-20, 20))
+        angle2 = input("leftAngle btwn {} and {}:   ".format(-20, 20))
         angle3 = input("rightHeight btwn {} and {}: ".format(-20, 20))
-        angle4 = input("rightAngle btwn {} and {}: ".format(-20, 20))
-        servo1.set_angle(-int(angle1))
-        servo2.set_angle(int(angle2))
-        servo3.set_angle(int(angle3))
-        servo4.set_angle(-int(angle4))
+        angle4 = input("rightAngle btwn {} and {}:  ".format(-20, 20))
+        servo1.set_angle(-int(angle1))  # Bigger => Higher Up
+        servo2.set_angle(int(angle2))  # Bigger => More Inward Angle
+        servo3.set_angle(int(angle3))  # Bigger => Higher Up
+        servo4.set_angle(-int(angle4))  # Bigger => More Inward Angle
 
 '''
 Eyebrows In (Angry) Neutral
