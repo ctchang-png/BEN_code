@@ -99,7 +99,7 @@ class Eyebrows():
     def get_ACTIVATED_animation(self, freeze_time=4):
         n = 20
         # Waking Up
-        z2t = np.linspace(-20, 20, n)
+        z2t = np.linspace(20, -20, n)
         leftHeight = np.concatenate([z2t])
         leftAngle = np.concatenate([-z2t])
         rightHeight = leftHeight
