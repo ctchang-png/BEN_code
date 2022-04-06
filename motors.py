@@ -150,15 +150,31 @@ class Eyebrows():
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, n
 
+    # Helper for ACTIVATED
+    def get_ACTIVATED_animation_glitch(self):
+        jump1 = [-10, 10, 10, -10, -10, -15, -15, -10, -10, 15, 15, -10]
+        jump2 = [-10, 10, 10, -10, -10, 15, 15, -10, -10, -15, -15, -10]
+        wiper = [-10, -10, -5, 5, -5, 5]
+        alte1 = [5, 15, 15, -15, -15, 5]
+        alte2 = [5, -15, -15, 15, 15, 5]
+        leftHeight = jump1 + jump2
+        leftAngle = wiper + wiper + alte1 + alte2
+        rightHeight = jump2 + jump1
+        rightAngle = wiper + wiper + alte2 + alte1
+        n = len(jump1)
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        return A, 2 * n
+
     # Go here when you press 2. Added by Len Huang
     def get_ACTIVATED_animation(self, freeze_time=4):
-        # Starter code to get acquainted with this.
         A1, n1 = self.get_ACTIVATED_animation_awake()
         A2, n2 = self.get_ACTIVATED_animation_tilt()
         A3, n3 = self.get_ACTIVATED_animation_down()
         A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
-        N = [n1, n2, n3, n4]
-        A = [A1, A2, A3, A4]
+        A5, n5 = self.get_ACTIVATED_animation_glitch()
+        A6, n6 = self.get_ACTIVATED_animation_raiselowerleft()
+        N = [n1, n2, n3, n4, n5, n6]
+        A = [A1, A2, A3, A4, A5, A6]
         return np.hstack(A), np.sum(N)
 
     def get_surprise_animation(self):
