@@ -101,8 +101,8 @@ class Eyebrows():
         # Waking Up
         leftHeight = np.linspace(0, 20, n)
         leftAngle = np.linspace(0, -20, n)
-        rightHeight = -leftHeight
-        rightAngle = leftAngle
+        rightHeight = leftHeight
+        rightAngle = -leftAngle
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, n
 
