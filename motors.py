@@ -98,13 +98,12 @@ class Eyebrows():
     # Go here when you press 2. Added by Len Huang
     def get_ACTIVATED_animation(self, freeze_time=4):
         n = 300
-        # Left eyebrow raised
-        hl_arr = -10 * np.ones(n)
-        al_arr = -10 * np.ones(n)
-        hr_arr = 10 * np.ones(n)
-        ar_arr = 10 * np.ones(n)
-
-        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
+        # Waking Up
+        leftHeight = np.linspace(4, 11, n)
+        leftAngle = np.linspace(0, -12, n)
+        rightHeight = leftHeight
+        rightAngle = rightAngle
+        A = np.vstack([-leftHeight, leftAngle, rightHeight, -rightAngle])
         return A, n
 
     def get_surprise_animation(self):
