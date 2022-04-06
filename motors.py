@@ -97,8 +97,8 @@ class Eyebrows():
         # A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
         # return A, n*8
         n = 20
-        zeros = np.zeros(n)
-        A = np.vstack([zeros, zeros, zeros, zeros])
+        low = -20 * np.ones(n)
+        A = np.vstack([low, low, low, low])
         return A, n
 
     # Helper for ACTIVATED
@@ -181,7 +181,7 @@ class Eyebrows():
 
     # Go here when you press 2. Added by Len Huang
 
-    def get_ACTIVATED_animation(self, freeze_time=4):
+    def get_ACTIVATED_animation(self):
         A1, n1 = self.get_ACTIVATED_animation_awake()
         # A2, n2 = self.get_ACTIVATED_animation_tilt()
         A3, n3 = self.get_ACTIVATED_animation_down()
@@ -197,8 +197,8 @@ class Eyebrows():
     # Look at the bottom left / map / portal button thing
     def get_idle2_animation(self):
         n = 20
-        fifteen = 15 * np.ones(n)
-        A = np.vstack([-fifteen, -fifteen, -fifteen, -fifteen])
+        twelve = 12 * np.ones(n)
+        A = np.vstack([-twelve, -twelve, -twelve, twelve])
         return A, n
 
     def get_surprise_animation(self):
