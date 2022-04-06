@@ -155,21 +155,33 @@ if __name__ == "__main__":
         servo4.set_angle(-int(angle4))  # Bigger => More Inward Angle
 
 '''
-Eyebrows In (Angry) Neutral
-enter servo1 angle btwn -20 and 20: -10
-enter servo2 angle btwn -20 and 20: 10
-enter servo3 angle btwn -20 and 20: 10
-enter servo4 angle btwn -20 and 20: -10
+Eyebrows In High (Angry)
+leftHeight btwn -20 and 20:  20
+leftAngle btwn -20 and 20:   20
+rightHeight btwn -20 and 20: 20
+rightAngle btwn -20 and 20:  20
 
-Eyebrows In (Angry) High
-enter servo1 angle btwn -20 and 20: -20
-enter servo2 angle btwn -20 and 20: 20
-enter servo3 angle btwn -20 and 20: 20
-enter servo4 angle btwn -20 and 20: -20
+Eyebrows In Low (Inspecting)
+leftHeight btwn -20 and 20:  -20
+leftAngle btwn -20 and 20:   20
+rightHeight btwn -20 and 20: -20
+rightAngle btwn -20 and 20:  20
 
-Eyebrows Out (Concerned) Neutral
-enter servo1 angle btwn -20 and 20: 10
-enter servo2 angle btwn -20 and 20: -10
-enter servo3 angle btwn -20 and 20: -10
-enter servo4 angle btwn -20 and 20: 10
+Eyebrows Out Neutral (Concerned)
+leftHeight btwn -20 and 20:  7
+leftAngle btwn -20 and 20:   -12
+rightHeight btwn -20 and 20: 7
+rightAngle btwn -20 and 20:  -12
+
+Eyebrows Looking (My Left, BEN's Right)
+leftHeight btwn -20 and 20:  7
+leftAngle btwn -20 and 20:   -12
+rightHeight btwn -20 and 20: 7
+rightAngle btwn -20 and 20:  12
+
+Eyebrows Looking (My Right, BEN's Right)
+leftHeight btwn -20 and 20:  7
+leftAngle btwn -20 and 20:   12
+rightHeight btwn -20 and 20: 7
+rightAngle btwn -20 and 20:  -12
 '''
