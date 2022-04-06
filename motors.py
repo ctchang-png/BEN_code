@@ -138,8 +138,13 @@ if __name__ == "__main__":
     servo3 = Servo(7, angle_min=-100, angle_max=100, bias=15)
     servo4 = Servo(8, angle_min=-100, angle_max=100, bias=25)
     while True:
-        angle = input("enter angle between {} and {}: ".format(-20, 20))
-        servo1.set_angle(-int(angle))
-        servo2.set_angle(int(angle))
-        servo3.set_angle(int(angle))
-        servo4.set_angle(-int(angle))
+        # angle = input("enter angle for servo1 between {} and {}: ".format(-20, 20))
+        # servo1.set_angle(-int(angle))
+        # servo2.set_angle(int(angle))
+        # servo3.set_angle(int(angle))
+        # servo4.set_angle(-int(angle))
+
+        angle1 = input("enter servo1 angle btwn {} and {}: ".format(-20, 20))
+        angle2 = input("enter servo2 angle btwn {} and {}: ".format(-20, 20))
+        angle3 = input("enter servo3 angle btwn {} and {}: ".format(-20, 20))
+        angle4 = input("enter servo4 angle btwn {} and {}: ".format(-20, 20))
