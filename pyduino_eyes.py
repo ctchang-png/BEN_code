@@ -199,8 +199,8 @@ class Eyes():
         midW = int(1/2 * self.width)
         height = midH + (7 * np.sin(np.linspace(0, 2 * np.pi, n)))
         width = midW + (7 * np.cos(np.linspace(0, 2 * np.pi, n)))
-        height = np.concat([height, height, height, height, height])
-        width = np.concat([width, width, width, width, width])
+        height = np.concatenate([height, height, height, height, height])
+        width = np.concatenate([width, width, width, width, width])
         A = np.vstack([height, width])
         return A, A.shape[1]
 
