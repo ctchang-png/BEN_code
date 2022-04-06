@@ -122,7 +122,7 @@ class Eyebrows():
         if animation_name == "IDLE1":
             A, n = self.get_idle1_animation()
         if animation_name == "ACTIVATED":
-            A, n = self.get_idle1_animation()
+            A, n = self.get_ACTIVATED_animation()
         if animation_name == "surprise":
             A, n = self.get_surprise_animation()
         self.animation = A
