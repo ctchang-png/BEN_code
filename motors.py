@@ -149,7 +149,27 @@ if __name__ == "__main__":
         angle2 = input("enter servo2 angle btwn {} and {}: ".format(-20, 20))
         angle3 = input("enter servo3 angle btwn {} and {}: ".format(-20, 20))
         angle4 = input("enter servo4 angle btwn {} and {}: ".format(-20, 20))
-        servo1.set_angle(int(angle1))
+        servo1.set_angle(int(-angle1))
         servo2.set_angle(int(angle2))
         servo3.set_angle(int(angle3))
-        servo4.set_angle(int(angle4))
+        servo4.set_angle(int(-angle4))
+
+'''
+Eyebrows In (Angry) Neutral
+enter servo1 angle btwn -20 and 20: -10
+enter servo2 angle btwn -20 and 20: 10
+enter servo3 angle btwn -20 and 20: 10
+enter servo4 angle btwn -20 and 20: -10
+
+Eyebrows In (Angry) High
+enter servo1 angle btwn -20 and 20: -20
+enter servo2 angle btwn -20 and 20: 20
+enter servo3 angle btwn -20 and 20: 20
+enter servo4 angle btwn -20 and 20: -20
+
+Eyebrows Out (Concerned) Neutral
+enter servo1 angle btwn -20 and 20: 10
+enter servo2 angle btwn -20 and 20: -10
+enter servo3 angle btwn -20 and 20: -10
+enter servo4 angle btwn -20 and 20: 10
+'''
