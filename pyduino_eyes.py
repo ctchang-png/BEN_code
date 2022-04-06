@@ -101,7 +101,7 @@ class Eyes():
         A = np.vstack([x_arr, y_arr])
         return A, A.shape[1]
 
-    def get_ACTIVATED_animation_chris(self, freeze_time=4):
+    def get_ACTIVATED_animation(self, freeze_time=4):
         # Animation when robot enters 'activated' state following a button press
         # Look up towards user's eyes
         n_move = 10
@@ -164,7 +164,7 @@ class Eyes():
     def get_ACTIVATED_animation_glitch(self, freeze_time=4):
         return [], 0
 
-    def get_ACTIVATED_animation(self, freeze_time=4):
+    def get_ACTIVATED_animation_len(self, freeze_time=4):
         A1, n1 = self.get_ACTIVATED_animation_awake()  # Look Up At User
         A2, n2 = self.get_ACTIVATED_animation_tilt()  # Look To Sides with Tilt
         A3, n3 = self.get_ACTIVATED_animation_down()  # Look Back at Neutral
