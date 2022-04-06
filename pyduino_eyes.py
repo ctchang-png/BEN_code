@@ -75,10 +75,13 @@ class Eyes():
     # Len focus on this
     def get_idle2_animation(self):
         "Slight pupil motions while looking towards map of treasure planet"
+        # X is height, Y is horizontal
         n_move = 5
         n_idle = 40
+        # change to 1/5 for more to the left
         x = int(self.width*(4/5)) + \
             np.random.randint(-self.width/10, self.width/10)
+        # change to 2/3 for more to the bottom?
         y = int(self.height/2) + \
             np.random.randint(-self.width/10, self.width/10)
         x_arr = np.linspace(self.px, x, n_move)
