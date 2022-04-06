@@ -6,7 +6,7 @@ import time
 
 
 class Servo():
-    def __init__(self, pin, angle_min=-20, angle_max=20, bias=0):
+    def __init__(self, pin, angle_min=-15, angle_max=15, bias=0):
         self.pin = pin
         if angle_min < -210/2:
             angle_min = 210/2
@@ -50,10 +50,10 @@ class Servo():
 
 class Eyebrows():
     def __init__(self):
-        self.hl = Servo(2, angle_min=-20, angle_max=20, bias=0)
-        self.al = Servo(3, angle_min=-20, angle_max=20, bias=0)
-        self.hr = Servo(4, angle_min=-20, angle_max=20, bias=15)
-        self.ar = Servo(14, angle_min=-20, angle_max=20, bias=25)
+        self.hl = Servo(2, angle_min=-15, angle_max=15, bias=0)
+        self.al = Servo(3, angle_min=-15, angle_max=15, bias=0)
+        self.hr = Servo(4, angle_min=-15, angle_max=15, bias=15)
+        self.ar = Servo(14, angle_min=-15, angle_max=15, bias=25)
 
         self.animation = None
         self.frame = 0
@@ -99,8 +99,7 @@ class Eyebrows():
         A = np.vstack([zeros, zeros, zeros, zeros])
         return A, n
 
-    # Go here when you press 2. Added by Len Huang
-
+    # Helper for ACTIVATED
     def get_ACTIVATED_animation_awake(self):
         n = 20
         fullRange = np.linspace(-20, 20, n)
@@ -112,6 +111,7 @@ class Eyebrows():
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, 2 * n
 
+    # Helper for ACTIVATED
     def get_ACTIVATED_animation_tilt(self):
         n = 20
         posTwenty = 20 * np.ones(n)
@@ -122,6 +122,7 @@ class Eyebrows():
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, 2 * n
 
+    # Helper for ACTIVATED
     def get_ACTIVATED_animation_down(self):
         n = 20
         leftHeight = np.linspace(20, 0, n)
@@ -131,14 +132,33 @@ class Eyebrows():
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, n
 
+    # Helper for ACTIVATED
+    def get_ACTIVATED_animation_raiselowerleft(self):
+        n = 20
+        leftHeight = np.concatenate(
+            [np.linspace(0, 20, n), np.linspace(20, -10, n)]
+        )
+        leftAngle = np.concatenate(
+            [np.linspace(0, 15, n), np.linspace(15, -10, n)]
+        )
+        rightHeight = np.concatenate(
+            [np.linspace(0, 5, n), np.linspace(5, -10, n)]
+        )
+        rightAngle = np.concatenate(
+            [np.linspace(0, 5, n), np.linspace(5, -10, n)]
+        )
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        return A, n
+
+    # Go here when you press 2. Added by Len Huang
     def get_ACTIVATED_animation(self, freeze_time=4):
         # Starter code to get acquainted with this.
-        # Eyebrows start low and concerned then go up and angry
         A1, n1 = self.get_ACTIVATED_animation_awake()
         A2, n2 = self.get_ACTIVATED_animation_tilt()
         A3, n3 = self.get_ACTIVATED_animation_down()
-        N = [n1, n2, n3]
-        A = [A1, A2, A3]
+        A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
+        N = [n1, n2, n3, n4]
+        A = [A1, A2, A3, A4]
         return np.hstack(A), np.sum(N)
 
     def get_surprise_animation(self):
