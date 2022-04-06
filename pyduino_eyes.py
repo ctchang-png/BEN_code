@@ -83,7 +83,7 @@ class Eyes():
         x = int((1/5) * self.width) + \
             np.random.randint(-self.width/10, self.width/10)
         # change to 2/3 for more to the bottom?
-        y = int((self.height/2 + (1/8)*self.height) + \
+        y = int((self.height/2 + (1/8)*self.height)) + \
             np.random.randint(-self.width/10, self.width/10)
         x_arr = np.linspace(self.px, x, n_move)
         x_arr = np.concatenate((x_arr, x*np.ones(n_idle)))
