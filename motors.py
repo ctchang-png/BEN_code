@@ -129,7 +129,7 @@ class Eyebrows():
         A2, n2 = self.get_ACTIVATED_animation_tilt()
         N = [n1, n2]
         A = [A1, A2]
-        return np.hstack(np.concatenate(A)), np.sum(N)
+        return np.hstack(A), np.sum(N)
 
     def get_surprise_animation(self):
         n_zero = 10
