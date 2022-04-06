@@ -97,7 +97,7 @@ class Eyebrows():
 
     # Go here when you press 2. Added by Len Huang
     def get_ACTIVATED_animation(self, freeze_time=4):
-        n = 20
+        n = 4
         # Waking Up
         leftHeight = [np.linspace(0, 20, n)]
         leftAngle = [np.linspace(0, -20, n)]
