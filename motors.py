@@ -164,8 +164,8 @@ class Eyebrows():
     def get_ACTIVATED_animation(self):
         "Why hello there, it seems you've awakened me from something"
         A1, n1 = self.get_ACTIVATED_animation_awake()
-        # "I'm looking around, at you all,"
-        # A2, n2 = self.get_ACTIVATED_animation_tilt()
+        "I'm looking around, at you all,"
+        A2, n2 = self.get_ACTIVATED_animation_tilt()
         # "Can you help me find something important?"
         # A3, n3 = self.get_ACTIVATED_animation_down()
         # "I'm forgetting what it was"
@@ -174,8 +174,8 @@ class Eyebrows():
         # A5, n5 = self.get_ACTIVATED_animation_glitch()
         # N = [n1, n2, n3, n4, n5]
         # A = [A1, A2, A3, A4, A5]
-        N = [n1]
-        A = [A1]
+        N = [n1, n2]
+        A = [A1, A2]
         return np.hstack(A), np.sum(N)
         # return self.get_ACTIVATED_animation_glitch()
 
