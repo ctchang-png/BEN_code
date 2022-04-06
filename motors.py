@@ -83,19 +83,24 @@ class Eyebrows():
             time.sleep(0.1)  # allow .1s to reach angle. Test and tune this
 
     def get_idle1_animation(self):
-        n = 10
-        hl_arr = np.concatenate([np.linspace(
-            0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n), np.zeros(4*n)])
-        al_arr = np.concatenate([np.zeros(
-            4*n), np.linspace(0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n)])
-        hr_arr = np.concatenate([np.linspace(
-            0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n), np.zeros(4*n)])
-        ar_arr = np.concatenate([np.zeros(
-            4*n), np.linspace(0, 20, n), np.linspace(20, -20, 2*n), np.linspace(-20, 0, n)])
-        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
-        return A, n*8
+        # n = 10
+        # hl_arr = np.concatenate([np.linspace(
+        #     0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n), np.zeros(4*n)])
+        # al_arr = np.concatenate([np.zeros(
+        #     4*n), np.linspace(0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n)])
+        # hr_arr = np.concatenate([np.linspace(
+        #     0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n), np.zeros(4*n)])
+        # ar_arr = np.concatenate([np.zeros(
+        #     4*n), np.linspace(0, 20, n), np.linspace(20, -20, 2*n), np.linspace(-20, 0, n)])
+        # A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
+        # return A, n*8
+        n = 20
+        zeros = np.zeros(n)
+        A = np.vstack([zeros, zeros, zeros, zeros])
+        return A, n
 
     # Go here when you press 2. Added by Len Huang
+
     def get_ACTIVATED_animation(self, freeze_time=4):
         n = 20
         # Waking Up
