@@ -80,10 +80,10 @@ class Eyes():
         n_move = 5
         n_idle = 40
         # change to 1/5 for more to the left
-        x = int(self.width*(4/5)) + \
+        x = int((1/5) * self.width) + \
             np.random.randint(-self.width/10, self.width/10)
         # change to 2/3 for more to the bottom?
-        y = int(self.height/2) + \
+        y = int((2/3) * self.height) + \
             np.random.randint(-self.width/10, self.width/10)
         x_arr = np.linspace(self.px, x, n_move)
         x_arr = np.concatenate((x_arr, x*np.ones(n_idle)))
@@ -195,8 +195,8 @@ class Eyes():
     # Helper FN, look everywhere
     def get_ACTIVATED_animation_glitch(self, freeze_time=4):
         n = 10
-        midH = int(2/5 * self.height)
-        midW = int(2/5 * self.width)
+        midH = int(3/5 * self.height)
+        midW = int(3/5 * self.width)
         height = midH + (10 * np.sin(np.linspace(0, 2 * np.pi, n)))
         width = midW + (10 * np.cos(np.linspace(0, 2 * np.pi, n)))
         height = np.concatenate([height, height, height, height, height])
