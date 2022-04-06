@@ -152,7 +152,7 @@ class Eyes():
     def get_ACTIVATED_animation_awake(self, freeze_time=4):
         n = 75
         height = np.linspace(int(1/5 * self.height), int(4/5 * self.height), n)
-        width = int(2/5 * self.width) * np.ones(n)
+        width = int(1/2 * self.width) * np.ones(n)
         A = np.vstack([height, width])
         return A, A.shape[1]
 
@@ -195,10 +195,10 @@ class Eyes():
     # Helper FN, look everywhere
     def get_ACTIVATED_animation_glitch(self, freeze_time=4):
         n = 10
-        midH = int(1/2 * self.height)
-        midW = int(1/2 * self.width)
-        height = midH + (7 * np.sin(np.linspace(0, 2 * np.pi, n)))
-        width = midW + (7 * np.cos(np.linspace(0, 2 * np.pi, n)))
+        midH = int(2/5 * self.height)
+        midW = int(2/5 * self.width)
+        height = midH + (10 * np.sin(np.linspace(0, 2 * np.pi, n)))
+        width = midW + (10 * np.cos(np.linspace(0, 2 * np.pi, n)))
         height = np.concatenate([height, height, height, height, height])
         width = np.concatenate([width, width, width, width, width])
         A = np.vstack([height, width])
