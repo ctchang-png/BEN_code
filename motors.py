@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 import time
 
-GPIO.setmode(GPIO.BOARD)  # Handled by door_animation.py
+# GPIO.setmode(GPIO.BOARD)  # Handled by door_animation.py, uncomment to run this main method
 
 
 class Servo():
