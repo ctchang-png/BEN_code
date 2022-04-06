@@ -161,7 +161,7 @@ class Eyes():
         n = 30
         height = np.concatenate(
             [np.linspace(int(4/5 * self.height), int(1/2 * self.height), n),
-             int(1/2 * self.height) * np.ones(n)]
+             int(1/2 * self.height) * np.ones(n + 2 * (n // 2))]
         )
         seeleft = np.linspace(int(2/5 * self.width),
                               int(5/6 * self.width), n)
