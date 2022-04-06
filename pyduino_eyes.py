@@ -152,7 +152,7 @@ class Eyes():
     def get_ACTIVATED_animation_awake(self, freeze_time=4):
         n = 75
         height = np.linspace(int(1/5 * self.height), int(4/5 * self.height), n)
-        width = int(3/5 * self.width) * np.ones(n)
+        width = int(2/5 * self.width) * np.ones(n)
         A = np.vstack([height, width])
         return A, A.shape[1]
 
@@ -164,12 +164,12 @@ class Eyes():
              int(3/6 * self.height) * np.ones(n - (n // 3)),
              int(3/6 * self.height) * np.ones(n), ]
         )
-        seeright = np.linspace(int(1/6 * self.width),
-                               int(5/6 * self.width), n // 2)
-        stayright = int(5/6 * self.width) * np.ones(n - (n // 2))
-        seeleft = np.linspace(int(5/6 * self.width),
-                              int(1/6 * self.width), n // 2)
-        stayleft = int(1/6 * self.width) * np.ones(n - (n // 2))
+        seeleft = np.linspace(int(2/5 * self.width),
+                              int(5/6 * self.width), n)
+        stayleft = int(5/6 * self.width) * np.ones(n // 2)
+        seeright = np.linspace(int(5/6 * self.width),
+                               int(1/6 * self.width), n)
+        stayright = int(1/6 * self.width) * np.ones(n // 2)
         width = np.concatenate([seeright, stayright, seeleft, stayleft])
         A = np.vstack([height, width])
         return A, A.shape[1]
