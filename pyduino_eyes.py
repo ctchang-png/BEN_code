@@ -175,26 +175,41 @@ class Eyes():
 
     # Helper FN, look to sides with down
     def get_ACTIVATED_animation_down(self, freeze_time=4):
-        return [], 0
+        n = 40
+        height = int(2/5 * self.height) * np.ones(n)
+        left2mid = np.linspace(int(1/5 * self.width),
+                               int(2/5 * self.width), n // 2)
+        staymid = int(2/5 * self.width) * np.ones(n - (n // 2))
+        width = np.concatenate([left2mid, staymid])
+        A = np.vstack([height, width])
+        return A, A.shape[1]
 
     # Helper FN, look up left
     def get_ACTIVATED_animation_raiseleft(self, freeze_time=4):
-        return [], 0
+        n = 40
+        height = np.linspace(int(2/5 * self.height), int(3/5 * self.height), n)
+        width = int(2/5 * self.width) * np.ones(n)
+        A = np.vstack([height, width])
+        return A, A.shape[1]
 
     # Helper FN, look everywhere
     def get_ACTIVATED_animation_glitch(self, freeze_time=4):
-        return [], 0
+        n = 80
+        midH = int(1/2 * self.height)
+        midW = int(1/2 * self.width)
+        height = midH + 7 * np.sin(np.linspace(0, 2 * np.pi, n))
+        width = midW + 7 * np.cos(np.linspace(0, 2 * np.pi, n))
+        A = np.vstack([height, width])
+        return A, A.shape[1]
 
     def get_ACTIVATED_animation(self, freeze_time=4):
         A1, n1 = self.get_ACTIVATED_animation_awake()  # Look Up At User
         A2, n2 = self.get_ACTIVATED_animation_tilt()  # Look To Sides with Tilt
-        # A3, n3 = self.get_ACTIVATED_animation_down()  # Look Back at Neutral
-        # A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()  # Raise Eyebrow
-        # A5, n5 = self.get_ACTIVATED_animation_glitch()  # Glitch
-        # N = [n1, n2, n3, n4, n5]
-        # A = [A1, A2, A3, A4, A5]
-        N = [n1, n2]
-        A = [A1, A2]
+        A3, n3 = self.get_ACTIVATED_animation_down()  # Look Back at Neutral
+        A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()  # Raise Eyebrow
+        A5, n5 = self.get_ACTIVATED_animation_glitch()  # Glitch
+        N = [n1, n2, n3, n4, n5]
+        A = [A1, A2, A3, A4, A5]
         return np.hstack(A), np.sum(N)
 
     def set_state(self, state):

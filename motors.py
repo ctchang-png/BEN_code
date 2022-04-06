@@ -174,8 +174,6 @@ class Eyebrows():
         A5, n5 = self.get_ACTIVATED_animation_glitch()
         N = [n1, n2, n3, n4, n5]
         A = [A1, A2, A3, A4, A5]
-        # N = [n1, n2]
-        # A = [A1, A2]
         return np.hstack(A), np.sum(N)
         # return self.get_ACTIVATED_animation_glitch()
 
