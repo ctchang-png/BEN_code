@@ -187,8 +187,8 @@ class Eyebrows():
 
 
 if __name__ == "__main__":
-    servo1 = Servo(3, angle_min=-20, angle_max=20, bias=0)
-    servo2 = Servo(5, angle_min=-20, angle_max=20, bias=0)
+    servo1 = Servo(3, angle_min=-15, angle_max=15, bias=0)
+    servo2 = Servo(5, angle_min=-15, angle_max=15, bias=0)
     servo3 = Servo(7, angle_min=-100, angle_max=100, bias=15)
     servo4 = Servo(8, angle_min=-100, angle_max=100, bias=25)
     while True:
@@ -199,10 +199,10 @@ if __name__ == "__main__":
         # servo4.set_angle(-int(angle))
 
         print("")
-        angle1 = input("leftHeight btwn {} and {}:  ".format(-20, 20))
-        angle2 = input("leftAngle btwn {} and {}:   ".format(-20, 20))
-        angle3 = input("rightHeight btwn {} and {}: ".format(-20, 20))
-        angle4 = input("rightAngle btwn {} and {}:  ".format(-20, 20))
+        angle1 = input("leftHeight btwn {} and {}:  ".format(-15, 15))
+        angle2 = input("leftAngle btwn {} and {}:   ".format(-15, 15))
+        angle3 = input("rightHeight btwn {} and {}: ".format(-15, 15))
+        angle4 = input("rightAngle btwn {} and {}:  ".format(-15, 15))
         servo1.set_angle(-int(angle1))  # Bigger => Higher Up
         servo2.set_angle(int(angle2))  # Bigger => More Inward Angle
         servo3.set_angle(int(angle3))  # Bigger => Higher Up
