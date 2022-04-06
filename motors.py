@@ -66,7 +66,9 @@ class Eyebrows():
             # If animation is complete default to idling
             if self.state == "IDLE":
                 self.set_animation("IDLE1")
-            else:
+            elif self.state == "ACTIVATED":
+                self.set_animation("IDLE2")
+            elif self.state == "PORTAL":
                 self.set_animation("IDLE1")
         else:
             A = self.animation
@@ -181,14 +183,23 @@ class Eyebrows():
 
     def get_ACTIVATED_animation(self, freeze_time=4):
         A1, n1 = self.get_ACTIVATED_animation_awake()
-        A2, n2 = self.get_ACTIVATED_animation_tilt()
+        # A2, n2 = self.get_ACTIVATED_animation_tilt()
         A3, n3 = self.get_ACTIVATED_animation_down()
-        A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
+        # A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
         A5, n5 = self.get_ACTIVATED_animation_glitch()
         A6, n6 = self.get_ACTIVATED_animation_stayleft()
-        N = [n1, n2, n3, n4, n5, n6]
-        A = [A1, A2, A3, A4, A5, A6]
+        # N = [n1, n2, n3, n4, n5, n6]
+        # A = [A1, A2, A3, A4, A5, A6]
+        N = [n1, n3, n5, n6]
+        A = [A1, A3, A5, A6]
         return np.hstack(A), np.sum(N)
+
+    # Look at the bottom left / map / portal button thing
+    def get_idle2_animation(self):
+        n = 20
+        fifteen = 15 * np.ones(n)
+        A = np.vstack([-fifteen, -fifteen, -fifteen, -fifteen])
+        return A, n
 
     def get_surprise_animation(self):
         n_zero = 10
@@ -208,6 +219,8 @@ class Eyebrows():
             A, n = self.get_idle1_animation()
         if animation_name == "ACTIVATED":
             A, n = self.get_ACTIVATED_animation()
+        if animation_name == "IDLE2":
+            A, n = self.get_idle2_animation()
         if animation_name == "surprise":
             A, n = self.get_surprise_animation()
         self.animation = A
