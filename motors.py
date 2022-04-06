@@ -103,7 +103,7 @@ class Eyebrows():
 
     # Helper for ACTIVATED
     def get_ACTIVATED_animation_awake(self):
-        n = 20
+        n = 10
         fullRange = np.linspace(-20, 20, n)
         posTwenty = 20 * np.ones(n)
         leftHeight = np.concatenate([fullRange, posTwenty])
@@ -157,6 +157,7 @@ class Eyebrows():
         rightAngle = alte2 + alte1 + wiper + wiper + alte2 + alte1
         n = len(jump1)
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        #36 size
         return A, 3 * n
 
     # Go here when you press 2. Added by Len Huang

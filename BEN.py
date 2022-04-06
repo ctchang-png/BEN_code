@@ -132,6 +132,12 @@ while True:
     eyebrows.set_state(BEN_state)
     if not thread_manager.eyebrows_running:
         thread_manager.open_eyebrow_thread(eyebrows)
+    if BEN_state == "PORTAL" and not thread_manager.door_running:
+        prev_state = BEN_state
+        BEN_state = "IDLE"
+        print(BEN_state)
+        eyes.set_animation("IDLE1")
+        eyebrows.set_animation("IDLE1")
 
     if 'q' in keys:
         eyes.shutdown()
@@ -156,7 +162,7 @@ while True:
         print(BEN_state)
         eyes.set_animation("ACTIVATED")
         eyebrows.set_animation("ACTIVATED")
-        None
+    
 
     if '3' in keys:
         # Trigger the transition into PORTAL
@@ -166,7 +172,7 @@ while True:
         eyes.set_animation("PORTAL")
         eyebrows.set_animation("PORTAL")
         thread_manager.open_door_thread()
-        None
+    
 
     if 's' in keys:
         # Trigger the surprise emote

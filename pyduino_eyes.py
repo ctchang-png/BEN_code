@@ -149,8 +149,8 @@ class Eyes():
         return animation, animation.shape[1]
 
     # Helper FN, look up at the user
-    def get_ACTIVATED_animation_awake(self, freeze_time=4):
-        n = 75
+    def get_ACTIVATED_animation_awake(self):
+        n = 20
         height = np.linspace(int(1/5 * self.height), int(4/5 * self.height), n)
         width = int(1/2 * self.width) * np.ones(n)
         A = np.vstack([height, width])
@@ -158,7 +158,7 @@ class Eyes():
 
     # Helper FN, look to sides with tilt
     def get_ACTIVATED_animation_tilt(self, freeze_time=4):
-        n = 30
+        n = 40
         height = np.concatenate(
             [np.linspace(int(4/5 * self.height), int(2/5 * self.height), n),
              int(2/5 * self.height) * np.ones(n + 2 * (n // 2))]
@@ -175,7 +175,7 @@ class Eyes():
 
     # Helper FN, look to sides with down
     def get_ACTIVATED_animation_down(self, freeze_time=4):
-        n = 40
+        n = 20
         height = int(2/5 * self.height) * np.ones(n)
         left2mid = np.linspace(int(1/5 * self.width),
                                int(2/5 * self.width), n // 2)
@@ -186,7 +186,7 @@ class Eyes():
 
     # Helper FN, look up left
     def get_ACTIVATED_animation_raiseleft(self, freeze_time=4):
-        n = 40
+        n = 15
         height = np.linspace(int(2/5 * self.height), int(4/5 * self.height), n)
         width = int(1/2 * self.width) * np.ones(n)
         A = np.vstack([height, width])
@@ -194,7 +194,7 @@ class Eyes():
 
     # Helper FN, look everywhere
     def get_ACTIVATED_animation_glitch(self, freeze_time=4):
-        n = 10
+        n = 36
         midH = int(3/5 * self.height)
         midW = int(3/5 * self.width)
         height = midH + (10 * np.sin(np.linspace(0, 2 * np.pi, n)))
