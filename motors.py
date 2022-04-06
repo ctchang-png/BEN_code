@@ -189,15 +189,16 @@ class Eyebrows():
         angledown = np.linspace(-15, -2, n)
         leftHeight = np.concatenate(
             [lookup, lookdown, lookup, lookdown,
-             lookup, lookdown, (-15 * np.ones(n))]
+             lookup, lookdown,  lookup, lookdown, (-15 * np.ones(n))]
         )
         leftAngle = np.concatenate(
-            [angleup, angledown, angleup, angledown, angleup, angledown, angleup]
+            [angleup, angledown, angleup, angledown,
+             angleup, angledown, angleup, angledown, angleup]
         )
         rightHeight = leftHeight
         rightAngle = leftAngle
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
-        return A, 7 * n
+        return A, 9 * n
 
     def get_surprise_animation(self):
         n_zero = 10
