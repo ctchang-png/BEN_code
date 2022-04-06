@@ -169,7 +169,7 @@ class Eyes():
         seeright = np.linspace(int(4/5 * self.width),
                                int(1/5 * self.width), n)
         stayright = int(1/5 * self.width) * np.ones(n // 2)
-        width = np.concatenate([seeright, stayright, seeleft, stayleft])
+        width = np.concatenate([seeleft, stayleft, seeright, stayright])
         A = np.vstack([height, width])
         return A, A.shape[1]
 
@@ -187,18 +187,20 @@ class Eyes():
     # Helper FN, look up left
     def get_ACTIVATED_animation_raiseleft(self, freeze_time=4):
         n = 40
-        height = np.linspace(int(2/5 * self.height), int(3/5 * self.height), n)
-        width = int(2/5 * self.width) * np.ones(n)
+        height = np.linspace(int(2/5 * self.height), int(4/5 * self.height), n)
+        width = int(1/2 * self.width) * np.ones(n)
         A = np.vstack([height, width])
         return A, A.shape[1]
 
     # Helper FN, look everywhere
     def get_ACTIVATED_animation_glitch(self, freeze_time=4):
-        n = 80
+        n = 10
         midH = int(1/2 * self.height)
         midW = int(1/2 * self.width)
-        height = midH + 7 * np.sin(np.linspace(0, 2 * np.pi, n))
-        width = midW + 7 * np.cos(np.linspace(0, 2 * np.pi, n))
+        height = midH + (7 * np.sin(np.linspace(0, 2 * np.pi, n)))
+        width = midW + (7 * np.cos(np.linspace(0, 2 * np.pi, n)))
+        height = np.concat([height, height, height, height, height])
+        width = np.concat([width, width, width, width, width])
         A = np.vstack([height, width])
         return A, A.shape[1]
 
