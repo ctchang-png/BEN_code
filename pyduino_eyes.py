@@ -159,11 +159,11 @@ class Eyes():
     def get_ACTIVATED_animation_down(self, freeze_time=4):
         return [], 0
 
-    # Helper FN, look up left then look down left
-    def get_ACTIVATED_animation_raiselowerleft(self, freeze_time=4):
+    # Helper FN, look up left
+    def get_ACTIVATED_animation_raiseleft(self, freeze_time=4):
         return [], 0
 
-    # Helper FN, look up left then look down left
+    # Helper FN, look everywhere
     def get_ACTIVATED_animation_glitch(self, freeze_time=4):
         return [], 0
 
@@ -173,9 +173,8 @@ class Eyes():
         A3, n3 = self.get_ACTIVATED_animation_down()  # Look Back at Neutral
         A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()  # Raise Eyebrow
         A5, n5 = self.get_ACTIVATED_animation_glitch()  # Glitch
-        A6, n6 = self.get_ACTIVATED_animation_raiselowerleft()  # Raise Eyebrow
-        N = [n1, n2, n3, n4, n5, n6]
-        A = [A1, A2, A3, A4, A5, A6]
+        N = [n1, n2, n3, n4, n5]
+        A = [A1, A2, A3, A4, A5]
         return np.hstack(A), np.sum(N)
 
     def set_state(self, state):

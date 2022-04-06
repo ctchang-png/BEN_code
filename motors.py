@@ -135,20 +135,12 @@ class Eyebrows():
         return A, n
 
     # Helper for ACTIVATED
-    def get_ACTIVATED_animation_raiselowerleft(self):
-        n = 20
-        leftHeight = np.concatenate(
-            [np.linspace(0, 20, n), np.linspace(20, -10, n)]
-        )
-        leftAngle = np.concatenate(
-            [np.linspace(0, 15, n), np.linspace(15, -10, n)]
-        )
-        rightHeight = np.concatenate(
-            [np.linspace(0, 5, n), np.linspace(5, -10, n)]
-        )
-        rightAngle = np.concatenate(
-            [np.linspace(0, 5, n), np.linspace(5, -10, n)]
-        )
+    def get_ACTIVATED_animation_raiseleft(self):
+        n = 15
+        leftHeight = np.concatenate([np.linspace(0, 15, n), 15 * np.ones(n)])
+        leftAngle = np.concatenate([np.linspace(0, 15, n), 15 * np.ones(n)])
+        rightHeight = np.concatenate([np.linspace(0, -5, n), -5 * np.ones(n)])
+        rightAngle = np.concatenate([np.linspace(0, 10, n), 10 * np.ones(n)])
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, n
 
