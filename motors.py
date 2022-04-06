@@ -165,14 +165,27 @@ class Eyebrows():
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, 2 * n
 
+    def get_ACTIVATED_animation_stayleft(self):
+        n1 = 50
+        n2 = 20
+        fifteen = 15 * np.ones(n1)
+        goback = np.linspace(-15, 0, n2)
+        leftHeight = np.concatenate([-fifteen, goback])
+        leftAngle = np.concatenate([-fifteen, goback])
+        rightHeight = np.concatenate([-fifteen, goback])
+        rightAngle = np.concatenate([fifteen, -goback])
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        return A, n1 + n2
+
     # Go here when you press 2. Added by Len Huang
+
     def get_ACTIVATED_animation(self, freeze_time=4):
         A1, n1 = self.get_ACTIVATED_animation_awake()
         A2, n2 = self.get_ACTIVATED_animation_tilt()
         A3, n3 = self.get_ACTIVATED_animation_down()
         A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
         A5, n5 = self.get_ACTIVATED_animation_glitch()
-        A6, n6 = self.get_ACTIVATED_animation_raiselowerleft()
+        A6, n6 = self.get_ACTIVATED_animation_stayleft()
         N = [n1, n2, n3, n4, n5, n6]
         A = [A1, A2, A3, A4, A5, A6]
         return np.hstack(A), np.sum(N)
