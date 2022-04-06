@@ -130,7 +130,7 @@ eyebrows = Eyebrows()
 prev_state = "IDLE"
 thread_manager.open_keyboard_thread()
 while True:
-    if G.input(10) == G.HIGH:
+    if G.input(21) == G.HIGH:
         print("Yellow Button Pushed")
     thread_manager.clean_threads()
     eyes.set_state(BEN_state)
