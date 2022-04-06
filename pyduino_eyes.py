@@ -202,6 +202,15 @@ class Eyes():
         height = np.concatenate([height, height, height, height, height])
         width = np.concatenate([width, width, width, width, width])
         A = np.vstack([height, width])
+
+
+        n_pts = 6
+        n_pause = 6
+        x_pts = np.random.randint(0, self.width, n_pts)
+        y_pts = np.random.randint(0, self.height, n_pts)
+        x_arr = np.repeat(x_pts, n_pause)
+        y_arr = np.repeat(y_pts, n_pause)
+        A = np.vstack([x_arr, y_arr])
         return A, A.shape[1]
 
     def get_ACTIVATED_animation(self, freeze_time=4):
