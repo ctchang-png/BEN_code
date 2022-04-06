@@ -2,7 +2,8 @@ import RPi.GPIO as GPIO
 import numpy as np
 import time
 
-#GPIO.setmode(GPIO.BOARD) #Handled by door_animation.py
+# GPIO.setmode(GPIO.BOARD) #Handled by door_animation.py
+
 
 class Servo():
     def __init__(self, pin, angle_min=-20, angle_max=20, bias=0):
@@ -10,7 +11,8 @@ class Servo():
         if angle_min < -210/2:
             angle_min = 210/2
         if angle_max > 210/2:
-            angle_max = 210/2 #can techincally be a bit looser but +-20 or 30 deg should be standard for this bot
+            # can techincally be a bit looser but +-20 or 30 deg should be standard for this bot
+            angle_max = 210/2
         self.angle_min = angle_min
         self.angle_max = angle_max
         GPIO.setup(pin, GPIO.OUT)
@@ -22,23 +24,23 @@ class Servo():
         self.bias = bias
         self.set_angle(0)
         time.sleep(0.50)
-        print("Servo object at GPIO pin #{} created with angle limits: ({}, {})".format(pin, angle_min, angle_max))
-    
+        print("Servo object at GPIO pin #{} created with angle limits: ({}, {})".format(
+            pin, angle_min, angle_max))
+
     def set_angle(self, angle):
         if angle < self.angle_min:
             angle = self.angle_min
         if angle > self.angle_max:
             angle = self.angle_max
-        #angle: +100, -100
-        duty = 1.5+(12.5-1.5)* (angle+self.bias+100)/200
+        # angle: +100, -100
+        duty = 1.5+(12.5-1.5) * (angle+self.bias+100)/200
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty)
-        #time.sleep(0.5)
+        # time.sleep(0.5)
         GPIO.output(self.pin, False)
-        #self.pwm.ChangeDutyCycle(0)
-        #time.sleep(0.050)
+        # self.pwm.ChangeDutyCycle(0)
+        # time.sleep(0.050)
         self.angle = angle
-
 
     def shutdown(self):
         GPIO.output(self.pin, False)
@@ -46,15 +48,13 @@ class Servo():
         self.pwm.stop()
 
 
-
-    
 class Eyebrows():
     def __init__(self):
         self.hl = Servo(2, angle_min=-20, angle_max=20, bias=0)
         self.al = Servo(3, angle_min=-20, angle_max=20, bias=0)
         self.hr = Servo(4, angle_min=-20, angle_max=20, bias=15)
         self.ar = Servo(14, angle_min=-20, angle_max=20, bias=25)
-        
+
         self.animation = None
         self.frame = 0
         self.max_frame = 0
@@ -63,7 +63,7 @@ class Eyebrows():
     def advance_animation(self):
         self.frame = self.frame + 1
         if self.frame >= self.max_frame:
-            #If animation is complete default to idling
+            # If animation is complete default to idling
             if self.state == "IDLE":
                 self.set_animation("IDLE1")
             else:
@@ -74,22 +74,36 @@ class Eyebrows():
 
             if A.shape[0] != 4:
                 print("Animation should be array of shape (5xn)")
-            self.hl.set_angle(A[0,f])
-            self.al.set_angle(A[1,f])
-            #print("Attempting to set angle {}".format(A[2,f]))
-            self.hr.set_angle(-A[2,f])
-            self.ar.set_angle(A[3,f])
-            #self.jaw.set_angle(A[4,f])
-            time.sleep(0.1) #allow .1s to reach angle. Test and tune this
+            self.hl.set_angle(A[0, f])
+            self.al.set_angle(A[1, f])
+            # print("Attempting to set angle {}".format(A[2,f]))
+            self.hr.set_angle(-A[2, f])
+            self.ar.set_angle(A[3, f])
+            # self.jaw.set_angle(A[4,f])
+            time.sleep(0.1)  # allow .1s to reach angle. Test and tune this
 
     def get_idle1_animation(self):
         n = 10
-        hl_arr = np.concatenate([np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n), np.zeros(4*n)])
-        al_arr = np.concatenate([np.zeros(4*n), np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n)])
-        hr_arr = np.concatenate([np.linspace(0,-20,n),np.linspace(-20,20,2*n), np.linspace(20,0,n), np.zeros(4*n)])
-        ar_arr = np.concatenate([np.zeros(4*n), np.linspace(0,20,n),np.linspace(20,-20,2*n), np.linspace(-20,0,n)])
-        A = np.vstack([hl_arr,al_arr,hr_arr,ar_arr])
+        hl_arr = np.concatenate([np.linspace(
+            0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n), np.zeros(4*n)])
+        al_arr = np.concatenate([np.zeros(
+            4*n), np.linspace(0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n)])
+        hr_arr = np.concatenate([np.linspace(
+            0, -20, n), np.linspace(-20, 20, 2*n), np.linspace(20, 0, n), np.zeros(4*n)])
+        ar_arr = np.concatenate([np.zeros(
+            4*n), np.linspace(0, 20, n), np.linspace(20, -20, 2*n), np.linspace(-20, 0, n)])
+        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
         return A, n*8
+
+    # Go here when you press 2. Added by Len Huang
+    def get_ACTIVATED_animation(self, freeze_time=4):
+        n = 80
+        hl_arr = -10 * np.ones(n)
+        al_arr = -10 * np.ones(n)
+        hr_arr = -10 * np.ones(n)
+        ar_arr = -10 * np.ones(n)
+        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
+        return A, n
 
     def get_surprise_animation(self):
         n_zero = 10
@@ -107,13 +121,14 @@ class Eyebrows():
     def set_animation(self, animation_name):
         if animation_name == "IDLE1":
             A, n = self.get_idle1_animation()
+        if animation_name == "ACTIVATED":
+            A, n = self.get_idle1_animation()
         if animation_name == "surprise":
             A, n = self.get_surprise_animation()
         self.animation = A
         self.max_frame = n
         self.frame = 0
 
-    
 
 if __name__ == "__main__":
     servo1 = Servo(3, angle_min=-20, angle_max=20, bias=0)
