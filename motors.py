@@ -167,31 +167,16 @@ class Eyebrows():
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, 2 * n
 
-    def get_ACTIVATED_animation_stayleft(self):
-        n1 = 50
-        n2 = 20
-        fifteen = 15 * np.ones(n1)
-        goback = np.linspace(-15, 0, n2)
-        leftHeight = np.concatenate([-fifteen, goback])
-        leftAngle = np.concatenate([-fifteen, goback])
-        rightHeight = np.concatenate([-fifteen, goback])
-        rightAngle = np.concatenate([fifteen, -goback])
-        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
-        return A, n1 + n2
-
     # Go here when you press 2. Added by Len Huang
 
     def get_ACTIVATED_animation(self):
         A1, n1 = self.get_ACTIVATED_animation_awake()
-        # A2, n2 = self.get_ACTIVATED_animation_tilt()
+        A2, n2 = self.get_ACTIVATED_animation_tilt()
         A3, n3 = self.get_ACTIVATED_animation_down()
-        # A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
+        A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
         A5, n5 = self.get_ACTIVATED_animation_glitch()
-        A6, n6 = self.get_ACTIVATED_animation_stayleft()
-        # N = [n1, n2, n3, n4, n5, n6]
-        # A = [A1, A2, A3, A4, A5, A6]
-        N = [n1, n3, n5, n6]
-        A = [A1, A3, A5, A6]
+        N = [n1, n2, n3, n4, n5]
+        A = [A1, A2, A3, A4, A5]
         return np.hstack(A), np.sum(N)
 
     # Look at the bottom left / map / portal button thing
@@ -200,6 +185,20 @@ class Eyebrows():
         twelve = 12 * np.ones(n)
         A = np.vstack([-twelve, -twelve, -twelve, twelve])
         return A, n
+
+    # React to the portal
+    def get_portal_animation(self):
+        n = 20
+        lookup = np.linspace(-15, 15, n)
+        lookdown = np.linspace(15, -15, n)
+        angleup = np.linspace(-2, -15, n)
+        angledown = np.linspace(-15, -2, n)
+        leftHeight = lookup + lookdown + lookup + lookdown + (-15 * np.ones(n))
+        leftAngle = angleup + angledown + angleup + angledown + angleup
+        rightHeight = leftHeight
+        rightAngle = leftAngle
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        return A, 5 * n
 
     def get_surprise_animation(self):
         n_zero = 10
@@ -221,6 +220,8 @@ class Eyebrows():
             A, n = self.get_ACTIVATED_animation()
         if animation_name == "IDLE2":
             A, n = self.get_idle2_animation()
+        if animation_name == "PORTAL":
+            A, n = self.get_portal_animation()
         if animation_name == "surprise":
             A, n = self.get_surprise_animation()
         self.animation = A
