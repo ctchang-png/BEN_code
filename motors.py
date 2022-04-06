@@ -181,10 +181,11 @@ class Eyebrows():
 
     # Look at the bottom left / map / portal button thing
     def get_idle2_animation(self):
-        n = 20
-        twelve = 12 * np.ones(n)
-        A = np.vstack([-twelve, -twelve, -twelve, twelve])
-        return A, n
+        # n = 20
+        # twelve = 12 * np.ones(n)
+        # A = np.vstack([-twelve, -twelve, -twelve, twelve])
+        # return A, n
+        return self.get_idle1_animation()
 
     # React to the portal
     def get_portal_animation(self):
@@ -193,8 +194,12 @@ class Eyebrows():
         lookdown = np.linspace(15, -15, n)
         angleup = np.linspace(-2, -15, n)
         angledown = np.linspace(-15, -2, n)
-        leftHeight = lookup + lookdown + lookup + lookdown + (-15 * np.ones(n))
-        leftAngle = angleup + angledown + angleup + angledown + angleup
+        leftHeight = np.concat(
+            [lookup, lookdown, lookup, lookdown, (-15 * np.ones(n))]
+        )
+        leftAngle = np.concat(
+            [angleup, angledown, angleup, angledown, angleup]
+        )
         rightHeight = leftHeight
         rightAngle = leftAngle
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
