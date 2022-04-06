@@ -160,9 +160,8 @@ class Eyes():
     def get_ACTIVATED_animation_tilt(self, freeze_time=4):
         n = 30
         height = np.concatenate(
-            [np.linspace(int(5/6 * self.height), int(3/6 * self.height), n // 3),
-             int(3/6 * self.height) * np.ones(n - (n // 3)),
-             int(3/6 * self.height) * np.ones(n), ]
+            [np.linspace(int(4/5 * self.height), int(1/2 * self.height), n),
+             int(1/2 * self.height) * np.ones(n)]
         )
         seeleft = np.linspace(int(2/5 * self.width),
                               int(5/6 * self.width), n)
