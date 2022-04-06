@@ -150,7 +150,7 @@ class Eyes():
     # Helper FN, look up at the user
     def get_ACTIVATED_animation_awake(self, freeze_time=4):
         n = 20
-        height = np.linspace(int(4/5 * self.height), int(self.height/5), n)
+        height = np.linspace(int(1/5 * self.height), int(4/5 * self.height), n)
         width = int(self.width / 2) * np.ones(n)
         A = np.vstack([height, width])
         return A, A.shape[1]
