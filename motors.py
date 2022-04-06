@@ -6,7 +6,7 @@ import time
 
 
 class Servo():
-    def __init__(self, pin, angle_min=-12, angle_max=15, bias=0):
+    def __init__(self, pin, angle_min=-15, angle_max=15, bias=0):
         self.pin = pin
         if angle_min < -210/2:
             angle_min = 210/2
@@ -51,9 +51,9 @@ class Servo():
 class Eyebrows():
     def __init__(self):
         self.hl = Servo(2, angle_min=-10, angle_max=15, bias=0)
-        self.al = Servo(3, angle_min=-10, angle_max=15, bias=0)
+        self.al = Servo(3, angle_min=-15, angle_max=15, bias=0)
         self.hr = Servo(4, angle_min=-10, angle_max=15, bias=15)
-        self.ar = Servo(14, angle_min=-10, angle_max=15, bias=25)
+        self.ar = Servo(14, angle_min=-15, angle_max=15, bias=25)
 
         self.animation = None
         self.frame = 0
