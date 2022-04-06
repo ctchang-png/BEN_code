@@ -159,14 +159,14 @@ class Eyes():
     # Helper FN, look to sides with tilt
     def get_ACTIVATED_animation_tilt(self, freeze_time=4):
         n = 30
-        height = np.concat(
+        height = np.concatenate(
             [np.linspace(int(5/6 * self.height), int(3/6 * self.height), n // 3),
              int(3/6 * self.height) * np.ones(n - (n // 3)),
              int(3/6 * self.height) * np.ones(n), ]
         )
         seeright = np.linspace(int(1/6 * self.width), int(5/6 * self.width), n)
         seeleft = np.linspace(int(5/6 * self.width), int(1/6 * self.width), n)
-        width = np.concat([seeright, seeleft])
+        width = np.concatenate([seeright, seeleft])
         A = np.vstack([height, width])
         return A, A.shape[1]
 
