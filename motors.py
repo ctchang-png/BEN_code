@@ -165,7 +165,7 @@ class Eyebrows():
         A1, n1 = self.get_ACTIVATED_animation_awake()
         A2, n2 = self.get_ACTIVATED_animation_tilt()
         A3, n3 = self.get_ACTIVATED_animation_down()
-        A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
+        A4, n4 = self.get_ACTIVATED_animation_raiseleft()
         A5, n5 = self.get_ACTIVATED_animation_glitch()
         N = [n1, n2, n3, n4, n5]
         A = [A1, A2, A3, A4, A5]
