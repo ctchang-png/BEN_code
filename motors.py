@@ -105,12 +105,12 @@ class Eyebrows():
         n = 20
         # Waking Up
         # for some reason this goes down up when intended to go up down
-        fullRange = np.linspace(20, -20, n)
-        negTwenty = -20 * np.ones(n)
-        leftHeight = np.concatenate([fullRange, negTwenty])
-        leftAngle = np.concatenate([-fullRange, -negTwenty])
+        fullRange = np.linspace(-20, 20, n)
+        posTwenty = 20 * np.ones(n)
+        leftHeight = np.concatenate([fullRange, posTwenty])
+        leftAngle = np.concatenate([fullRange, posTwenty])
         rightHeight = leftHeight
-        rightAngle = np.concatenate([fullRange, negTwenty])  # opp of leftAngle
+        rightAngle = leftAngle
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
         return A, 2 * n
 
@@ -160,35 +160,3 @@ if __name__ == "__main__":
         servo2.set_angle(int(angle2))  # Bigger => More Inward Angle
         servo3.set_angle(int(angle3))  # Bigger => Higher Up
         servo4.set_angle(-int(angle4))  # Bigger => More Inward Angle
-
-'''
-Eyebrows In High (Angry)
-leftHeight btwn -20 and 20:  20
-leftAngle btwn -20 and 20:   20
-rightHeight btwn -20 and 20: 20
-rightAngle btwn -20 and 20:  20
-
-Eyebrows In Low (Inspecting)
-leftHeight btwn -20 and 20:  -20
-leftAngle btwn -20 and 20:   20
-rightHeight btwn -20 and 20: -20
-rightAngle btwn -20 and 20:  20
-
-Eyebrows Out Neutral (Concerned)
-leftHeight btwn -20 and 20:  7
-leftAngle btwn -20 and 20:   -12
-rightHeight btwn -20 and 20: 7
-rightAngle btwn -20 and 20:  -12
-
-Eyebrows Looking (My Left, BEN's Right)
-leftHeight btwn -20 and 20:  7
-leftAngle btwn -20 and 20:   -12
-rightHeight btwn -20 and 20: 7
-rightAngle btwn -20 and 20:  12
-
-Eyebrows Looking (My Right, BEN's Right)
-leftHeight btwn -20 and 20:  7
-leftAngle btwn -20 and 20:   12
-rightHeight btwn -20 and 20: 7
-rightAngle btwn -20 and 20:  -12
-'''
