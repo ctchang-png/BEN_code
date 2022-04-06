@@ -99,13 +99,15 @@ class Eyebrows():
     def get_ACTIVATED_animation(self, freeze_time=4):
         n = 20
         # Waking Up
-        z2t = np.linspace(20, -20, n)
-        leftHeight = np.concatenate([z2t])
-        leftAngle = np.concatenate([-z2t])
+        # for some reason this goes down up when intended to go up down
+        fullRange = np.linspace(20, -20, n)
+        negTwenty = -20 * np.ones(n)
+        leftHeight = np.concatenate([fullRange, negTwenty])
+        leftAngle = np.concatenate([-fullRange, -negTwenty])
         rightHeight = leftHeight
-        rightAngle = np.concatenate([z2t])  # opp of leftAngle
+        rightAngle = np.concatenate([fullRange, negTwenty])  # opp of leftAngle
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
-        return A, n
+        return A, 2 * n
 
     def get_surprise_animation(self):
         n_zero = 10
