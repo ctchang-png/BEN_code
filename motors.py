@@ -170,14 +170,16 @@ class Eyebrows():
     # Go here when you press 2. Added by Len Huang
 
     def get_ACTIVATED_animation(self):
-        A1, n1 = self.get_ACTIVATED_animation_awake()
-        A2, n2 = self.get_ACTIVATED_animation_tilt()
-        A3, n3 = self.get_ACTIVATED_animation_down()
-        A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
-        A5, n5 = self.get_ACTIVATED_animation_glitch()
-        N = [n1, n2, n3, n4, n5]
-        A = [A1, A2, A3, A4, A5]
-        return np.hstack(A), np.sum(N)
+        # A1, n1 = self.get_ACTIVATED_animation_awake()
+        # A2, n2 = self.get_ACTIVATED_animation_tilt()
+        # A3, n3 = self.get_ACTIVATED_animation_down()
+        # A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()
+        # A5, n5 = self.get_ACTIVATED_animation_glitch()
+        # N = [n1, n2, n3, n4, n5]
+        # A = [A1, A2, A3, A4, A5]
+        # return np.hstack(A), np.sum(N)
+
+        return self.get_ACTIVATED_animation_glitch()
 
     # Look at the bottom left / map / portal button thing
     def get_idle2_animation(self):
@@ -189,21 +191,22 @@ class Eyebrows():
 
     # React to the portal
     def get_portal_animation(self):
-        n = 20
+        n = 12
         lookup = np.linspace(-15, 15, n)
         lookdown = np.linspace(15, -15, n)
         angleup = np.linspace(-2, -15, n)
         angledown = np.linspace(-15, -2, n)
         leftHeight = np.concatenate(
-            [lookup, lookdown, lookup, lookdown, (-15 * np.ones(n))]
+            [lookup, lookdown, lookup, lookdown,
+             lookup, lookdown, (-15 * np.ones(n))]
         )
         leftAngle = np.concatenate(
-            [angleup, angledown, angleup, angledown, angleup]
+            [angleup, angledown, angleup, angledown, angleup, angledown, angleup]
         )
         rightHeight = leftHeight
         rightAngle = leftAngle
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
-        return A, 5 * n
+        return A, 7 * n
 
     def get_surprise_animation(self):
         n_zero = 10
