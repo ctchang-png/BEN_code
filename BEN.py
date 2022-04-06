@@ -155,6 +155,7 @@ while True:
         BEN_state = "ACTIVATED"
         print(BEN_state)
         eyes.set_animation("ACTIVATED")
+        eyebrows.set_animation("ACTIVATED")
         None
 
     if '3' in keys:
