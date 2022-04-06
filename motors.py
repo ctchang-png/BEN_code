@@ -74,10 +74,10 @@ class Eyebrows():
 
             if A.shape[0] != 4:
                 print("Animation should be array of shape (5xn)")
-            self.hl.set_angle(A[0, f])
-            self.al.set_angle(A[1, f])
+            self.hl.set_angle(-A[0, f])
+            self.al.set_angle(-A[1, f])
             # print("Attempting to set angle {}".format(A[2,f]))
-            self.hr.set_angle(-A[2, f])
+            self.hr.set_angle(A[2, f])
             self.ar.set_angle(A[3, f])
             # self.jaw.set_angle(A[4,f])
             time.sleep(0.1)  # allow .1s to reach angle. Test and tune this
