@@ -5,7 +5,11 @@ from door_animation import do_door_animation
 from sound_effects import do_sound_effect
 from motors import Eyebrows
 from pyduino_eyes import Eyes
-#import RPi.GPIO as gpio
+import RPi.GPIO as G
+
+G.setwarnings(False)
+G.setmode(G.BCM)
+G.setup(21, G.IN, pull_up_down=G.PUD_DOWN)
 
 # sshkeyboard for ssh control
 from sshkeyboard import listen_keyboard, stop_listening
@@ -126,6 +130,8 @@ eyebrows = Eyebrows()
 prev_state = "IDLE"
 thread_manager.open_keyboard_thread()
 while True:
+    if G.input(10) == G.HIGH:
+        print("Yellow Button Pushed")
     thread_manager.clean_threads()
     eyes.set_state(BEN_state)
     eyes.advance_animation()
