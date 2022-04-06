@@ -125,8 +125,8 @@ class Eyebrows():
     def get_ACTIVATED_animation(self, freeze_time=4):
         # Starter code to get acquainted with this.
         # Eyebrows start low and concerned then go up and angry
-        n1, A1 = self.get_ACTIVATED_animation_awake()
-        n2, A2 = self.get_ACTIVATED_animation_tilt()
+        A1, n1 = self.get_ACTIVATED_animation_awake()
+        A2, n2 = self.get_ACTIVATED_animation_tilt()
         N = [n1, n2]
         A = [A1, A2]
         return np.hstack(np.concatenate(A)), np.sum(N)
