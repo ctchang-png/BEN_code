@@ -101,9 +101,7 @@ class Eyebrows():
 
     # Go here when you press 2. Added by Len Huang
 
-    def get_ACTIVATED_animation(self, freeze_time=4):
-        # Starter code to get acquainted with this.
-        # Eyebrows start low and concerned then go up and angry
+    def get_ACTIVATED_animation_awake(self):
         n = 20
         fullRange = np.linspace(-20, 20, n)
         posTwenty = 20 * np.ones(n)
@@ -112,10 +110,26 @@ class Eyebrows():
         rightHeight = leftHeight
         rightAngle = leftAngle
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
-        print("A", A)
-        A = np.hstack([A, A])
-        print("A after hstack", A)
-        return A, 4 * n
+        return A, 2 * n
+
+    def get_ACTIVATED_animation_tilt(self):
+        n = 20
+        posTwenty = 20 * np.ones(n)
+        leftHeight = np.concatenate([posTwenty, posTwenty])
+        leftAngle = np.concatenate([posTwenty, -posTwenty])
+        rightHeight = leftHeight
+        rightAngle = -leftAngle
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        return A, 2 * n
+
+    def get_ACTIVATED_animation(self, freeze_time=4):
+        # Starter code to get acquainted with this.
+        # Eyebrows start low and concerned then go up and angry
+        n1, A1 = self.get_ACTIVATED_animation_awake()
+        n2, A2 = self.get_ACTIVATED_animation_tilt()
+        N = [n1, n2]
+        A = [A1, A2]
+        return np.hstack(A), np.sum(N)
 
     def get_surprise_animation(self):
         n_zero = 10
