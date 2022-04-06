@@ -130,8 +130,6 @@ eyebrows = Eyebrows()
 prev_state = "IDLE"
 thread_manager.open_keyboard_thread()
 while True:
-    if G.input(21) == G.HIGH:
-        print("Yellow Button Pushed")
     thread_manager.clean_threads()
     eyes.set_state(BEN_state)
     eyes.advance_animation()
@@ -161,7 +159,7 @@ while True:
         eyes.set_animation("IDLE1")
         eyebrows.set_animation("IDLE1")
 
-    if '2' in keys:
+    if G.input(21) == G.HIGH:#'2' in keys:
         # Trigger the transition into ACTIVATED
         prev_state = BEN_state
         BEN_state = "ACTIVATED"
