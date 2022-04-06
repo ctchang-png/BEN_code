@@ -214,6 +214,27 @@ class Eyes():
         A = [A1, A2, A3, A4, A5]
         return np.hstack(A), np.sum(N)
 
+    def get_portal_animation(self):
+        n = 20
+        sinn = 10 * np.sin(np.linspace(0, 2 * np.pi, n))
+        coss = 10 * np.cos(np.linspace(0, 2 * np.pi, n))
+        midH1 = int(3/5 * self.height)
+        midW1 = int(3/5 * self.width)
+        midH2 = int(1/2 * self.height)
+        midW2 = int(1/2 * self.width)
+        midH3 = int(2/5 * self.height)
+        midW3 = int(2/5 * self.width)
+        height1 = midH1 + sinn
+        height2 = midH2 + sinn
+        height3 = midH3 + sinn
+        width1 = midW1 + coss
+        width2 = midW2 + coss
+        width3 = midW3 + coss
+        height = np.concatenate([height1, height2, height3])
+        width = np.concatenate([width1, width2, width3])
+        height = np.concatenate([height, height, height, height1])
+        width = np.concatenate([width, width, width, width1])
+
     def set_state(self, state):
         self.state = state
 
@@ -230,7 +251,7 @@ class Eyes():
         if animation_name == "IDLE2":
             A, n = self.get_idle2_animation()
         if animation_name == "PORTAL":
-            A, n = self.get_idle1_animation()
+            A, n = self.get_portal_animation()
         self.animation = A
         self.max_frame = n
         self.frame = 0
