@@ -157,8 +157,8 @@ class Eyes():
         return A, A.shape[1]
 
     # Helper FN, look to sides with tilt
-    def get_ACTIVATED_animation_tilt(self, freeze_time=4):
-        n = 40
+    def get_ACTIVATED_animation_tilt(self):
+        n = 10
         height = np.concatenate(
             [np.linspace(int(4/5 * self.height), int(2/5 * self.height), n),
              int(2/5 * self.height) * np.ones(n + 2 * (n // 2))]
@@ -185,7 +185,7 @@ class Eyes():
         return A, A.shape[1]
 
     # Helper FN, look up left
-    def get_ACTIVATED_animation_raiseleft(self, freeze_time=4):
+    def get_ACTIVATED_animation_raiseleft(self):
         n = 15
         height = np.linspace(int(2/5 * self.height), int(4/5 * self.height), n)
         width = int(1/2 * self.width) * np.ones(n)
