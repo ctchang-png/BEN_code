@@ -194,6 +194,7 @@ class Eyes():
 
     # Helper FN, look everywhere
     def get_ACTIVATED_animation_glitch(self, freeze_time=4):
+        '''
         n = 36
         midH = int(3/5 * self.height)
         midW = int(3/5 * self.width)
@@ -202,12 +203,12 @@ class Eyes():
         height = np.concatenate([height, height, height, height, height])
         width = np.concatenate([width, width, width, width, width])
         A = np.vstack([height, width])
-
+        '''
 
         n_pts = 6
         n_pause = 6
         x_pts = np.random.randint(0, self.width, n_pts)
-        y_pts = np.random.randint(0, self.height, n_pts)
+        y_pts = np.random.randint(self.height/2 - self.width/2, self.height/2 + self.width/2, n_pts)
         x_arr = np.repeat(x_pts, n_pause)
         y_arr = np.repeat(y_pts, n_pause)
         A = np.vstack([x_arr, y_arr])
@@ -221,6 +222,7 @@ class Eyes():
         A5, n5 = self.get_ACTIVATED_animation_glitch()  # Glitch
         N = [n1, n2, n3, n4, n5]
         A = [A1, A2, A3, A4, A5]
+        print("pyduino_eyes.py: get_ACTIVATED_animation produced animation of length {}".format(sum(N)))
         return np.hstack(A), np.sum(N)
 
     def get_portal_animation(self):
