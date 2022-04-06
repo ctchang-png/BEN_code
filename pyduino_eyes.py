@@ -234,6 +234,8 @@ class Eyes():
         width = np.concatenate([width1, width2, width3])
         height = np.concatenate([height, height, height, height1])
         width = np.concatenate([width, width, width, width1])
+        A = np.vstack([height, width])
+        return A, A.shape[1]
 
     def set_state(self, state):
         self.state = state
