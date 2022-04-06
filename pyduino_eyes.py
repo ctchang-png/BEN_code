@@ -166,10 +166,10 @@ class Eyes():
         )
         seeright = np.linspace(int(1/6 * self.width),
                                int(5/6 * self.width), n // 2)
-        stayright = int(4/5 * self.width) * np.ones(n - (n // 2))
-        seeleft = np.linspace(int(4/5 * self.width),
-                              int(1/5 * self.width), n // 2)
-        stayleft = int(4/5 * self.width) * np.ones(n - (n // 2))
+        stayright = int(5/6 * self.width) * np.ones(n - (n // 2))
+        seeleft = np.linspace(int(5/6 * self.width),
+                              int(1/6 * self.width), n // 2)
+        stayleft = int(1/6 * self.width) * np.ones(n - (n // 2))
         width = np.concatenate([seeright, stayright, seeleft, stayleft])
         A = np.vstack([height, width])
         return A, A.shape[1]
