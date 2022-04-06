@@ -206,7 +206,7 @@ class Eyes():
         A1, n1 = self.get_ACTIVATED_animation_awake()  # Look Up At User
         A2, n2 = self.get_ACTIVATED_animation_tilt()  # Look To Sides with Tilt
         A3, n3 = self.get_ACTIVATED_animation_down()  # Look Back at Neutral
-        A4, n4 = self.get_ACTIVATED_animation_raiselowerleft()  # Raise Eyebrow
+        A4, n4 = self.get_ACTIVATED_animation_raiseleft()  # Raise Eyebrow
         A5, n5 = self.get_ACTIVATED_animation_glitch()  # Glitch
         N = [n1, n2, n3, n4, n5]
         A = [A1, A2, A3, A4, A5]
