@@ -166,16 +166,16 @@ class Eyebrows():
         A1, n1 = self.get_ACTIVATED_animation_awake()
         "I'm looking around, at you all,"
         A2, n2 = self.get_ACTIVATED_animation_tilt()
-        # "Can you help me find something important?"
-        # A3, n3 = self.get_ACTIVATED_animation_down()
-        # "I'm forgetting what it was"
-        # A4, n4 = self.get_ACTIVATED_animation_raiseleft()
-        # "OH YES THE TREASURE MAP"
-        # A5, n5 = self.get_ACTIVATED_animation_glitch()
-        # N = [n1, n2, n3, n4, n5]
-        # A = [A1, A2, A3, A4, A5]
-        N = [n1, n2]
-        A = [A1, A2]
+        "Can you help me find something important?"
+        A3, n3 = self.get_ACTIVATED_animation_down()
+        "I'm forgetting what it was"
+        A4, n4 = self.get_ACTIVATED_animation_raiseleft()
+        "OH YES THE TREASURE MAP"
+        A5, n5 = self.get_ACTIVATED_animation_glitch()
+        N = [n1, n2, n3, n4, n5]
+        A = [A1, A2, A3, A4, A5]
+        # N = [n1, n2]
+        # A = [A1, A2]
         return np.hstack(A), np.sum(N)
         # return self.get_ACTIVATED_animation_glitch()
 
