@@ -66,8 +66,9 @@ def make_ignite_array(pixel_num):
     scroll_rate = -5
     animation = np.zeros((pixel_num, 3, pixel_num))
     for k in range((pixel_num - 0)//2):
-        i = int(pixel_num//2 - k) + 0
-        j = int(pixel_num//2 + k) + 0
+        i = int(pixel_num//2 - k) + 10
+        j = int(pixel_num//2 + k) + 10
+        print("i: {}, j: {} ".format(i,j))
         P = make_green_line(pixel_num, i, j)
         P = P + red_bias*red_mask*make_line(pixel_num, i, j)
         P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i, j)
