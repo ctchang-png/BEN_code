@@ -50,7 +50,7 @@ class Servo():
 
 class Eyebrows():
     def __init__(self):
-        self.hl = Servo(2, angle_min=-10, angle_max=15, bias=10)
+        self.hl = Servo(2, angle_min=-10, angle_max=15, bias=5)
         self.al = Servo(3, angle_min=-15, angle_max=15, bias=0)
         self.hr = Servo(4, angle_min=-10, angle_max=15, bias=10)
         self.ar = Servo(14, angle_min=-15, angle_max=15, bias=25)
