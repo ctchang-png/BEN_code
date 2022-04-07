@@ -4,6 +4,9 @@ from math import sqrt, exp, pi
 import board
 import neopixel
 
+PMIN = 30
+PMAX = 290
+PMID = 165
 
 def make_line(n, i, j):
     #generates a binary line from P[i] to P[j]
@@ -66,13 +69,12 @@ def make_ignite_array(pixel_num):
     scroll_rate = -5
     animation = np.zeros((pixel_num, 3, pixel_num))
     for k in range(1, (pixel_num - 0)//2):
-        i = int(pixel_num//2 - k) + 15
-        j = int(pixel_num//2 + k) + 15
-        if i < 20:
-            i = 30
-        if j > 300:
-            j = 300
-        print("i: {}, j: {} ".format(i,j))
+        i = PMID - k
+        j = PMID + k
+        if i < PMIN:
+            i = PMIN
+        if j > PMAX:
+            j = PMAX
         P = make_green_line(pixel_num, i, j)
         P = P + red_bias*red_mask*make_line(pixel_num, i, j)
         P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i, j)
@@ -139,7 +141,7 @@ def do_door_animation(simulated=False):
         scroll_rate = -5
         tic = time.time()
         while time.time() < tic + 10: #remain active for 10seconds
-            P = make_green_line(pixel_num, pixel_num)
+            P = make_green_line(pixel_num, PMIN, PMAX)
             P = P + red_bias*red_mask
             P = P + np.random.normal(scale=0.01, size=pixel_num)
             P = normalize(P)
