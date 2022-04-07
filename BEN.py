@@ -176,10 +176,5 @@ while True:
         eyes.set_animation("PORTAL")
         eyebrows.set_animation("PORTAL")
         thread_manager.open_door_thread()
-    
-
-    if 's' in keys:
-        # Trigger the surprise emote
-        surprise()
 
     time.sleep(0.050)

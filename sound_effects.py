@@ -28,15 +28,5 @@ def do_sound_effect(sound_effect_key):
 
 
 if __name__ == "__main__":
-    listener = Listener(on_press=on_press, on_release=on_release)
-    listener.start()
-
-    while True:
-        if len(keys) > 1:
-            print(
-                "Warning! Multiple keys activated. To avoid indeterminant behavior depress only 1 key at a time"
-            )
-        elif len(keys) == 0:
-            continue
-        do_sound_effect(KEYBOARD_EFFECT[list(keys)[0]])
+        do_sound_effect("smp")
         time.sleep(0.100)
