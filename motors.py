@@ -221,7 +221,7 @@ class Eyebrows():
         n = 10
         hl_arr = np.concatenate([np.linspace(-10, 20, n), [25, 20, 15, 20, 25, 20, 15, 20, 25, 20]])
         al_arr = np.concatenate([np.linspace(0, 5, n), 5*np.ones(n)])
-        hr_arr = np.concatenate([np.linspace(-10, 10, n), [25, 20, 15, 20, 25, 20, 15, 20, 25, 20]])
+        hr_arr = np.concatenate([np.linspace(-10, 10, n), [15, 10, 5, 10, 15, 10, 5, 10, 15, 10]])
         ar_arr = np.concatenate([np.linspace(0, 5, n), 5*np.ones(n)])
         jaw_arr = np.concatenate([np.linspace(0,-50,n), -50*np.ones(n)])
         A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr, jaw_arr])
