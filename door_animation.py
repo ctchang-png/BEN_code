@@ -120,7 +120,7 @@ def do_door_animation(simulated=False):
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
         #last idx
-        P = ignite_array[ignite_array.shape[0]-1, :]
+        P = ignite_array[-1, :]
         set_pixels(pixels, P, pixel_num, simulated, fig, axim)
         time.sleep(refresh_rate)
         
