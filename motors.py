@@ -70,7 +70,7 @@ class Eyebrows():
             elif self.state == "ACTIVATED":
                 self.set_animation("IDLE2")
             elif self.state == "PORTAL":
-                self.set_animation("IDLE1")
+                self.set_animation("IDLE3")
         else:
             A = self.animation
             f = self.frame
@@ -227,6 +227,16 @@ class Eyebrows():
         A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr, jaw_arr])
         return A, A.shape[1]
 
+    def get_idle3_animation(self):
+        n = 10
+        hl_arr = 10*np.ones(n)
+        al_arr = 10*np.ones(n)
+        hr_arr = 20*np.ones(n)
+        ar_arr = 5*np.ones(n)
+        jaw_arr = -50*np.ones(n)
+        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr, jaw_arr])
+        return A, A.shape[1]
+
     def get_surprise_animation(self):
         n_zero = 10
         n_up = 30
@@ -250,6 +260,8 @@ class Eyebrows():
             A, n = self.get_idle2_animation()
         if animation_name == "PORTAL":
             A, n = self.get_portal_animation()
+        if animation_name == "IDLE3":
+            A, n = self.get_idle3_animation()
         if animation_name == "surprise":
             A, n = self.get_surprise_animation()
         self.animation = A
