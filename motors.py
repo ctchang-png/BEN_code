@@ -50,9 +50,9 @@ class Servo():
 
 class Eyebrows():
     def __init__(self):
-        self.hl = Servo(2, angle_min=-10, angle_max=15, bias=5)
+        self.hl = Servo(2, angle_min=-10, angle_max=20, bias=5)
         self.al = Servo(3, angle_min=-15, angle_max=15, bias=0)
-        self.hr = Servo(4, angle_min=-10, angle_max=15, bias=10)
+        self.hr = Servo(4, angle_min=-10, angle_max=20, bias=10)
         self.ar = Servo(14, angle_min=-15, angle_max=15, bias=25)
         self.jaw = Servo(15, angle_min=-50, angle_max=0, bias=-30)
 
@@ -98,7 +98,7 @@ class Eyebrows():
         # A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
         # return A, n*8
         n = 20
-        low = -15 * np.ones(n)
+        low = -10 * np.ones(n)
         Z = np.zeros(n)
         A = np.vstack([low, low, low, low, Z])
         return A, n
