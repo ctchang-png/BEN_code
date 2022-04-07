@@ -197,6 +197,7 @@ class Eyebrows():
 
     # React to the portal
     def get_portal_animation(self):
+        '''
         n = 12
         lookup = np.linspace(-15, 15, n)
         lookdown = np.linspace(15, -15, n)
@@ -212,9 +213,19 @@ class Eyebrows():
         )
         rightHeight = leftHeight
         rightAngle = leftAngle
-        Z = np.zeros(n*9)
-        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, Z])
-        return A, 9 * n
+        jaw_drop = np.linspace(0, -50, n)
+        jaw_hold = -50*np.ones(8*n)
+        jaw = np.concatenate([jaw_drop, jaw_hold])
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, jaw])
+        '''
+        n = 10
+        hl_arr = np.linspace(-10, 10, n)
+        al_arr = np.linspace(0, 5, n)
+        hr_arr = np.linspace(-10, 20, n)
+        ar_arr = np.linspace(0, 5, n)
+        jaw_arr = np.concatenate([np.linspace(0,-50,5), -50*np.ones(5)])
+        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr, jaw_arr])
+        return A, A.shape[1]
 
     def get_surprise_animation(self):
         n_zero = 10

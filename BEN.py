@@ -159,7 +159,7 @@ while True:
         eyes.set_animation("IDLE1")
         eyebrows.set_animation("IDLE1")
 
-    if G.input(21) == G.HIGH:#'2' in keys:
+    if '2' in keys:
         # Trigger the transition into ACTIVATED
         prev_state = BEN_state
         BEN_state = "ACTIVATED"
@@ -168,7 +168,7 @@ while True:
         eyebrows.set_animation("ACTIVATED")
     
 
-    if '3' in keys:
+    if G.input(21) == G.HIGH:#'3' in keys:
         # Trigger the transition into PORTAL
         prev_state = BEN_state
         BEN_state = "PORTAL"

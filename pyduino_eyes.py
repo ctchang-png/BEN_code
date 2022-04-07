@@ -226,6 +226,7 @@ class Eyes():
         return np.hstack(A), np.sum(N)
 
     def get_portal_animation(self):
+        '''
         n = 20
         sinn = 10 * np.sin(np.linspace(0, 2 * np.pi, n))
         coss = 10 * np.cos(np.linspace(0, 2 * np.pi, n))
@@ -246,6 +247,21 @@ class Eyes():
         height = np.concatenate([height, height, height, height1])
         width = np.concatenate([width, width, width, width1])
         A = np.vstack([height, width])
+        '''
+        n = 10
+        x, y = self.px, self.py
+        x_arr = np.linspace(x, self.width/2, n)
+        y_arr = np.linspace(y, self.height/2 - (self.width/2) * (0.8), n) #hopefully minus is right
+        A = np.vstack([x_arr, y_arr])
+        return A, A.shape[1]
+
+    def get_idle3_animation(self):
+        n = 10
+        x, y = self.px, self.py
+        cx, cy = self.width/2, self.height/2 - (self.width/2 * 0.8) #match end points of portal animation
+        x_arr = np.linspace(x, cx+np.random.randint(-self.width/8, self.width/8), n)
+        y_arr = np.linspace(y, cy+np.random.randint(-self.width/8, self.width/8), n)
+        A = np.vstack([x_arr, y_arr])
         return A, A.shape[1]
 
     def set_state(self, state):
