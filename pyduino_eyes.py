@@ -251,7 +251,7 @@ class Eyes():
         n = 10
         x, y = self.px, self.py
         xf = self.width/2
-        yf = self.height/2 - self.width/2 * 0.7
+        yf = self.height/2 - self.width/2 * 0.6
         x_arr = np.concatenate([np.linspace(x, xf, n), xf*np.ones(n)])
         y_arr = np.concatenate([np.linspace(y, yf, n), yf*np.ones(n)]) #hopefully minus is right
         A = np.vstack([x_arr, y_arr])
@@ -260,7 +260,7 @@ class Eyes():
     def get_idle3_animation(self):
         n = 10
         x, y = self.px, self.py
-        cx, cy = self.width/2, self.height/2 - (self.width/2 * 0.8) #match end points of portal animation
+        cx, cy = self.width/2, self.height/2 - (self.width/2 * 0.6) #match end points of portal animation
         x_arr = np.linspace(x, cx+np.random.randint(-self.width/20, self.width/20), n)
         y_arr = np.linspace(y, cy+np.random.randint(-self.width/20, self.width/20), n)
         A = np.vstack([x_arr, y_arr])
@@ -281,6 +281,8 @@ class Eyes():
             A, n = self.get_ACTIVATED_animation()
         if animation_name == "IDLE2":
             A, n = self.get_idle2_animation()
+        if animation_name == "IDLE3":
+            A, n - self.get_idle3_animation()
         if animation_name == "PORTAL":
             A, n = self.get_portal_animation()
         self.animation = A
