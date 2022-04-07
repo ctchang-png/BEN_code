@@ -98,7 +98,7 @@ class Eyebrows():
         # A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
         # return A, n*8
         n = 20
-        low = -20 * np.ones(n)
+        low = -15 * np.ones(n)
         Z = np.zeros(n)
         A = np.vstack([low, low, low, low, Z])
         return A, n
