@@ -2,7 +2,7 @@
 import time
 import threading
 from door_animation import do_door_animation
-from sound_effects import do_sound_effect
+#from sound_effects import do_sound_effect
 from motors import Eyebrows
 from pyduino_eyes import Eyes
 import RPi.GPIO as G

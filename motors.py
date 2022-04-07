@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import numpy as np
 import time
 
-# GPIO.setmode(GPIO.BOARD)  # Handled by door_animation.py, uncomment to run this main method
+#GPIO.setmode(GPIO.BOARD)  # Handled by door_animation.py, uncomment to run this main method
 
 
 class Servo():
@@ -54,6 +54,7 @@ class Eyebrows():
         self.al = Servo(3, angle_min=-15, angle_max=15, bias=0)
         self.hr = Servo(4, angle_min=-10, angle_max=15, bias=15)
         self.ar = Servo(14, angle_min=-15, angle_max=15, bias=25)
+        self.jaw = Servo(15, angle_min=-50, angle_max=0, bias=-30)
 
         self.animation = None
         self.frame = 0
@@ -74,14 +75,14 @@ class Eyebrows():
             A = self.animation
             f = self.frame
 
-            if A.shape[0] != 4:
+            if A.shape[0] != 5:
                 print("Animation should be array of shape (5xn)")
             self.hl.set_angle(-A[0, f])
             self.al.set_angle(A[1, f])
             # print("Attempting to set angle {}".format(A[2,f]))
             self.hr.set_angle(A[2, f])
             self.ar.set_angle(-A[3, f])
-            # self.jaw.set_angle(A[4,f])
+            self.jaw.set_angle(A[4,f])
             time.sleep(0.1)  # allow .1s to reach angle. Test and tune this
 
     def get_idle1_animation(self):
@@ -98,7 +99,8 @@ class Eyebrows():
         # return A, n*8
         n = 20
         low = -20 * np.ones(n)
-        A = np.vstack([low, low, low, low])
+        Z = np.zeros(n)
+        A = np.vstack([low, low, low, low, Z])
         return A, n
 
     # Helper for ACTIVATED
@@ -110,7 +112,8 @@ class Eyebrows():
         leftAngle = np.concatenate([fullRange, posTwenty])
         rightHeight = leftHeight
         rightAngle = leftAngle
-        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        Z = np.zeros(2*n)
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, Z])
         return A, 2 * n
 
     # Helper for ACTIVATED
@@ -121,7 +124,8 @@ class Eyebrows():
         leftAngle = np.concatenate([posTwenty, -posTwenty])
         rightHeight = leftHeight
         rightAngle = -leftAngle
-        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        Z = np.zeros(2*n)
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, Z])
         return A, 2 * n
 
     # Helper for ACTIVATED
@@ -131,7 +135,8 @@ class Eyebrows():
         leftAngle = np.linspace(-20, 0, n)
         rightHeight = leftHeight
         rightAngle = -leftAngle
-        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        Z = np.zeros(n)
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, Z])
         return A, n
 
     # Helper for ACTIVATED
@@ -141,7 +146,8 @@ class Eyebrows():
         leftAngle = np.concatenate([np.linspace(0, 15, n), 15 * np.ones(n)])
         rightHeight = np.concatenate([np.linspace(0, -5, n), -5 * np.ones(n)])
         rightAngle = np.concatenate([np.linspace(0, 10, n), 10 * np.ones(n)])
-        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        Z = np.zeros(n)
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, Z])
         return A, n
 
     # Helper for ACTIVATED
@@ -156,7 +162,8 @@ class Eyebrows():
         rightHeight = jump2 + jump1 + jump2
         rightAngle = alte2 + alte1 + wiper + wiper + alte2 + alte1
         n = len(jump1)
-        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        Z = np.zeros(3*n)
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, Z])
         #36 size
         return A, 3 * n
 
@@ -183,7 +190,8 @@ class Eyebrows():
     def get_idle2_animation(self):
         n = 20
         twelve = 15 * np.ones(n)
-        A = np.vstack([-twelve, -twelve, -twelve, twelve])
+        Z = np.zeros(n)
+        A = np.vstack([-twelve, -twelve, -twelve, twelve, Z])
         return A, n
         # return self.get_idle1_animation()
 
@@ -204,7 +212,8 @@ class Eyebrows():
         )
         rightHeight = leftHeight
         rightAngle = leftAngle
-        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle])
+        Z = np.zeros(n*9)
+        A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, Z])
         return A, 9 * n
 
     def get_surprise_animation(self):
@@ -214,7 +223,8 @@ class Eyebrows():
         al_arr = np.zeros(n_zero+n_up)
         hr_arr = np.concatenate([np.zeros(n_zero), 20*np.ones(n_up)])
         ar_arr = np.zeros(n_zero+n_up)
-        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr])
+        Z = np.zeros(n_zero+n_up)
+        A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr, Z])
         return A, n_zero+n_up
 
     def set_state(self, state):
@@ -241,7 +251,7 @@ if __name__ == "__main__":
     servo2 = Servo(5, angle_min=-15, angle_max=15, bias=0)
     servo3 = Servo(7, angle_min=-100, angle_max=100, bias=15)
     servo4 = Servo(8, angle_min=-100, angle_max=100, bias=25)
-    servo5 = Servo(10, angle_min=-100, angle_max=100, bias=0)
+    servo5 = Servo(10, angle_min=-100, angle_max=100, bias=-30)
     while True:
         # angle = input("enter angle for servo1 between {} and {}: ".format(-20, 20))
         # servo1.set_angle(-int(angle))
@@ -250,13 +260,13 @@ if __name__ == "__main__":
         # servo4.set_angle(-int(angle))
 
         print("")
-        angle1 = input("leftHeight btwn {} and {}:  ".format(-15, 15))
-        angle2 = input("leftAngle btwn {} and {}:   ".format(-15, 15))
-        angle3 = input("rightHeight btwn {} and {}: ".format(-15, 15))
-        angle4 = input("rightAngle btwn {} and {}:  ".format(-15, 15))
+        #angle1 = input("leftHeight btwn {} and {}:  ".format(-15, 15))
+        #angle2 = input("leftAngle btwn {} and {}:   ".format(-15, 15))
+        #angle3 = input("rightHeight btwn {} and {}: ".format(-15, 15))
+        #angle4 = input("rightAngle btwn {} and {}:  ".format(-15, 15))
         angle5 = input("jawAngle: ")
-        servo1.set_angle(-int(angle1))  # Bigger => Higher Up
-        servo2.set_angle(int(angle2))  # Bigger => More Inward Angle
-        servo3.set_angle(int(angle3))  # Bigger => Higher Up
-        servo4.set_angle(-int(angle4))  # Bigger => More Inward Angle
+        #servo1.set_angle(-int(angle1))  # Bigger => Higher Up
+        #servo2.set_angle(int(angle2))  # Bigger => More Inward Angle
+        #servo3.set_angle(int(angle3))  # Bigger => Higher Up
+        #servo4.set_angle(-int(angle4))  # Bigger => More Inward Angle
         servo5.set_angle(int(angle5))
