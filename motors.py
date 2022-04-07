@@ -50,9 +50,9 @@ class Servo():
 
 class Eyebrows():
     def __init__(self):
-        self.hl = Servo(2, angle_min=-10, angle_max=20, bias=5)
+        self.hl = Servo(2, angle_min=-10, angle_max=30, bias=-15)
         self.al = Servo(3, angle_min=-15, angle_max=15, bias=0)
-        self.hr = Servo(4, angle_min=-10, angle_max=20, bias=10)
+        self.hr = Servo(4, angle_min=-10, angle_max=30, bias=20)
         self.ar = Servo(14, angle_min=-15, angle_max=15, bias=25)
         self.jaw = Servo(15, angle_min=-50, angle_max=0, bias=-30)
 
@@ -270,9 +270,9 @@ class Eyebrows():
 
 
 if __name__ == "__main__":
-    servo1 = Servo(3, angle_min=-15, angle_max=15, bias=10)
-    servo2 = Servo(5, angle_min=-15, angle_max=15, bias=0)
-    servo3 = Servo(7, angle_min=-100, angle_max=100, bias=10)
+    servo1 = Servo(3, angle_min=-100, angle_max=100, bias=-15)
+    servo2 = Servo(5, angle_min=-100, angle_max=100, bias=0)
+    servo3 = Servo(7, angle_min=-100, angle_max=100, bias=20)
     servo4 = Servo(8, angle_min=-100, angle_max=100, bias=25)
     servo5 = Servo(10, angle_min=-100, angle_max=100, bias=-30)
     while True:
@@ -287,9 +287,9 @@ if __name__ == "__main__":
         #angle2 = input("leftAngle btwn {} and {}:   ".format(-15, 15))
         #angle3 = input("rightHeight btwn {} and {}: ".format(-15, 15))
         #angle4 = input("rightAngle btwn {} and {}:  ".format(-15, 15))
-        angle5 = input("jawAngle: ")
-        #servo1.set_angle(-int(angle1))  # Bigger => Higher Up
-        #servo2.set_angle(int(angle2))  # Bigger => More Inward Angle
-        #servo3.set_angle(int(angle3))  # Bigger => Higher Up
-        #servo4.set_angle(-int(angle4))  # Bigger => More Inward Angle
-        servo5.set_angle(int(angle5))
+        angle = input("Angle: ")
+        servo1.set_angle(-int(angle))  # Bigger => Higher Up
+        servo2.set_angle(int(angle))  # Bigger => More Inward Angle
+        servo3.set_angle(int(angle))  # Bigger => Higher Up
+        servo4.set_angle(-int(angle))  # Bigger => More Inward Angle
+        servo5.set_angle(int(angle))
