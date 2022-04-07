@@ -219,9 +219,9 @@ class Eyebrows():
         A = np.vstack([leftHeight, leftAngle, rightHeight, rightAngle, jaw])
         '''
         n = 10
-        hl_arr = np.linspace(-10, 10, n)
+        hl_arr = np.linspace(-10, 20, n)
         al_arr = np.linspace(0, 5, n)
-        hr_arr = np.linspace(-10, 20, n)
+        hr_arr = np.linspace(-10, 10, n)
         ar_arr = np.linspace(0, 5, n)
         jaw_arr = np.concatenate([np.linspace(0,-50,5), -50*np.ones(5)])
         A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr, jaw_arr])
@@ -229,9 +229,9 @@ class Eyebrows():
 
     def get_idle3_animation(self):
         n = 10
-        hl_arr = 10*np.ones(n)
+        hl_arr = 20*np.ones(n)
         al_arr = 10*np.ones(n)
-        hr_arr = 20*np.ones(n)
+        hr_arr = 10*np.ones(n)
         ar_arr = 5*np.ones(n)
         jaw_arr = -50*np.ones(n)
         A = np.vstack([hl_arr, al_arr, hr_arr, ar_arr, jaw_arr])
