@@ -78,7 +78,7 @@ def make_ignite_array(pixel_num):
         #P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i, j)
         P = normalize(P)
         P = np.floor(P*160).astype(int) #Max Brightness of 128 to allow for yellow flash effect
-        animation[i,:] = P
+        animation[k,:] = P
         red_mask = np.roll(red_mask, scroll_rate, axis=1)
     return animation
 
@@ -102,7 +102,7 @@ def do_door_animation(simulated=False):
         pixels = None
 
     #Pre-compute animations
-    start = time.time()
+    #start = time.time()
     ignite_array = make_ignite_array(pixel_num)
     #print(time.time() - start) Takes the pi 0.13s to compute these frames
     try:
