@@ -41,7 +41,7 @@ class Eyes():
             elif self.state == "ACTIVATED":
                 self.set_animation("IDLE2")
             elif self.state == "PORTAL":
-                self.set_animation("IDLE1")
+                self.set_animation("IDLE3")
         else:
             A = self.animation
             f = self.frame
@@ -251,7 +251,7 @@ class Eyes():
         n = 10
         x, y = self.px, self.py
         xf = self.width/2
-        yf = self.height/2 - self.width/2 * 0.9
+        yf = self.height/2 - self.width/2 * 0.7
         x_arr = np.concatenate([np.linspace(x, xf, n), xf*np.ones(n)])
         y_arr = np.concatenate([np.linspace(y, yf, n), yf*np.ones(n)]) #hopefully minus is right
         A = np.vstack([x_arr, y_arr])
