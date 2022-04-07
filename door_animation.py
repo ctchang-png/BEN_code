@@ -122,12 +122,14 @@ def do_door_animation(simulated=False):
         #last idx
         P = ignite_array[-1, :]
         set_pixels(pixels, P, pixel_num, simulated, fig, axim)
+        tic = time.time()
         time.sleep(refresh_rate)
         
         #to yellow
         for _ in range(n):
-            print(_)
             P = P + inc
+            toc = time.time()
+            print(toc-tic)
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
         #to original
