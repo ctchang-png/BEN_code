@@ -68,6 +68,10 @@ def make_ignite_array(pixel_num):
     for k in range(1, (pixel_num - 0)//2):
         i = int(pixel_num//2 - k) + 10
         j = int(pixel_num//2 + k) + 10
+        if i < 20:
+            i = 20
+        if j > 300:
+            j = 300
         print("i: {}, j: {} ".format(i,j))
         P = make_green_line(pixel_num, i, j)
         #P = P + red_bias*red_mask*make_line(pixel_num, i, j)
