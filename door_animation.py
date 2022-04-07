@@ -68,12 +68,12 @@ def make_ignite_array(pixel_num):
     for k in range((pixel_num - 0)//2):
         i = int(pixel_num//2 - k) + 10
         j = int(pixel_num//2 + k) + 10
-        print("i: {}, j: {} ".format(i,j))
+        #print("i: {}, j: {} ".format(i,j))
         P = make_green_line(pixel_num, i, j)
-        P = P + red_bias*red_mask*make_line(pixel_num, i, j)
-        P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i, j)
-        P = normalize(P)
-        P = np.floor(P*160).astype(int) #Max Brightness of 128 to allow for yellow flash effect
+        #P = P + red_bias*red_mask*make_line(pixel_num, i, j)
+        #P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i, j)
+        #P = normalize(P)
+        #P = np.floor(P*160).astype(int) #Max Brightness of 128 to allow for yellow flash effect
         animation[i,:] = P
         red_mask = np.roll(red_mask, scroll_rate, axis=1)
     return animation
