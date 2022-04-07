@@ -250,8 +250,10 @@ class Eyes():
         '''
         n = 10
         x, y = self.px, self.py
-        x_arr = np.linspace(x, self.width/2, n)
-        y_arr = np.linspace(y, self.height/2 - (self.width/2) * (0.9), n) #hopefully minus is right
+        xf = self.width/2
+        yf = self.height/2 - self.width/2 * 0.9
+        x_arr = np.concatenate([np.linspace(x, xf, n), xf*np.ones(n)])
+        y_arr = np.concatenate([np.linspace(y, yf, n), yf*np.ones(n)]) #hopefully minus is right
         A = np.vstack([x_arr, y_arr])
         return A, A.shape[1]
 
