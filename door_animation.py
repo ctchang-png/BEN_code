@@ -106,6 +106,13 @@ def do_door_animation(simulated=False):
     #Pre-compute animations
     #start = time.time()
     ignite_array = make_ignite_array(pixel_num)
+    #Flash Yellow
+    Y = np.vstack([255*np.ones(pixel_num),
+                255*np.ones(pixel_num),
+                np.zeros(pixel_num)])
+    diff = Y - ignite_array[-1, :]
+    n = 10
+    inc = diff / n
     #print(time.time() - start) Takes the pi 0.13s to compute these frames
     try:
         for frame in range(0, ignite_array.shape[0], 5): #Play with speed
@@ -117,15 +124,7 @@ def do_door_animation(simulated=False):
         set_pixels(pixels, P, pixel_num, simulated, fig, axim)
         time.sleep(refresh_rate)
         
-        #Flash Yellow
-        Y = np.vstack([255*np.ones(pixel_num),
-                       255*np.ones(pixel_num),
-                       np.zeros(pixel_num)])
-        diff = Y - P
-        n = 10
-        inc = diff / n
         #to yellow
-        print("pre loop)")
         for _ in range(n):
             print(_)
             P = P + inc
