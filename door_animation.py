@@ -5,20 +5,22 @@ import board
 import neopixel
 
 
-def make_line(n, i):
-    #generates a binary line from P[0] to P[i]
+def make_line(n, i, j):
+    #generates a binary line from P[i] to P[j]
+    '''
     if i >= n:
         return np.ones(n)
-    P = np.concatenate((np.ones(i), np.zeros(n-i)))
+    '''
+    P = np.concatenate((np.zeros(i), np.ones(j-i), np.zeros(n-j)))
     return P
 
-def make_green_line(n, i):
+def make_green_line(n, i, j):
     # 0 0 0
     # 1 1 0
     # 0 0 0
     # - i n
     P = np.vstack((np.zeros(n),
-                   make_line(n,i),
+                   make_line(n,i, j),
                    np.zeros(n)))
     return P
 
@@ -63,10 +65,12 @@ def make_ignite_array(pixel_num):
     red_bias = 7.0
     scroll_rate = -5
     animation = np.zeros((pixel_num, 3, pixel_num))
-    for i in range(pixel_num):
-        P = make_green_line(pixel_num, i)
-        P = P + red_bias*red_mask*make_line(pixel_num, i)
-        P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i)
+    for k in range((pixel_num - 0)//2):
+        i = int(pixel_num//2 - k) + 0
+        j = int(pixel_num//2 + k) + 0
+        P = make_green_line(pixel_num, i, j)
+        P = P + red_bias*red_mask*make_line(pixel_num, i, j)
+        P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i, j)
         P = normalize(P)
         P = np.floor(P*160).astype(int) #Max Brightness of 128 to allow for yellow flash effect
         animation[i,:] = P
