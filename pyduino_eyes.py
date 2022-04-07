@@ -251,7 +251,7 @@ class Eyes():
         n = 10
         x, y = self.px, self.py
         x_arr = np.linspace(x, self.width/2, n)
-        y_arr = np.linspace(y, self.height/2 - (self.width/2) * (0.8), n) #hopefully minus is right
+        y_arr = np.linspace(y, self.height/2 - (self.width/2) * (0.9), n) #hopefully minus is right
         A = np.vstack([x_arr, y_arr])
         return A, A.shape[1]
 
@@ -259,8 +259,8 @@ class Eyes():
         n = 10
         x, y = self.px, self.py
         cx, cy = self.width/2, self.height/2 - (self.width/2 * 0.8) #match end points of portal animation
-        x_arr = np.linspace(x, cx+np.random.randint(-self.width/8, self.width/8), n)
-        y_arr = np.linspace(y, cy+np.random.randint(-self.width/8, self.width/8), n)
+        x_arr = np.linspace(x, cx+np.random.randint(-self.width/20, self.width/20), n)
+        y_arr = np.linspace(y, cy+np.random.randint(-self.width/20, self.width/20), n)
         A = np.vstack([x_arr, y_arr])
         return A, A.shape[1]
 

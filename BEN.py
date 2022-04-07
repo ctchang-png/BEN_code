@@ -90,13 +90,6 @@ def door_thread_func(thread_manager):
     print("Door Thread:\t Door Animation Completed!")
 
 
-def audio_thread_func(thread_manager, sound_effect):
-    print("Audio Thread:\t Beginning Sound Effect")
-    do_sound_effect(sound_effect)
-    thread_manager.close_audio_thread()
-    print("Audio Thread:\t Sound Effect Completed!")
-
-
 def keyboard_thread_func(thread_manager, press, release):
     print("Keyboard Thread:\t Beginning Keyboard Thread")
     listen_keyboard(
