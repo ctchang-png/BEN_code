@@ -66,16 +66,16 @@ def make_ignite_array(pixel_num):
     scroll_rate = -5
     animation = np.zeros((pixel_num, 3, pixel_num))
     for k in range(1, (pixel_num - 0)//2):
-        i = int(pixel_num//2 - k) + 10
-        j = int(pixel_num//2 + k) + 10
+        i = int(pixel_num//2 - k) + 15
+        j = int(pixel_num//2 + k) + 15
         if i < 20:
-            i = 20
+            i = 30
         if j > 300:
             j = 300
         print("i: {}, j: {} ".format(i,j))
         P = make_green_line(pixel_num, i, j)
-        #P = P + red_bias*red_mask*make_line(pixel_num, i, j)
-        #P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i, j)
+        P = P + red_bias*red_mask*make_line(pixel_num, i, j)
+        P = P + np.random.normal(scale=0.01, size=pixel_num)*make_line(pixel_num, i, j)
         P = normalize(P)
         P = np.floor(P*160).astype(int) #Max Brightness of 128 to allow for yellow flash effect
         animation[k,:] = P
