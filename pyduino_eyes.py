@@ -282,7 +282,7 @@ class Eyes():
         if animation_name == "IDLE2":
             A, n = self.get_idle2_animation()
         if animation_name == "IDLE3":
-            A, n - self.get_idle3_animation()
+            A, n = self.get_idle3_animation()
         if animation_name == "PORTAL":
             A, n = self.get_portal_animation()
         self.animation = A
