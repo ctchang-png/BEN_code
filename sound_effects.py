@@ -5,7 +5,7 @@ from playsound import playsound
 # Library that maps effect names to relative paths
 SOUND_EFFECTS = {"smp": "sample.wav"}
 
-
+''''
 def play_sound(sound_effect_pth):
     """
     Given a path for an audio file, plays it
@@ -25,8 +25,8 @@ def do_sound_effect(sound_effect_key):
         print(f"Sound effect with keyword '{sound_effect_key}' not in library")
     else:
         play_sound(SOUND_EFFECTS[sound_effect_key])
-
+'''
 
 if __name__ == "__main__":
-        do_sound_effect("smp")
+        playsound("sample.wav")
         time.sleep(0.100)
