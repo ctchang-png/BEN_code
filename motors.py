@@ -241,7 +241,7 @@ if __name__ == "__main__":
     servo2 = Servo(5, angle_min=-15, angle_max=15, bias=0)
     servo3 = Servo(7, angle_min=-100, angle_max=100, bias=15)
     servo4 = Servo(8, angle_min=-100, angle_max=100, bias=25)
-    servo5 = Servo(9, angle_min=-100, angle_max=100, bias=0)
+    servo5 = Servo(10, angle_min=-100, angle_max=100, bias=0)
     while True:
         # angle = input("enter angle for servo1 between {} and {}: ".format(-20, 20))
         # servo1.set_angle(-int(angle))
@@ -259,4 +259,4 @@ if __name__ == "__main__":
         servo2.set_angle(int(angle2))  # Bigger => More Inward Angle
         servo3.set_angle(int(angle3))  # Bigger => Higher Up
         servo4.set_angle(-int(angle4))  # Bigger => More Inward Angle
-        servo5.set_angle(angle5)
+        servo5.set_angle(int(angle5))
