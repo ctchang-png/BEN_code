@@ -65,7 +65,7 @@ def make_ignite_array(pixel_num):
     red_bias = 7.0
     scroll_rate = -5
     animation = np.zeros((pixel_num, 3, pixel_num))
-    for k in range((pixel_num - 0)//2):
+    for k in range(1, (pixel_num - 0)//2):
         i = int(pixel_num//2 - k) + 10
         j = int(pixel_num//2 + k) + 10
         #print("i: {}, j: {} ".format(i,j))
