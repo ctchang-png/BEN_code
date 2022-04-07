@@ -125,7 +125,9 @@ def do_door_animation(simulated=False):
         n = 10
         inc = diff / n
         #to yellow
+        print("pre loop)")
         for _ in range(n):
+            print(_)
             P = P + inc
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
