@@ -127,8 +127,6 @@ def do_door_animation(simulated=False):
         #to yellow
         for _ in range(n):
             P = P + inc
-            if _ == 0:
-                print(P)
             set_pixels(pixels, P, pixel_num, simulated, fig, axim)
             time.sleep(refresh_rate)
         #to original
